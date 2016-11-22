@@ -1,23 +1,57 @@
-function G_recovery=inverse_AFD(an,coef,t,max_level)
+function G_recovery=inverse_AFD(an,coef,t,varargin)
 % Inverse AFD
-% G_recovery=inverse_AFD(an,coef)
+%
+% G_recovery=inverse_AFD(an,coef,t)
+% G_recovery=inverse_AFD(an,coef,t,'level',max_level)
+% G_recovery=inverse_AFD(an,coef,t,'energy',max_energy)
+%
+% Descriptions:
+%   (1) G_recovery=inverse_AFD(an,coef,t): Build the reconstructed signal
+%       G_reconvery using all an and coef.
+%   (2) G_recovery=inverse_AFD(an,coef,t,'level',max_level): Build the
+%       reconstructed signal G_recovery only using first max_level an and coef.
+%   (3) G_recovery=inverse_AFD(an,coef,t,'energy',max_energy): Build the
+%       reconstructed signal G_reconvery to make |G_reconvery| achieve the max_energy
 %
 % Inputs:
 %   an: a_n array for n=0,1,2,...,N
 %   coef: coeffient array for n=0,1,2,...,N
 %   t: time sample points of the discrete time signal
 %   max_level: max reconstructed level
+%   max_energy: max reconstruction energy
+%
 % Output:
 %   G_recovery: reconstructed analytic representation
-if max_level>length(an)
-    disp('Error: max reconstructed level cannot larger than the size of an.')
+if length(varargin)==0
+    max_level=length(an);
+    max_energy=inf;
+elseif length(varargin)==2
+    switch lower(varargin{1})
+        case 'level'
+            max_level=varargin{2};
+            max_energy=inf;
+        case 'energy'
+            max_level=length(an);
+            max_energy=varargin{2};
+        otherwise
+            disp('Error: the limit condition must be level or energy')
+            return;
+    end
+else
+    disp('Error: wrong inputs')
     return;
 end
+
+Weight=weight(length(t),6);
 tem_B=(sqrt(1-abs(an(1))^2)./(1-conj(an(1))*exp(t.*1i)));
 G_recovery=coef(1).*tem_B;
-for n=2:max_level
+n=1;
+energy=intg(G_recovery,G_recovery,Weight);
+while n<max_level && energy<max_energy
+    n=n+1;
     tem_B=(sqrt(1-abs(an(n))^2)./(1-conj(an(n))*exp(t.*1i))).*((exp(1i*t)-an(n-1))./(sqrt(1-abs(an(n-1))^2))).*tem_B;
     G_recovery=G_recovery+coef(n).*tem_B;
+    energy=intg(G_recovery,G_recovery,Weight);
 end
 
 end

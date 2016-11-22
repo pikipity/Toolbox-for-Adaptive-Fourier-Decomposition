@@ -1,7 +1,16 @@
-function [an,coef,t]=FFT_AFD(s,max_level,M,L)
+function [an,coef,t]=FFT_AFD(s,max_level,M,varargin)
 % AFD based on the FFT based basis searching
 %
+% [an,coef,t]=FFT_AFD(s,max_level,M)
 % [an,coef,t]=FFT_AFD(s,max_level,M,L)
+%
+% Desciptions:
+%   (1) [an,coef,t]=FFT_AFD(s,max_level,M): decomposes signal s to max_level
+%       levels. The magnitude searching dictionary of an generated based on M.
+%       The phase searching dictionary of an gnerated according to the length of
+%       the signal s.
+%   (2) [an,coef,t]=FFT_AFD(s,max_level,M,L): Same as (1) but the phase
+%       searching dictionary of an generated according to L.
 %
 % Inputs:
 %   s: pocessed discrete signal
@@ -13,10 +22,19 @@ function [an,coef,t]=FFT_AFD(s,max_level,M,L)
 %   L: if it is a integer number, it is the maximum number of the phase
 %      values of a_n in the searching dictionary, and the dictionary of the
 %      phase values is unique distributed in [0,2*pi).
+%
 % Outputs:
 %   an: values of a_n for n=0,2,...,N
 %   coef: values of coef_n for n=0,2,...,N
 %
+if length(varargin)>1
+    disp('Error: too many inputs.')
+    return;
+elseif isempty(varargin)
+    L=0:2*pi/length(s):(2*pi-2*pi/length(s));
+elseif length(varargin)==1
+    L=varargin{1};
+end
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Convert the signal to its discrete time format
 K=length(s);
