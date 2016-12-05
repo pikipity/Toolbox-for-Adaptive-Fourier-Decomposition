@@ -1,4 +1,4 @@
-function G_recovery=inverse_AFD(an,coef,t,varargin)
+function [G_recovery,n]=inverse_AFD(an,coef,t,varargin)
 % Inverse AFD
 %
 % G_recovery=inverse_AFD(an,coef,t)
@@ -22,8 +22,9 @@ function G_recovery=inverse_AFD(an,coef,t,varargin)
 %
 % Output:
 %   G_recovery: reconstructed analytic representation
-if length(varargin)==0
-    max_level=length(an);
+%   n: reconstructed maximum level
+if isempty(varargin)
+    max_level=length(an)-1;
     max_energy=inf;
 elseif length(varargin)==2
     switch lower(varargin{1})
@@ -31,7 +32,7 @@ elseif length(varargin)==2
             max_level=varargin{2};
             max_energy=inf;
         case 'energy'
-            max_level=length(an);
+            max_level=length(an)-1;
             max_energy=varargin{2};
         otherwise
             disp('Error: the limit condition must be level or energy')
@@ -46,12 +47,12 @@ Weight=weight(length(t),6);
 tem_B=(sqrt(1-abs(an(1))^2)./(1-conj(an(1))*exp(t.*1i)));
 G_recovery=coef(1).*tem_B;
 n=1;
-energy=intg(G_recovery,G_recovery,Weight);
-while n<max_level && energy<max_energy
+energy=intg(real(G_recovery),real(G_recovery),Weight);
+while n<(max_level+1) && energy<max_energy && n<length(an)
     n=n+1;
     tem_B=(sqrt(1-abs(an(n))^2)./(1-conj(an(n))*exp(t.*1i))).*((exp(1i*t)-an(n-1))./(sqrt(1-abs(an(n-1))^2))).*tem_B;
     G_recovery=G_recovery+coef(n).*tem_B;
-    energy=intg(G_recovery,G_recovery,Weight);
+    energy=intg(real(G_recovery),real(G_recovery),Weight);
 end
 
 end

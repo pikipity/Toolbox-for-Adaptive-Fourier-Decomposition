@@ -1,19 +1,19 @@
-function [an,coef,t]=FFT_AFD(s,max_level,M,varargin)
-% AFD based on the FFT based basis searching
+function [an,coef,t]=conv_AFD(s,max_level,M,varargin)
+% AFD based on the conventional exhaustive basis searching
 %
 % [an,coef,t]=FFT_AFD(s,max_level,M)
-% [an,coef,t]=FFT_AFD(s,max_level,M,L)
+% [an,coef,t]=conv_AFD(s,max_level,M,L)
 %
 % Desciptions:
-%   (1) [an,coef,t]=FFT_AFD(s,max_level,M): decomposes signal s to max_level
+%   (1) [an,coef,t]=conv_AFD(s,max_level,M): decomposes signal s to max_level
 %       levels. The magnitude searching dictionary of an generated based on M.
 %       The phase searching dictionary of an gnerated according to the length of
 %       the signal s.
-%   (2) [an,coef,t]=FFT_AFD(s,max_level,M,L): Same as (1) but the phase
+%   (2) [an,coef,t]=conv_AFD(s,max_level,M,L): Same as (1) but the phase
 %       searching dictionary of an generated according to L.
 %
 % Inputs:
-%   s: pocessed discrete signal
+%   s: 1*K pocessed discrete signal
 %   max_level: maximum decomposition level
 %   M: if it is a integer number, it is the maximum number of the magnitude
 %      values of a_n in the searching dictionary, and the dictionary of the
@@ -22,7 +22,6 @@ function [an,coef,t]=FFT_AFD(s,max_level,M,varargin)
 %   L: if it is a integer number, it is the maximum number of the phase
 %      values of a_n in the searching dictionary, and the dictionary of the
 %      phase values is unique distributed in [0,2*pi).
-%
 % Outputs:
 %   an: values of a_n for n=0,2,...,N
 %   coef: values of coef_n for n=0,2,...,N
@@ -74,37 +73,34 @@ else
         return;
     end
 end
-dic_an=abs_a;
-G_temp=zeros(1,length(phase_a));
-for k=1:length(phase_a)
-    [~,I]=min(abs(t-phase_a(k)));
-    G_temp(k)=G(I);
-    phase_a(k)=t(I);
+dic_an=zeros(length(abs_a),length(phase_a));
+for m=1:length(abs_a)
+    for l=1:length(phase_a)
+        dic_an(m,l,:)=abs_a(m).*exp(1j.*phase_a(l));
+    end
 end
+dic_an=reshape(dic_an,1,length(abs_a)*length(phase_a));
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Generate evaluator
-Base=zeros(length(abs_a),length(phase_a));
+Base=zeros(length(abs_a)*length(phase_a),K);
 for k=1:size(Base,1)
-    Base(k,:)=fft(e_a(dic_an(k),exp(1j.*phase_a)),length(phase_a));
+    Base(k,:)=e_a(dic_an(k),exp(1j.*t));
 end
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Generate weight for the numerical integration
-Weight=weight(length(phase_a),6);
+Weight=weight(K,6);
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Initilization
 an=zeros(1,max_level+1);
 coef=zeros(1,max_level+1);
-coef(1)=intg(G_temp,ones(size(phase_a)),Weight);
-% Main decomposition loop
-for n=2:max_level
-    e_an=e_a(an(n-1),exp(1j.*phase_a));
-    G_temp=(G_temp-coef(n-1).*e_an).*(1-conj(an(n-1)).*exp(1j.*phase_a))./(exp(1j.*phase_a)-an(n-1));
-    S1=ifft(repmat(fft(G_temp.*Weight.',length(phase_a)),size(Base,1),1).*Base,length(phase_a),2);
-    [S2,I1]=max(abs(S1));
-    [~,I2]=max(S2);
-    an(n)=dic_an(I1(I2)).*exp(1j.*phase_a(I2));
-    G=(G-coef(n-1).*e_a(an(n-1),exp(1j.*t))).*(1-conj(an(n-1)).*exp(1j.*t))./(exp(1j.*t)-an(n-1));
-    coef(n)=conj(e_a(an(n),exp(t.*1i))*(G'.*weight(K,6)));
+coef(1)=intg(G,ones(size(t)),Weight);
+for n=2:(max_level+1)
+    e_an=e_a(an(n-1),exp(1j.*t));
+    G=(G-coef(n-1).*e_an).*(1-conj(an(n-1)).*exp(1j.*t))./(exp(1j.*t)-an(n-1));
+    S1=conj(Base*(G'.*Weight));
+    [~,I]=max(abs(S1));
+    coef(n)=S1(I);
+    an(n)=dic_an(I);
 end
 
 end
