@@ -1,4 +1,9 @@
 # -*- coding: utf-8 -*-
+from numpy import *
+from numpy.matlib import repmat
+from numpy.fft import fft, ifft
+from scipy.signal import hilbert
+    
 def e_a(a,t):
     """
     evaluator function
@@ -11,6 +16,8 @@ def weight(n,order):
     """
     weight function of the numerical integration
     """
+    """
+    # Old Code: 
     y=zeros((n,1),'complex')
     Newton=array([[41.0/840],[9.0/35],[9.0/280],[34.0/105],[9.0/280],[9.0/35],[41.0/840]])
     k=floor((n*1.0-1)/order)
@@ -33,6 +40,8 @@ def weight(n,order):
         
     if nleft>0:
         y[(n-nleft-1):(n+1)]=y[(n-nleft-1):(n+1)]+Newton*nleft/(n-1)
+    """
+    y=ones((n,1),'complex')
         
     return y
     
@@ -100,7 +109,7 @@ def conv_AFD(s,max_level=50,M=20,L=2000):
         elif shape(L)[1]==1:
             phase_a=L.T.copy()
         else:
-            return -1,array([]),arry([])
+            return -1,array([]),array([])
              
     dic_an=zeros((size(abs_a),size(phase_a)),'complex')
     for m in arange(0,size(abs_a)):
@@ -124,10 +133,44 @@ def conv_AFD(s,max_level=50,M=20,L=2000):
         G=(G-coef[0,n-1]*e_an)*(1-conjugate(an[0,n-1])*(e**(1j*t)))/(e**(1j*t)-an[0,n-1])
         S1=conjugate(Base.dot(G.conj().T*Weight))
         I=nonzero(absolute(S1)==absolute(S1).max())[0][0]
-        coef[0,n]=S1[I,0]
         an[0,n]=dic_an[0,I]
+        coef[0,n]=conjugate(e_a(an[0,n],t).dot(G.conj().T*Weight))[0,0]
         
     return 1,an,coef,t
+    
+    
+def component_AFD(an,coef,t):
+    """
+    Decomposition components of AFD
+    Inputs:
+        1. a_n array for n=0,1,2,...,N
+        2. coef: coefficient array for n=0,1,2,...,N
+        3. t: time sample points of the discrete time signal
+    Outputs:
+        1. e_an: dictionary components
+        2. B_n: basis components
+        3: F_n: decomposition components
+    """
+    if ndim(an)==1:
+        an=array([an])
+    if ndim(coef)==1:
+        coef=array([coef])
+    if ndim(t)==1:
+        t=array([t])
+    e_an=zeros((size(an),size(t)),'complex')
+    B_n=zeros((size(an),size(t)),'complex')
+    F_n=zeros((size(an),size(t)),'complex')
+    n=0
+    e_an[n,:]=e_a(an[0,n],t)
+    B_n[n,:]=(sqrt(1-absolute(an[0,0])**2)/(1-conjugate(an[0,0])*e**(t*1j)))
+    F_n[n,:]=coef[0,n]*B_n[n,:]
+    n=1
+    while n<size(an):
+        e_an[n,:]=e_a(an[0,n],t)
+        B_n[n,:]=(sqrt(1-absolute(an[0,n])**2)/(1-conjugate(an[0,n])*e**(t*1j)))*((e**(1j*t)-an[0,n-1])/(sqrt(1-absolute(an[0,n-1])**2)))*B_n[n-1,:]
+        F_n[n,:]=coef[0,n]*B_n[n,:]
+        n=n+1
+    return e_an,B_n,F_n
     
 
 def inverse_AFD(an,coef,t,standard='level',standard_value=float("inf")):
@@ -162,7 +205,7 @@ def inverse_AFD(an,coef,t,standard='level',standard_value=float("inf")):
         target_value=standard_value
     while n<size(an)-1 and current_value<target_value:
         n=n+1
-        tem_B=(sqrt(1-absolute(an[0,n])**2)/(1-conj(an[0,n])*e**(t*1j)))*((e**(1j*t)-an[0,n-1])/(sqrt(1-absolute(an[0,n-1])**2)))*tem_B
+        tem_B=(sqrt(1-absolute(an[0,n])**2)/(1-conjugate(an[0,n])*e**(t*1j)))*((e**(1j*t)-an[0,n-1])/(sqrt(1-absolute(an[0,n-1])**2)))*tem_B
         G_recovery=G_recovery+coef[0,n]*tem_B
         if standard.lower()=='level':
             current_value=n
@@ -238,11 +281,7 @@ def FFT_AFD(s,max_level=50,M=20):
     
     
 if __name__ == "__main__":
-    from numpy import *
-    from numpy.matlib import repmat
-    from numpy.fft import fft, ifft
-    from scipy.signal import hilbert
-    print("--------------------------------------------------------")
+    print("-----------Test Basic Functions--------------------------------")
     t=array([arange(0,2*pi,2*pi/2000)])
     print("Test e_a")
     print(e_a(0.5+0.5j,t))
@@ -250,41 +289,33 @@ if __name__ == "__main__":
     print(weight(2000,6))
     print("Test intg")
     print(intg(array([arange(0,12)]),array([arange(1,13)]),weight(12,6)))
-    print("---------------------------------------------------------")
+    print("-----------Test conventional method--------------------------")
     from scipy.io import loadmat
+    import time
     s=loadmat('.\\Example\\bump_signal.mat')
     s=s['G'].copy()
-    print(hilbert(s))
-    state,an,coef,t=conv_AFD(s,50,50,size(s))
-    print('state:')
-    print(state)
-    print('an:')
-    print(an)
-    print('coef:')
-    print(coef)
+    # Repeat 50 times for measuring time
+    measure_time=arange(0,50,dtype=dtype(float))
+    for k in arange(0,50):
+        t1=time.clock()
+        state,an,coef,t=conv_AFD(s,50,50,size(s))
+        t2=time.clock()
+        measure_time[k]=t2-t1
     s_re,n=inverse_AFD(an,coef,t)
-    print('s_re:')
-    print(s_re)
-    print('n:')
-    print(n)
-    print("---------------------------------------------------------")
-    from scipy.io import loadmat
-    s=loadmat('.\\Example\\bump_signal.mat')
-    s=s['G'].copy()
-    print(hilbert(s))
-    state_FFT,an_FFT,coef_FFT,t_FFT=FFT_AFD(s,50,50)
-    print('state_FFT:')
-    print(state_FFT)
-    print('an_FFT:')
-    print(an_FFT)
-    print('coef_FFT:')
-    print(coef_FFT)
+    print("Time for the conventional method:")
+    print(mean(measure_time))
+    print("--------------Test FFT method-------------------------------")
+    # Repeat 50 times for measuring time
+    measure_time=arange(0,50,dtype=dtype(float))
+    for k in arange(0,50):
+        t3=time.clock()
+        state_FFT,an_FFT,coef_FFT,t_FFT=FFT_AFD(s,50,50)
+        t4=time.clock()
+        measure_time[k]=t4-t3
     s_re_FFT,n_FFT=inverse_AFD(an_FFT,coef_FFT,t_FFT)
-    print('s_re_FFT:')
-    print(s_re_FFT)
-    print('n_FFT:')
-    print(n_FFT)
-    print("---------------------------------------------------------")
+    print("Time for the FFT:")
+    print(mean(measure_time))
+    print("---------------Plot results---------------------------------")
     from matplotlib import pyplot
     pyplot.figure(1)
     pyplot.plot(real(an),imag(an),'rx',real(an_FFT),imag(an_FFT),'go')

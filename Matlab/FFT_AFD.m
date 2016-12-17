@@ -89,7 +89,7 @@ for k=1:size(Base,1)
 end
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Generate weight for the numerical integration
-Weight=weight(length(phase_a),6);
+Weight=ones(K,1);%weight(length(phase_a),6);
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Initilization
 an=zeros(1,max_level+1);

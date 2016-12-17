@@ -88,7 +88,7 @@ for k=1:size(Base,1)
 end
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Generate weight for the numerical integration
-Weight=weight(K,6);
+Weight=ones(K,1);%weight(K,6);
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Initilization
 an=zeros(1,max_level+1);
@@ -99,8 +99,8 @@ for n=2:(max_level+1)
     G=(G-coef(n-1).*e_an).*(1-conj(an(n-1)).*exp(1j.*t))./(exp(1j.*t)-an(n-1));
     S1=conj(Base*(G'.*Weight));
     [~,I]=max(abs(S1));
-    coef(n)=S1(I);
     an(n)=dic_an(I);
+    coef(n)=conj(e_a(an(n),exp(t.*1i))*(G'.*weight(K,6)));
 end
 
 end

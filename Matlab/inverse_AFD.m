@@ -43,7 +43,7 @@ else
     return;
 end
 
-Weight=weight(length(t),6);
+Weight=ones(length(t),1);%weight(length(t),6);
 tem_B=(sqrt(1-abs(an(1))^2)./(1-conj(an(1))*exp(t.*1i)));
 G_recovery=coef(1).*tem_B;
 n=1;
