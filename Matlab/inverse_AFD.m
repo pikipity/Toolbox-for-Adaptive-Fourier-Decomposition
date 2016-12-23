@@ -1,5 +1,5 @@
 function [G_recovery,n]=inverse_AFD(an,coef,t,varargin)
-% Inverse AFD
+% Inverse AFD 
 %
 % G_recovery=inverse_AFD(an,coef,t)
 % G_recovery=inverse_AFD(an,coef,t,'level',max_level)

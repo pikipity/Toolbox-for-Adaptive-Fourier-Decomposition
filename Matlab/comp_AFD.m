@@ -1,5 +1,5 @@
 function [dic_n,B_n,F_n]=comp_AFD(an,coef,t)
-% Obtain the dictionary components at the certain an, basis B_n
+% Obtain the dictionary components at the certain an, basis B_n 
 % (Non-coefficients), decomposition components (B_n with coefficients)
 %
 % [dic_n,B_n,F_n]=comp_AFD(an,coef,t)

@@ -1,5 +1,5 @@
 function [an,coef,t]=conv_AFD(s,max_level,M,varargin)
-% AFD based on the conventional exhaustive basis searching
+% AFD based on the conventional exhaustive basis searching 
 %
 % [an,coef,t]=FFT_AFD(s,max_level,M)
 % [an,coef,t]=conv_AFD(s,max_level,M,L)

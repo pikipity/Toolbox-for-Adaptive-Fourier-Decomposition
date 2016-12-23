@@ -1,5 +1,5 @@
 function [an,coef,t]=FFT_AFD(s,max_level,M,varargin)
-% AFD based on the FFT based basis searching
+% AFD based on the FFT
 %
 % [an,coef,t]=FFT_AFD(s,max_level,M)
 % [an,coef,t]=FFT_AFD(s,max_level,M,L)
