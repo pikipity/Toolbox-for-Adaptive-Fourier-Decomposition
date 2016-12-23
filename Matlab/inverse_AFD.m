@@ -23,6 +23,7 @@ function [G_recovery,n]=inverse_AFD(an,coef,t,varargin)
 % Output:
 %   G_recovery: reconstructed analytic representation
 %   n: reconstructed maximum level
+%
 if isempty(varargin)
     max_level=length(an)-1;
     max_energy=inf;

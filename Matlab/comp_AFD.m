@@ -12,7 +12,8 @@ function [dic_n,B_n,F_n]=comp_AFD(an,coef,t)
 % Output:
 %   dic_n: dictionary components e_an
 %   B_n: basis B_n
-%   F_n: decomposition components F_n
+%   F_n: decomposition components F_n. F_n=coef*B_n
+%
 dic_n=zeros(length(an),length(t));
 B_n=zeros(length(an),length(t));
 F_n=zeros(length(an),length(t));

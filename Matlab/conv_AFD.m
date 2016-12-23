@@ -25,6 +25,7 @@ function [an,coef,t]=conv_AFD(s,max_level,M,varargin)
 % Outputs:
 %   an: values of a_n for n=0,2,...,N
 %   coef: values of coef_n for n=0,2,...,N
+%   t: phase of s
 %
 if length(varargin)>1
     disp('Error: too many inputs.')
