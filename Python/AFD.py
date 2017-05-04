@@ -52,7 +52,7 @@ def intg(f,g,W):
     y=f.dot(g.T*W)
     if ndim(y)!=1:
         y=y[0,0]
-    return y
+    return y/(shape(f)[1])
         
 
 def conv_AFD(s,max_level=50,M=20,L=2000):
@@ -134,7 +134,7 @@ def conv_AFD(s,max_level=50,M=20,L=2000):
         S1=conjugate(Base.dot(G.conj().T*Weight))
         I=nonzero(absolute(S1)==absolute(S1).max())[0][0]
         an[0,n]=dic_an[0,I]
-        coef[0,n]=conjugate(e_a(an[0,n],t).dot(G.conj().T*Weight))[0,0]
+        coef[0,n]=conjugate(e_a(an[0,n],t).dot(G.conj().T*Weight))[0,0]/K
         
     return 1,an,coef,t
     
@@ -275,7 +275,7 @@ def FFT_AFD(s,max_level=50,M=20):
         S1=ifft(repmat(fft(G*Weight.conj().T,size(t)),shape(Base)[0],1)*Base,size(t),1)        
         max_loc=nonzero(absolute(S1)==absolute(S1).max())
         an[0,n]=abs_a[0,max_loc[0][0]]*e**(1j*t[0,max_loc[1][0]])
-        coef[0,n]=conjugate(e_a(an[0,n],t).dot(G.conj().T*Weight))[0,0]
+        coef[0,n]=conjugate(e_a(an[0,n],t).dot(G.conj().T*Weight))[0,0]/K
         
     return 1,an,coef,t    
     
@@ -324,5 +324,15 @@ if __name__ == "__main__":
     pyplot.show()
     pyplot.figure(2)
     pyplot.plot(t,real(s),'ro-',t,real(s_re),'go-',t,real(s_re_FFT),'ko-')
+    pyplot.xlabel('Phase')
+    pyplot.show()
+    e_an,B_n,F_n=component_AFD(an,coef,t)
+    pyplot.figure(3)
+    pyplot.plot(t[0,:],real(s[0,:]),'ro-',t[0,:],real(F_n[0,:]),'go-',t[0,:],real(F_n[1,:]),'ko-',t[0,:],real(F_n[2,:]),'yo-')
+    pyplot.xlabel('Phase')
+    pyplot.show()
+    e_an,B_n,F_n=component_AFD(an_FFT,coef_FFT,t_FFT)
+    pyplot.figure(4)
+    pyplot.plot(t_FFT[0,:],real(s[0,:]),'ro-',t_FFT[0,:],real(F_n[0,:]),'go-',t_FFT[0,:],real(F_n[1,:]),'ko-',t_FFT[0,:],real(F_n[2,:]),'yo-')
     pyplot.xlabel('Phase')
     pyplot.show()

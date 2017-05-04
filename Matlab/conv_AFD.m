@@ -101,7 +101,7 @@ for n=2:(max_level+1)
     S1=conj(Base*(G'.*Weight));
     [~,I]=max(abs(S1));
     an(n)=dic_an(I);
-    coef(n)=conj(e_a(an(n),exp(t.*1i))*(G'.*weight(K,6)));
+    coef(n)=conj(e_a(an(n),exp(t.*1i))*(G'.*Weight))./length(t);
 end
 
 end

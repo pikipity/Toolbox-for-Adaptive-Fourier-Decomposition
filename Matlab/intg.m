@@ -3,5 +3,5 @@ function [ ret ] = intg( f,g,Weigth)
 %      'g' is an array.
 
 %Weigth=weight(length(f),6);
-ret=f*(g'.*Weigth);
+ret=f*(g'.*Weigth)./length(f);
 end

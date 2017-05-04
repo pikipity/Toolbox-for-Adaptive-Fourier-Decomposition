@@ -105,7 +105,7 @@ for n=2:(max_level+1)
     [~,I2]=max(S2);
     an(n)=dic_an(I1(I2)).*exp(1j.*phase_a(I2));
     G=(G-coef(n-1).*e_a(an(n-1),exp(1j.*t))).*(1-conj(an(n-1)).*exp(1j.*t))./(exp(1j.*t)-an(n-1));
-    coef(n)=conj(e_a(an(n),exp(t.*1i))*(G'.*weight(K,6)));
+    coef(n)=conj(e_a(an(n),exp(t.*1i))*(G'.*Weight))./length(t);
 end
 
 end
