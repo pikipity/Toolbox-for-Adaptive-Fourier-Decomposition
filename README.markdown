@@ -13,8 +13,7 @@ For both MATLAB and Python versions, there are two kinds of implementations in t
 For MATLAB users, you only need to
 
 1. Download this [toolbox](https://github.com/pikipity/Toolbox-for-Adaptive-Fourier-Decomposition/archive/master.zip)
-2. Add the "Matlab" folder to your MATLAB searching path. For example, if your MATLAB folder path is `D:\Github\Toolbox-for-Adaptive-Fourier-Decomposition\Matlab`,you can use the following command in MATLAB:
-   ``addpath('D:\Github\Toolbox-for-Adaptive-Fourier-Decomposition\Matlab')``
+2. Add the "Matlab" folder to your MATLAB searching path. For example, if your MATLAB folder path is `D:\Github\Toolbox-for-Adaptive-Fourier-Decomposition\Matlab`, you can use the following command in MATLAB: `addpath('D:\Github\Toolbox-for-Adaptive-Fourier-Decomposition\Matlab')`
 
 ### Python Version
 
