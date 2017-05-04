@@ -52,7 +52,7 @@ For Python users, in `Python` folder, you can directly run `AFD.py` to try the A
 
 ## Related Papers
 
-### Mathmatical Fundation
+### Mathematical Fundation
 
 + T. Qian, L. Zhang, and Z. Li, “[Algorithm of adaptive Fourier decomposition](http://ieeexplore.ieee.org/document/6021385/),” IEEE Trans. Signal Process., vol. 59, no. 12, pp. 5899–5906, 2011.
 + T. Qian and Y. Wang, “[Remarks on adaptive Fourier decomposition](http://www.worldscientific.com/doi/pdf/10.1142/S0219691313500070),” Int. J. Wavelets, Multiresolution Inf. Process., vol. 11, no. 1, p. 1350007, 2013.
