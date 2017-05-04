@@ -12,9 +12,10 @@ For both MATLAB and Python versions, there are two kinds of implementations in t
 
 For MATLAB users, you only need to
 
-1. Download this toolbox
+1. Download this [toolbox](https://github.com/pikipity/Toolbox-for-Adaptive-Fourier-Decomposition/archive/master.zip)
 2. Add the "Matlab" folder to your MATLAB searching path. For example, if your MATLAB folder path is `D:\Github\Toolbox-for-Adaptive-Fourier-Decomposition\Matlab`,you can use the following command in MATLAB:
    ``addpath('D:\Github\Toolbox-for-Adaptive-Fourier-Decomposition\Matlab')``
+
 ### Python Version
 
 For Python users, the following packages are required:
@@ -25,7 +26,7 @@ For Python users, the following packages are required:
 
 After you have successfully downloaded and installed the above required packages, you only need to
 
-1. Download this toolbox
+1. Download this [toolbox](https://github.com/pikipity/Toolbox-for-Adaptive-Fourier-Decomposition/archive/master.zip)
 2. Copy the `AFD.py` file in the Python folder to the Python searching path, like your own program root path.
 3. In your own python program, you have to import functions in `AFD.py`. For example, you can use `from AFD import *`.
 
@@ -38,12 +39,16 @@ For Python users, in `Python` folder, you can directly run `AFD.py` to try the A
 ## Key Functions
 
 + Conventional AFD: `conv_AFD` (MATLAB and Python Versions)
+
   This function computes a_n and coefficients of decomposition components <e_{a_n},G_n> of the AFD following equations in ["Algorithm of Adaptive Fourier Decomposition"](http://ieeexplore.ieee.org/document/6021385/).
 + FFT based AFD: `FFT_AFD.m` (MATLAB and Python Versions)
+
   This function computes a_n and coefficients of decomposition components <e_{a_n},G_n> of the AFD using the FFT for the computation of objective function values.
 + Inverse AFD: `inverse_AFD` (MATLAB and Python Versions)
+
   This function computes the recovery signal using a_n and coefficients of decomposition components <e_{a_n},G_n> obtained from `conv_AFD.m` and `FFT_AFD.m`.
 + Components of the AFD: `comp_AFD` (MATLAB Version) and `component_AFD` (Python Version)
+
   This function computes evaluators e_{a_n}, basis B_n and decomposition components F_n
 
 ## Related Papers
