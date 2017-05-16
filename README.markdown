@@ -6,6 +6,10 @@ This toolbox offers the MATLAB functions and Python functions for the core AFD a
 
 For both MATLAB and Python versions, there are two kinds of implementations in this toolbox. One is the conventional AFD. The computation of the conventional AFD follows equations in ["Algorithm of Adaptive Fourier Decomposition"](http://ieeexplore.ieee.org/document/6021385/). Another one is the FFT based AFD. The objective function computation is optimized. The FFT based AFD is suggested due to its fast computation speed.
 
+For the MATLAB version, there is a GUI to show the decomposition process of the AFD as shown below:
+
+![GUI (MATLAB Version)](https://lh3.googleusercontent.com/hweqOoj0477Uqv6rRheXkelt4CP3zm6nqMX7DkcrPapExxYPHJSuHvUW8wDg3UqT_cUbd-rdh4AuoynFIikel6XhcTTNjCDqZT2UnYtEF6ieEchEAOdg07ejnm8EDF5cEBRUpxtTPj96lmU7juU7GohPmhE9k_Hq4wUF9WvCzpt5Tl-1FIMSsr2ZeOWCUV5-sG4g-9HKzWhhEhwvCnizMaK78KE3qfF9ZZvJnFgE9v3cowrP69k5RSSYZN5Mwt6NgoY6cpIEWOJHXJn9Wb8kFdEHPzjSNwPlCtTdeU0QRWX5bpBKlX0XTfTwMh6c8ltroRg7JzHHoZB9qeb69UQnQ2F1CNDz83JUWpCIdGSgE1zqp273j-tAozqGGl9EiFMnL1ZTKObF9LzvbwAdjMJP_g8pGcy7oRpBuWuErSdXbK9YjSfZBGDAxO1IQMO9zE6dLmnRoBlXYeYF7EYyaOZtLrmUyW6EeCaWDNm7fDCxnHBHHFHyKnOLav-c7DnkgZdG4ELdurivz5fOZoLzQ_N-yPK0RzRK9ukrijhZZnbTyU2YXdqTsFYHz5PTpmWyKb06cpdLmyynZDgfgnKfyQaWXxF3VePuSbLHJ-cJjHSU-Uoxc8So7hpK=w1044-h404-no)
+
 ## Installation
 
 ### MATLAB Version
@@ -49,6 +53,10 @@ For Python users, in `Python` folder, you can directly run `AFD.py` to try the A
 + Components of the AFD: `comp_AFD` (MATLAB Version) and `component_AFD` (Python Version)
 
   This function computes evaluators e_{a_n}, basis B_n and decomposition components F_n
+  
++ GUI of the AFD: `GUI_AFD` (MATLAB Version)
+  
+  Use the GUI to show the decomposition process of the AFD.
 
 ## Related Papers
 
