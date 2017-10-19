@@ -58,7 +58,7 @@ For Python users, in `Python` folder, you can directly run `AFD.py` to try the A
   
   Use the GUI to show the decomposition process of the AFD.
 
-## Related Papers
+## References and Related Papers
 
 ### Mathematical Fundation
 
