@@ -75,6 +75,7 @@ For Python users, in `Python` folder, you can directly run `AFD.py` to try the A
 ### Applications
 
 + C. Tan, L. Zhang, H. Wu,"[A Novel Blaschke Unwinding Adaptive Fourier Decomposition based Signal Compression Algorithm with Application on ECG Signals](https://ieeexplore.ieee.org/stamp/stamp.jsp?arnumber=8322131)," IEEE J. Biomed. Heal. Informatics, Mar. 2018.
++ Z. Wang, C. M. Wong, F. Wan, "[Adaptive Fourier decomposition based R-peak detection for noisy ECG Signals](https://ieeexplore.ieee.org/abstract/document/8037611/)," in 39th Annual International Conference of the IEEE Engineering in Medicine and Biology Society (EMBC), 2017, pp. 3501-3504.
 + Q. Chen, T. Qian, Y. Li, W. Mai, X. Zhang, "[Adaptive Fourier tester for statistical estimation](https://doi.org/10.1002/mma.3795)," Math. Method. Appl. Sci., vol. 39, no. 12, pp. 3478–3495, 2016. 
 + Z. Wang, F. Wan, C. M. Wong, and L. Zhang, “[Adaptive Fourier decomposition based ECG denoising](http://www.sciencedirect.com/science/article/pii/S0010482516302104),” Comput. Biol. Med., vol. 77, pp. 195–205, 2016.
 + Z. Wang, C. M. Wong, J. N. da Cruz, F. Wan, P.-I. Mak, P. U. Mak, and M. I. Vai, “[Muscle and electrode motion artifacts reduction in ECG using adaptive Fourier decomposition](http://ieeexplore.ieee.org/document/6974120/),” in 2014 IEEE International Conference on Systems, Man, and Cybernetics (SMC), 2014, pp. 1456–1461.
