@@ -62,15 +62,20 @@ For Python users, in `Python` folder, you can directly run `AFD.py` to try the A
 
 ### Mathematical Fundation
 
++ T. Qian, "[Intrinsic mono-component decomposition of functions: an advance of Fourier theory](https://doi.org/10.1002/mma.1214)," Math. Methods Appl. Sci., vol. 33, no. 7, pp. 880–891, 2010. 
 + T. Qian, L. Zhang, and Z. Li, “[Algorithm of adaptive Fourier decomposition](http://ieeexplore.ieee.org/document/6021385/),” IEEE Trans. Signal Process., vol. 59, no. 12, pp. 5899–5906, 2011.
 + T. Qian and Y. Wang, “[Remarks on adaptive Fourier decomposition](http://www.worldscientific.com/doi/pdf/10.1142/S0219691313500070),” Int. J. Wavelets, Multiresolution Inf. Process., vol. 11, no. 1, p. 1350007, 2013.
++ T. Qian, "[Cyclic AFD algorithm for the best rational approximation](https://doi.org/10.1002/mma.2843)," Math. Methods Appl. Sci., vol. 37, no. 6, pp. 846–859, 2014. 
 + T. Qian, “[Adaptive Fourier decompositions and rational approximations — part I: Theory](http://www.worldscientific.com/doi/pdf/10.1142/S0219691314610086),” Int. J. Wavelets, Multiresolution Inf. Process., vol. 12, no. 5, p. 1461008, 2014.
 + L. Zhang, W. Hong, W. Mai, and T. Qian, “[Adaptive Fourier decomposition and rational approximation — part II: Software system design and development](http://www.worldscientific.com/doi/pdf/10.1142/S0219691314610098),” Int. J. Wavelets, Multiresolution Inf. Process., vol. 12, no. 5, p. 1461009, 2014.
 + T. Qian, H. Li, and M. Stessin, “[Comparison of adaptive mono-component decompositions](http://www.sciencedirect.com/science/article/pii/S1468121812001770),” Nonlinear Anal. Real World Appl., vol. 14, no. 2, pp. 1055–1074, 2013.
 + Y. Gao, M. Ku, T. Qian, and J. Wang, “[FFT formulations of adaptive Fourier decomposition](http://www.sciencedirect.com/science/article/pii/S0377042717302005),” J. Comput. Appl. Math., Apr. 2017.
++ Z. Wang, F. Wan, C. M. Wong, and T. Qian, "[Fast basis search for adaptive Fourier decomposition](https://link.springer.com/article/10.1186/s13634-018-0593-1)," EURASIP J. Adv. Sig. Pr., vol. 74, no. 1, 2018.
 
 ### Applications
 
++ C. Tan, L. Zhang, H. Wu,"[A Novel Blaschke Unwinding Adaptive Fourier Decomposition based Signal Compression Algorithm with Application on ECG Signals](https://ieeexplore.ieee.org/stamp/stamp.jsp?arnumber=8322131)," IEEE J. Biomed. Heal. Informatics, Mar. 2018.
++ Q. Chen, T. Qian, Y. Li, W. Mai, X. Zhang, "[Adaptive Fourier tester for statistical estimation](https://doi.org/10.1002/mma.3795)," Math. Method. Appl. Sci., vol. 39, no. 12, pp. 3478–3495, 2016. 
 + Z. Wang, F. Wan, C. M. Wong, and L. Zhang, “[Adaptive Fourier decomposition based ECG denoising](http://www.sciencedirect.com/science/article/pii/S0010482516302104),” Comput. Biol. Med., vol. 77, pp. 195–205, 2016.
 + Z. Wang, C. M. Wong, J. N. da Cruz, F. Wan, P.-I. Mak, P. U. Mak, and M. I. Vai, “[Muscle and electrode motion artifacts reduction in ECG using adaptive Fourier decomposition](http://ieeexplore.ieee.org/document/6974120/),” in 2014 IEEE International Conference on Systems, Man, and Cybernetics (SMC), 2014, pp. 1456–1461.
 + Z. Wang, J. Nuno da Cruz, and F. Wan, “[Adaptive Fourier decomposition approach for lung-heart sound separation](http://ieeexplore.ieee.org/document/7158631/),” in 2015 IEEE International Conference on Computational Intelligence and Virtual Environments for Measurement Systems and Applications (CIVEMSA), 2015, pp. 1–5.
