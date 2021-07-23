@@ -1,5 +1,5 @@
 clear classes;clear all;clc;close all;
-N=50;
+N=18;
 %% prepare input signal
 fileList={'ECG.mat',...
           'heavysine_signal.mat',...
@@ -23,6 +23,8 @@ afdcal_1=AFDCal();
 afdcal_1.setInputSignal(G);
 % set decomposition method: Single Channel Fast AFD
 afdcal_1.setDecompMethod(2);
+% set AFD method: unwinding AFD
+afdcal_1.setAFDMethod(2);
 % generate searching dictionary
 afdcal_1.genDic(0.02,0.95);
 % generate evaluators
@@ -47,6 +49,8 @@ afdcal_2.setInputSignal(G);
 afdcal_2.setDecompMethod(1);
 % set searching dictionary generation method: square searching dictionary
 afdcal_2.setDicGenMethod(1);
+% set AFD method: unwinding AFD
+afdcal_2.setAFDMethod(2);
 % generate searching dictionary
 afdcal_2.genDic(0.02,0.95);
 % generate evaluators
@@ -69,8 +73,10 @@ afdcal_3=AFDCal();
 afdcal_3.setInputSignal(G);
 % set decomposition method: Single Channel Conventional AFD
 afdcal_3.setDecompMethod(1);
-% set searching dictionary generation method: square searching dictionary
+% set searching dictionary generation method: circle searching dictionary
 afdcal_3.setDicGenMethod(2);
+% set AFD method: unwinding AFD
+afdcal_3.setAFDMethod(2);
 % generate searching dictionary
 afdcal_3.genDic(0.02,0.95);
 % generate evaluators

@@ -37,5 +37,12 @@ function initSetting(obj)
     obj.time_genDic=[];
     obj.time_genEva=[];
     
+    obj.r_store={};
+    obj.InProd={};
+    obj.OutProd={};
+    obj.Base_r={};
+    obj.N_r=1e3;
+    obj.tol_r=1e-3;
+    
     obj.addLog('Initialize settings correctly')
 end

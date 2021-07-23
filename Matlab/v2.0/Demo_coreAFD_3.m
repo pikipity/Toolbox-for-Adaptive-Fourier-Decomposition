@@ -1,6 +1,6 @@
 clear classes;clear all;clc;
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% Single Channel Conventional AFD, circle searching dictionary, same phase (0~2\pi)
+%% Single Channel Fast AFD, circle searching dictionary, same phase (0~2\pi)
 % prepare input signal
 fileList={'ECG.mat',...
           'heavysine_signal.mat',...
@@ -21,7 +21,7 @@ end
 afdcal=AFDCal();
 afdcal.setInputSignal(G);
 afdcal.plot_ori_sig();
-% set decomposition method: Single Channel Conventional AFD
+% set decomposition method: Single Channel Fast AFD
 afdcal.setDecompMethod(2);
 % generate searching dictionary
 afdcal.genDic(0.02,0.95);

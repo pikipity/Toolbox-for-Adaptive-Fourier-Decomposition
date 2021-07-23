@@ -29,6 +29,15 @@ classdef AFDCal  < handle
         run_time % running time of decomposition
         time_genDic % running time of generating searching dictionary
         time_genEva % running time of generating evaluators
+        
+        r_store % zeros for unwinding
+        InProd % inner product for unwinding
+        OutProd % outer product for unwinding
+        Base_r % evaluators of searching zeros
+        N_r % largest number of iterations for searching zeros
+            % Normally, it is a large number. Default is 1e3.
+        tol_r % tol for searching zeros
+              % This number should be small enough. Default is 1e-3.
     end
     
     
@@ -55,11 +64,13 @@ classdef AFDCal  < handle
     
     methods (Static)
         ret = e_a(a,z)
+        ret = e_a_r(a,z)
         ret = Unit_Disk(dist,cont)
         ret = Circle_Disk(dist,cont,phase)
         plot_sig(t,s,xlab,ylab)
         plot_point(t,s,xlab,ylab)
         ret = intg( f,g,Weigth)
+        ret = blaschke1(r,t)
     end
 end
 
