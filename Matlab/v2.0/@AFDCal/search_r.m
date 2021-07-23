@@ -18,6 +18,8 @@ function search_r(obj,ch_i)
                         S(i,:) = conj(squeeze(obj.Base_r{ch_i,1}(i,:,:))*(f_r(ch_i,:)'.*obj.Weight));
                     end
                     [min_row_i,min_col_i]=find(S==min(min(S)));
+                    min_row_i=min_row_i(1);
+                    min_col_i=min_col_i(1);
                     min_S=abs(min(min(S)));
                     % r
                     r=obj.dic_an{ch_i,1}(min_row_i,min_col_i);
@@ -27,6 +29,8 @@ function search_r(obj,ch_i)
                     Base=squeeze(obj.Base_r{ch_i,1}(1,:,:)); 
                     S=ifft(repmat(fft(f_r(ch_i,:).*obj.Weight.',length(phase_a)),size(Base,1),1).*Base,length(phase_a),2);
                     [min_row_i,min_col_i]=find(S==min(min(S)));
+                    min_row_i=min_row_i(1);
+                    min_col_i=min_col_i(1);
                     min_S=abs(min(min(S)));
                     %
                     r=obj.dic_an{ch_i,1}(min_row_i).*exp(1j.*phase_a(min_col_i));

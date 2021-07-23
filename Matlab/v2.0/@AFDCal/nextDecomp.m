@@ -88,6 +88,8 @@ function nextDecomp(obj,varargin)
                         obj.S1{ch_i,obj.level+1}(i,:)=conj(squeeze(obj.Base{ch_i,1}(i,:,:))*(obj.remainder(ch_i,:)'.*obj.Weight));
                     end
                     [max_row_i,max_col_i]=find(obj.S1{ch_i,obj.level+1}==max(max(obj.S1{ch_i,obj.level+1})));
+                    max_row_i=max_row_i(1);
+                    max_col_i=max_col_i(1);
                     obj.max_loc{ch_i,obj.level+1}=[max_row_i,max_col_i];
                     % an
                     an=obj.dic_an{ch_i,1}(max_row_i,max_col_i);
@@ -101,6 +103,8 @@ function nextDecomp(obj,varargin)
                     Base=squeeze(obj.Base{ch_i,1}(1,:,:));
                     obj.S1{ch_i,obj.level+1}=ifft(repmat(fft(obj.remainder(ch_i,:).*obj.Weight.',length(phase_a)),size(Base,1),1).*Base,length(phase_a),2);
                     [max_row_i,max_col_i]=find(obj.S1{ch_i,obj.level+1}==max(max(obj.S1{ch_i,obj.level+1})));
+                    max_row_i=max_row_i(1);
+                    max_col_i=max_col_i(1);
                     obj.max_loc{ch_i,obj.level+1}=[max_row_i,max_col_i];
                     % an
                     an=obj.dic_an{ch_i,1}(max_row_i).*exp(1j.*phase_a(max_col_i));
