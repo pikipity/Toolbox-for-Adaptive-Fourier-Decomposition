@@ -6,6 +6,58 @@ function init_decomp(obj,varargin)
         return
     end
     
+    if size(obj.dic_an,1)<size(obj.G,1) || ~isempty(find(cellfun(@(x) numel(x),obj.dic_an)==0))
+        obj.addLog('warning: Because there is not searching dictionary, the decomposition cannot be continued. Please use "genDic" to generate searching dictionary.')
+        warning('Because there is not searching dictionary, the decomposition cannot be continued. Please use "genDic" to generate searching dictionary.')
+        return
+    end
+    
+    if size(obj.Base,1)<size(obj.G,1) ||  ~isempty(find(cellfun(@(x) numel(x),obj.Base)==0))
+        obj.addLog('warning: Because there is not evaluators, the decomposition cannot be continued. Please use "genEva" to generate evaluators.')
+        warning('Because there is not evaluators, the decomposition cannot be continued. Please use "genEva" to generate evaluators.')
+        return
+    end
+    
+    switch obj.AFDMethod
+        case 'unwinding'
+            if size(obj.Base_r,1)<size(obj.G,1) ||  ~isempty(find(cellfun(@(x) numel(x),obj.Base_r)==0))
+                obj.addLog('warning: Because there is not evaluators, the decomposition cannot be continued. Please use "genEva" to generate evaluators.')
+                warning('Because there is not evaluators, the decomposition cannot be continued. Please use "genEva" to generate evaluators.')
+                return
+            end
+    end
+    
+    switch obj.decompMethod
+        case 'Single Channel Fast AFD'
+            switch obj.dicGenMethod
+                case 'square'
+                    obj.addLog('warning: AFD only can use circle searching dictionary.')
+                    warning('AFD only can use circle searching dictionary.')
+                    return
+            end
+    end
+    
+    switch obj.decompMethod
+        case 'Single Channel Fast AFD'
+            if ~isempty(find(cellfun(@(x) size(x,1),obj.Base)~=1)) || ~isempty(find(cellfun(@(x) size(x,1),obj.dic_an)~=1))
+                obj.addLog('warning: AFD only can use circle searching dictionary.')
+                warning('AFD only can use circle searching dictionary.')
+                return
+            end
+    end
+    
+    switch obj.AFDMethod
+        case 'unwinding'
+            switch obj.decompMethod
+                case 'Single Channel Fast AFD'
+                    if ~isempty(find(cellfun(@(x) size(x,1),obj.Base_r)~=1))
+                        obj.addLog('warning: AFD only can use circle searching dictionary.')
+                        warning('AFD only can use circle searching dictionary.')
+                        return
+                    end
+            end
+    end
+    
     if length(varargin)<1
         searching_an_flag = 1;
     else
