@@ -38,10 +38,14 @@ The basis parameter :math:`a_n` is defined in the unit circle :math:`\mathbb{D}`
 Decomposition Process
 ----------------------
 
-As mentioned in `Basic Idea`_, 
+Core AFD
+^^^^^^^^^^^
 
+Unwinding AFD
+^^^^^^^^^^^^^^
 
-
+Fast AFD
+----------------------
 
 Applications
 -----------------

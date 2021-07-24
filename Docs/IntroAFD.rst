@@ -35,13 +35,19 @@ The basis parameter :math:`a_n` is defined in the unit circle :math:`\mathbb{D}`
 .. image:: ./_static/AFD_Bn_diff_a.png
    :width: 600px
 
-Basic Decomposition Process
+Decomposition Process
 ----------------------
 
-As mentioned in `Basic Idea`_, the decomposition of the AFD is a matching pursuit process. Therefore, in the decomposition level :math:`n`, the basis parameter :math:`a_n` is searched to maximize the extracted energy :math:`\left< g(t),B_n(t) \right>`. 
 
 
+Core AFD
+^^^^^^^^^^^
 
+Unwinding AFD
+^^^^^^^^^^^^^^
+
+Improving Computational Efficiency
+----------------------
 
 Applications
 -----------------
