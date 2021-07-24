@@ -3,13 +3,43 @@
 Introduction to Adaptive Fourier Decomposition
 =====================================================================
 
-The AFD is an **adaptive signal decomposition**:
+The adaptive Fourier decomposition is an **adaptive** signal decomposition:
 
 + Compared with the conventional signal decomposition methods, e.g. Fourier decomposition and wavelet decomposition, the AFD uses **adaptive orthogonal basis**. These adaptive basis can make the decomposition components match the processed signals best and thus can provide good time-frequency resolution without pre-defined basis. 
 + Compared with other adaptive decomposition methods, e.g. empirical mode decomposition (EMD), the AFD has the **rigorous mathematical foundation**, which allowed users further analyze detailed decomposition coefficients and decomposition components.
 
 Basic Idea
 -------------
+
+The AFD decomposes the processed signal :math:`g(t)` to a series of orthogonal signals, which can be expressed as
+
+.. math::
+
+   g(t) = \sum_{n=1}^\infty A_n B_n(t),
+
+where :math:`A_n` is the decomposition coefficient, :math:`B_n(t)` is the decomposition basis component, and :math:`n` denotes the decomposition level. The decomposition is from :math:`n=1` to :math:`n=\infty`. In each decomposition level, a suitable basis component is generated adaptively to make sure that the corresponding decomposition component matches the processed signal best. In other words, the AFD applies `matching pursuit <https://en.wikipedia.org/wiki/Matching_pursuit>`_ process to provide a **sparse** approximation of the processed signal. 
+
+Decomposition Basis
+----------------------
+
+The AFD uses the rational orthogonal system :math:`\left\{B_n\right\}_{n=1}^\infty` as its basis where
+
+.. math::
+
+   B_n(t)=\frac{\sqrt{1-\left| a_n \right|^2}}{1-\overline{a}_ne^{jt}}\prod_{k=1}^{n-1}\frac{e^{jt}-a_k}{1-\overline{a}_ke^{jt}}.
+
+It should be noticed that, in the decomposition level :math:`n`, the basis component :math:`B_n` is only determined by :math:`\left\{a_k\right\}_{k=1}^n`. Suppose parameters :math:`a_k` from :math:`k=1` to :math:`k=n-1` have been obtained in previous decomposition levels, only :math:`a_n` needs to be found in the decomposition level :math:`n`. 
+
+The basis parameter :math:`a_n` is defined in the unit circle :math:`\mathbb{D}` of the complex plane :math:`\mathbb{C}` where :math:`\mathbb{D}=\left\{ z\in\mathbb{C}: \left| z \right|<1 \right\}`. The effects of :math:`a_n` for :math:`B_n(t)` are similar as the effects of shift and scaling factors for the wavelet decomposition as shown in the following figure. Moreover, when :math:`a_1= \cdots =a_n=0`, the basis component of the AFD becomes the basis component of the conventional Fourier decomposition. 
+
+.. image:: ./_static/AFD_Bn_diff_a.png
+   :width: 600px
+
+Decomposition Process
+----------------------
+
+As mentioned in `Basic Idea`_, 
+
 
 
 

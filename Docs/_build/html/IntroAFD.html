@@ -15,6 +15,7 @@
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
   <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/graphviz.css" type="text/css" />
 
   
   
@@ -35,6 +36,7 @@
         <script src="_static/jquery.js"></script>
         <script src="_static/underscore.js"></script>
         <script src="_static/doctools.js"></script>
+        <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     
     <script type="text/javascript" src="_static/js/theme.js"></script>
 
@@ -90,6 +92,8 @@
               <ul class="current">
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Introduction to Adaptive Fourier Decomposition</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#basic-idea">Basic Idea</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#decomposition-basis">Decomposition Basis</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#decomposition-process">Decomposition Process</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#applications">Applications</a></li>
 </ul>
 </li>
@@ -163,13 +167,30 @@
             
   <div class="section" id="introduction-to-adaptive-fourier-decomposition">
 <span id="introductionafd-label"></span><h1>Introduction to Adaptive Fourier Decomposition<a class="headerlink" href="#introduction-to-adaptive-fourier-decomposition" title="Permalink to this headline">¶</a></h1>
-<p>The AFD is an <strong>adaptive signal decomposition</strong>:</p>
+<p>The adaptive Fourier decomposition is an <strong>adaptive</strong> signal decomposition:</p>
 <ul class="simple">
 <li><p>Compared with the conventional signal decomposition methods, e.g. Fourier decomposition and wavelet decomposition, the AFD uses <strong>adaptive orthogonal basis</strong>. These adaptive basis can make the decomposition components match the processed signals best and thus can provide good time-frequency resolution without pre-defined basis.</p></li>
 <li><p>Compared with other adaptive decomposition methods, e.g. empirical mode decomposition (EMD), the AFD has the <strong>rigorous mathematical foundation</strong>, which allowed users further analyze detailed decomposition coefficients and decomposition components.</p></li>
 </ul>
 <div class="section" id="basic-idea">
 <h2>Basic Idea<a class="headerlink" href="#basic-idea" title="Permalink to this headline">¶</a></h2>
+<p>The AFD decomposes the processed signal <span class="math notranslate nohighlight">\(g(t)\)</span> to a series of orthogonal signals, which can be expressed as</p>
+<div class="math notranslate nohighlight">
+\[g(t) = \sum_{n=1}^\infty A_n B_n(t),\]</div>
+<p>where <span class="math notranslate nohighlight">\(A_n\)</span> is the decomposition coefficient, <span class="math notranslate nohighlight">\(B_n(t)\)</span> is the decomposition basis component, and <span class="math notranslate nohighlight">\(n\)</span> denotes the decomposition level. The decomposition is from <span class="math notranslate nohighlight">\(n=1\)</span> to <span class="math notranslate nohighlight">\(n=\infty\)</span>. In each decomposition level, a suitable basis component is generated adaptively to make sure that the corresponding decomposition component matches the processed signal best. In other words, the AFD applies <a class="reference external" href="https://en.wikipedia.org/wiki/Matching_pursuit">matching pursuit</a> process to provide a <strong>sparse</strong> approximation of the processed signal.</p>
+</div>
+<div class="section" id="decomposition-basis">
+<h2>Decomposition Basis<a class="headerlink" href="#decomposition-basis" title="Permalink to this headline">¶</a></h2>
+<p>The AFD uses the rational orthogonal system <span class="math notranslate nohighlight">\(\left\{B_n\right\}_{n=1}^\infty\)</span> as its basis where</p>
+<div class="math notranslate nohighlight">
+\[B_n(t)=\frac{\sqrt{1-\left| a_n \right|^2}}{1-\overline{a}_ne^{jt}}\prod_{k=1}^{n-1}\frac{e^{jt}-a_k}{1-\overline{a}_ke^{jt}}.\]</div>
+<p>It should be noticed that, in the decomposition level <span class="math notranslate nohighlight">\(n\)</span>, the basis component <span class="math notranslate nohighlight">\(B_n\)</span> is only determined by <span class="math notranslate nohighlight">\(\left\{a_k\right\}_{k=1}^n\)</span>. Suppose parameters <span class="math notranslate nohighlight">\(a_k\)</span> from <span class="math notranslate nohighlight">\(k=1\)</span> to <span class="math notranslate nohighlight">\(k=n-1\)</span> have been obtained in previous decomposition levels, only <span class="math notranslate nohighlight">\(a_n\)</span> needs to be found in the decomposition level <span class="math notranslate nohighlight">\(n\)</span>.</p>
+<p>The basis parameter <span class="math notranslate nohighlight">\(a_n\)</span> is defined in the unit circle <span class="math notranslate nohighlight">\(\mathbb{D}\)</span> of the complex plane <span class="math notranslate nohighlight">\(\mathbb{C}\)</span> where <span class="math notranslate nohighlight">\(\mathbb{D}=\left\{ z\in\mathbb{C}: \left| z \right|&lt;1 \right\}\)</span>. The effects of <span class="math notranslate nohighlight">\(a_n\)</span> for <span class="math notranslate nohighlight">\(B_n(t)\)</span> are similar as the effects of shift and scaling factors for the wavelet decomposition as shown in the following figure. Moreover, when <span class="math notranslate nohighlight">\(a_1= \cdots =a_n=0\)</span>, the basis component of the AFD becomes the basis component of the conventional Fourier decomposition.</p>
+<a class="reference internal image-reference" href="_images/AFD_Bn_diff_a.png"><img alt="_images/AFD_Bn_diff_a.png" src="_images/AFD_Bn_diff_a.png" style="width: 600px;" /></a>
+</div>
+<div class="section" id="decomposition-process">
+<h2>Decomposition Process<a class="headerlink" href="#decomposition-process" title="Permalink to this headline">¶</a></h2>
+<p>As mentioned in <a class="reference internal" href="#basic-idea">Basic Idea</a>,</p>
 </div>
 <div class="section" id="applications">
 <h2>Applications<a class="headerlink" href="#applications" title="Permalink to this headline">¶</a></h2>
