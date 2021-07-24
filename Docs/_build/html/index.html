@@ -41,7 +41,7 @@
     
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Installation Instructions" href="BuildToolbox.html" /> 
+    <link rel="next" title="Introduction to Adaptive Fourier Decomposition" href="IntroAFD.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -87,6 +87,7 @@
             
             
               <ul>
+<li class="toctree-l1"><a class="reference internal" href="IntroAFD.html">Introduction to Adaptive Fourier Decomposition</a></li>
 <li class="toctree-l1"><a class="reference internal" href="BuildToolbox.html">Installation Instructions</a></li>
 </ul>
 
@@ -157,12 +158,17 @@
             
   <div class="section" id="toolbox-for-adaptive-fourier-decomposition">
 <h1>Toolbox for Adaptive Fourier Decomposition<a class="headerlink" href="#toolbox-for-adaptive-fourier-decomposition" title="Permalink to this headline">¶</a></h1>
-<p>This toolbox is intended to help users use the adaptive Fourier decomposition (AFD) easily. This toolbox contains different implementations of the AFD for different types of processed signals and different decomposition process.</p>
-<hr class="docutils" />
+<p>This toolbox is intended to help users use the adaptive Fourier decomposition (AFD) <strong>easily</strong>.</p>
+<p>This toolbox contains <strong>different implementations</strong> of the AFD for different types of processed signals and different decomposition process.</p>
 <div class="section" id="content">
 <h2>Content<a class="headerlink" href="#content" title="Permalink to this headline">¶</a></h2>
 <div class="toctree-wrapper compound">
 <ul>
+<li class="toctree-l1"><a class="reference internal" href="IntroAFD.html">Introduction to Adaptive Fourier Decomposition</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="IntroAFD.html#basic-idea">Basic Idea</a></li>
+<li class="toctree-l2"><a class="reference internal" href="IntroAFD.html#applications">Applications</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="BuildToolbox.html">Installation Instructions</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="BuildToolbox.html#matlab">Matlab</a></li>
 <li class="toctree-l2"><a class="reference internal" href="BuildToolbox.html#python">Python</a></li>
@@ -170,87 +176,6 @@
 </li>
 </ul>
 </div>
-<hr class="docutils" />
-<p>The AFD is an <strong>adaptive signal decomposition</strong>:</p>
-<ul class="simple">
-<li><p>Compared with the conventional signal decomposition methods, e.g. Fourier decomposition and wavelet decomposition, the AFD uses <strong>adaptive orthogonal basis</strong>. These adaptive basis can make the decomposition components match the processed signals best and thus can provide good time-frequency resolution without pre-defined basis.</p></li>
-<li><p>Compared with other adaptive decomposition methods, e.g. empirical mode decomposition (EMD), the AFD has the <strong>rigorous mathematical foundation</strong>, which allowed users further analyze detailed decomposition coefficients and decomposition components.</p></li>
-</ul>
-<p>According to above characteristics, the AFD can applied to many different areas:</p>
-<ul>
-<li><p>Adaptive feature extraction (for further signal classification or recognition)</p>
-<blockquote>
-<div><ul class="simple">
-<li><ol class="upperalpha simple" start="26">
-<li><p>Ye, T. Qian, L. Zhang, L. Dai, H. Li, J.A. Benediktsson,”<a class="reference external" href="https://ieeexplore.ieee.org/document/9340564">Functional Feature Extraction for Hyperspectral Image Classification With Adaptive Rational Function Approximation</a>,” IEEE Trans. Geosci. Remote Sens., pp. 1–15, 2021.</p></li>
-</ol>
-</li>
-<li><ol class="upperalpha simple" start="3">
-<li><p>Ke, Q. Huang, L. Zhang, and Y. Fang, “<a class="reference external" href="https://ieeexplore.ieee.org/document/8228391">Modeling head-related impulse response based on adaptive Fourier decomposition</a>,” in TENCON 2017 - 2017 IEEE Region 10 Conference, Penang, Nov. 2017, pp. 3084–3088.</p></li>
-</ol>
-</li>
-</ul>
-</div></blockquote>
-</li>
-<li><p>Signal compression:</p>
-<ul class="simple">
-<li><ol class="upperalpha simple" start="3">
-<li><p>Tan, L. Zhang, H. Wu,”<a class="reference external" href="https://ieeexplore.ieee.org/stamp/stamp.jsp?arnumber=8322131">A Novel Blaschke Unwinding Adaptive Fourier Decomposition based Signal Compression Algorithm with Application on ECG Signals</a>,” IEEE J. Biomed. Heal. Informatics, Mar. 2018.</p></li>
-</ol>
-</li>
-<li><ol class="upperalpha simple" start="10">
-<li><p>Ma, T. Zhang, and M. Dong, “<a class="reference external" href="http://ieeexplore.ieee.org/document/6897915/">A novel ECG data compression method using adaptive Fourier decomposition with security guarantee in e-health applications</a>,” IEEE J. Biomed. Heal. Informatics, vol. 19, no. 3, pp. 986–994, 2015.</p></li>
-</ol>
-</li>
-</ul>
-</li>
-<li><p>Signal denoising:</p>
-<blockquote>
-<div><ul class="simple">
-<li><ol class="upperalpha simple" start="26">
-<li><p>Wang, F. Wan, C. M. Wong, and L. Zhang, “<a class="reference external" href="http://www.sciencedirect.com/science/article/pii/S0010482516302104">Adaptive Fourier decomposition based ECG denoising</a>,” Comput. Biol. Med., vol. 77, pp. 195–205, 2016.</p></li>
-</ol>
-</li>
-<li><ol class="upperalpha simple" start="26">
-<li><p>Wang, C. M. Wong, F. Wan, “<a class="reference external" href="https://ieeexplore.ieee.org/abstract/document/8037611/">Adaptive Fourier decomposition based R-peak detection for noisy ECG Signals</a>,” in 39th Annual International Conference of the IEEE Engineering in Medicine and Biology Society (EMBC), 2017, pp. 3501-3504.</p></li>
-</ol>
-</li>
-<li><ol class="upperalpha simple" start="26">
-<li><p>Wang, C. M. Wong, J. N. da Cruz, F. Wan, P.-I. Mak, P. U. Mak, and M. I. Vai, “<a class="reference external" href="http://ieeexplore.ieee.org/document/6974120/">Muscle and electrode motion artifacts reduction in ECG using adaptive Fourier decomposition</a>,” in 2014 IEEE International Conference on Systems, Man, and Cybernetics (SMC), 2014, pp. 1456–1461.</p></li>
-</ol>
-</li>
-<li><ol class="upperalpha simple" start="26">
-<li><p>Wang, J. Nuno da Cruz, and F. Wan, “<a class="reference external" href="http://ieeexplore.ieee.org/document/7158631/">Adaptive Fourier decomposition approach for lung-heart sound separation</a>,” in 2015 IEEE International Conference on Computational Intelligence and Virtual Environments for Measurement Systems and Applications (CIVEMSA), 2015, pp. 1–5.</p></li>
-</ol>
-</li>
-</ul>
-</div></blockquote>
-</li>
-<li><p>Model estimation:</p>
-<blockquote>
-<div><ul class="simple">
-<li><ol class="upperalpha simple" start="17">
-<li><p>Chen, T. Qian, Y. Li, W. Mai, X. Zhang, “<a class="reference external" href="https://doi.org/10.1002/mma.3795">Adaptive Fourier tester for statistical estimation</a>,” Math. Method. Appl. Sci., vol. 39, no. 12, pp. 3478–3495, 2016.</p></li>
-</ol>
-</li>
-<li><ol class="upperalpha simple" start="23">
-<li><p>Mi and T. Qian, “<a class="reference external" href="http://www.sciencedirect.com/science/article/pii/S0005109812000982">Frequency-domain identification: An algorithm based on an adaptive rational orthogonal system</a>,” Automatica, vol. 48, no. 6, pp. 1154–1162, 2012.</p></li>
-</ol>
-</li>
-</ul>
-</div></blockquote>
-</li>
-<li><p>Time-frequency analysis:</p>
-<blockquote>
-<div><ul class="simple">
-<li><ol class="upperalpha simple" start="12">
-<li><p>Zhang, “<a class="reference external" href="http://waset.org/publications/2536/adaptive-fourier-decomposition-based-signal-instantaneous-frequency-computation-approach">Adaptive Fourier decomposition based signal instantaneous frequency computation approach</a>,” Int. J. Math. Comput. Phys. Electr. Comput. Eng., vol. 6, no. 8, pp. 1117–1122, 2012.</p></li>
-</ol>
-</li>
-</ul>
-</div></blockquote>
-</li>
-</ul>
 </div>
 </div>
 
@@ -260,7 +185,7 @@
           </div>
           <footer>
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-        <a href="BuildToolbox.html" class="btn btn-neutral float-right" title="Installation Instructions" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="IntroAFD.html" class="btn btn-neutral float-right" title="Introduction to Adaptive Fourier Decomposition" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
