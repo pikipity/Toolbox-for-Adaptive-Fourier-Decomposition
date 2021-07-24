@@ -47,7 +47,7 @@ Unwinding AFD
 ^^^^^^^^^^^^^^
 
 Improving Computational Efficiency
-----------------------
+------------------------------------
 
 Applications
 -----------------
