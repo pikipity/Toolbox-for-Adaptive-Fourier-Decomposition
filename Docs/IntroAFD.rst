@@ -17,7 +17,7 @@ The AFD decomposes the processed signal :math:`g(t)` to a series of orthogonal s
 
    g(t) = \sum_{n=1}^\infty A_n B_n(t),
 
-where :math:`A_n` is the decomposition coefficient, :math:`B_n(t)` is the decomposition basis component, and :math:`n` denotes the decomposition level. The decomposition is from :math:`n=1` to :math:`n=\infty`. In each decomposition level, a suitable basis component is generated adaptively to make sure that the corresponding decomposition component matches the processed signal best. In other words, the AFD applies `matching pursuit <https://en.wikipedia.org/wiki/Matching_pursuit>`_ process to provide a **sparse** approximation of the processed signal. 
+where :math:`A_n` is the decomposition coefficient, :math:`B_n(t)` is the decomposition basis component, and :math:`n` denotes the decomposition level. The decomposition is from :math:`n=1` to :math:`n=\infty`. In each decomposition level, a suitable basis component is generated adaptively to make sure that the corresponding decomposition component matches the processed signal best. Such decomposition process can provide a fast energy convergence. In other words, the AFD applies `matching pursuit <https://en.wikipedia.org/wiki/Matching_pursuit>`_ process to provide a **sparse** approximation of the processed signal. 
 
 Decomposition Basis
 ----------------------
@@ -30,6 +30,8 @@ The AFD uses the rational orthogonal system :math:`\left\{B_n\right\}_{n=1}^\inf
 
 It should be noticed that, in the decomposition level :math:`n`, the basis component :math:`B_n` is only determined by :math:`\left\{a_k\right\}_{k=1}^n`. Suppose parameters :math:`a_k` from :math:`k=1` to :math:`k=n-1` have been obtained in previous decomposition levels, only :math:`a_n` needs to be found in the decomposition level :math:`n`. 
 
+It should be noticed that :math:`t` in :math:`B_n(t)` does not denote the time sample but denotes the phase. :math:`t` in :math:`B_n(t)` is like :math:`\theta` in :math:`\sin(\theta)`. Normally, :math:`t` is defined from :math:`0` to :math:`2\pi`. According to requirements of the applications, :math:`t` also can be defined in other ranges.
+
 The basis parameter :math:`a_n` is defined in the unit circle :math:`\mathbb{D}` of the complex plane :math:`\mathbb{C}` where :math:`\mathbb{D}=\left\{ z\in\mathbb{C}: \left| z \right|<1 \right\}`. The effects of :math:`a_n` for :math:`B_n(t)` are similar as the effects of shift and scaling factors for the wavelet decomposition as shown in the following figure. Moreover, when :math:`a_1= \cdots =a_n=0`, the basis component of the AFD becomes the basis component of the conventional Fourier decomposition. 
 
 .. image:: ./_static/AFD_Bn_diff_a.png
@@ -38,10 +40,26 @@ The basis parameter :math:`a_n` is defined in the unit circle :math:`\mathbb{D}`
 Decomposition Process
 ----------------------
 
+As mentioned in `Basic Idea`_, the AFD adopts the idea of the matching pursuit to achieve the fast energy convergence. There are different extensions (or say versions) of the AFD. Although these extensions of the AFD all uses the rational orthogonal system and have the same target that is to achieve the fast energy convergence, they apply different decomposition process. 
 
+In this toolbox, the following extensions of the AFD have been included. 
 
 Core AFD
 ^^^^^^^^^^^
+
+The core AFD is the fundamental implementation of the AFD. It is an iterative decomposition process. In each decomposition level :math:`n`, the basis parameter :math:`a_n` is searched by
+
+.. math::
+
+   a_n = \arg\max_{a\in\mathbb{A}}\left\{ \left| \left< G_n(t),\text{e}_{\left\{ a \right\}}(t) \right> \right| \right\},
+
+where :math:`G_n(t)`, called reduced remainder, is computed from the remainder in the last decomposition level and :math:`\text{e}_{\left\{ a \right\}}(t)` is the evaluator of the basis parameter :math:`a`. :math:`\left| \left< G_n(t),\text{e}_{\left\{ a \right\}}(t) \right> \right|` is the extracted energy when using :math:`a` as :math:`a_n`. The detailed evaluation process can be found in `"Algorithm of adaptive Fourier decomposition" <http://ieeexplore.ieee.org/document/6021385/>`_.
+
+The reduced remainder :math:`G_n(t)` can be computed by
+
+.. math::
+
+   G_n(t) = 
 
 Unwinding AFD
 ^^^^^^^^^^^^^^
