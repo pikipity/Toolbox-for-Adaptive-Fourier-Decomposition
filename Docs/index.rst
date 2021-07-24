@@ -1,20 +1,60 @@
-.. Toolbox of Adaptive Fourier Decomposition documentation master file, created by
+.. Toolbox for Adaptive Fourier Decomposition documentation master file, created by
    sphinx-quickstart on Sat Jul 24 09:46:01 2021.
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Welcome to Toolbox of Adaptive Fourier Decomposition's documentation!
+Toolbox for Adaptive Fourier Decomposition
 =====================================================================
 
+This toolbox is intended to help users use the adaptive Fourier decomposition (AFD) easily. This toolbox contains different implementations of the AFD for different types of processed signals and different decomposition process.
+
+------------------------------------------------------------------------------------------------------------
+
+Content
+--------
+
 .. toctree::
-   :maxdepth: 2
-   :caption: Contents:
+   IntroAFD
+   BuildToolbox
+
+------------------------------------------------------------------------------------------------------------
+
+The AFD is an **adaptive signal decomposition**:
+
++ Compared with the conventional signal decomposition methods, e.g. Fourier decomposition and wavelet decomposition, the AFD uses **adaptive orthogonal basis**. These adaptive basis can make the decomposition components match the processed signals best and thus can provide good time-frequency resolution without pre-defined basis. 
++ Compared with other adaptive decomposition methods, e.g. empirical mode decomposition (EMD), the AFD has the **rigorous mathematical foundation**, which allowed users further analyze detailed decomposition coefficients and decomposition components.
+
+According to above characteristics, the AFD can applied to many different areas:
+
++ Adaptive feature extraction (for further signal classification or recognition)
+
+   + Z. Ye, T. Qian, L. Zhang, L. Dai, H. Li, J.A. Benediktsson,"`Functional Feature Extraction for Hyperspectral Image Classification With Adaptive Rational Function Approximation <https://ieeexplore.ieee.org/document/9340564>`_," IEEE Trans. Geosci. Remote Sens., pp. 1–15, 2021.
+   + C. Ke, Q. Huang, L. Zhang, and Y. Fang, "`Modeling head-related impulse response based on adaptive Fourier decomposition <https://ieeexplore.ieee.org/document/8228391>`_," in TENCON 2017 - 2017 IEEE Region 10 Conference, Penang, Nov. 2017, pp. 3084–3088.
+
++ Signal compression: 
+  
+  + C. Tan, L. Zhang, H. Wu,"`A Novel Blaschke Unwinding Adaptive Fourier Decomposition based Signal Compression Algorithm with Application on ECG Signals <https://ieeexplore.ieee.org/stamp/stamp.jsp?arnumber=8322131>`_," IEEE J. Biomed. Heal. Informatics, Mar. 2018.
+  + J. Ma, T. Zhang, and M. Dong, "`A novel ECG data compression method using adaptive Fourier decomposition with security guarantee in e-health applications <http://ieeexplore.ieee.org/document/6897915/>`_," IEEE J. Biomed. Heal. Informatics, vol. 19, no. 3, pp. 986–994, 2015.
+
++ Signal denoising:
+
+   + Z. Wang, F. Wan, C. M. Wong, and L. Zhang, "`Adaptive Fourier decomposition based ECG denoising <http://www.sciencedirect.com/science/article/pii/S0010482516302104>`_," Comput. Biol. Med., vol. 77, pp. 195–205, 2016.
+   + Z. Wang, C. M. Wong, F. Wan, "`Adaptive Fourier decomposition based R-peak detection for noisy ECG Signals <https://ieeexplore.ieee.org/abstract/document/8037611/>`_," in 39th Annual International Conference of the IEEE Engineering in Medicine and Biology Society (EMBC), 2017, pp. 3501-3504.
+   + Z. Wang, C. M. Wong, J. N. da Cruz, F. Wan, P.-I. Mak, P. U. Mak, and M. I. Vai, "`Muscle and electrode motion artifacts reduction in ECG using adaptive Fourier decomposition <http://ieeexplore.ieee.org/document/6974120/>`_," in 2014 IEEE International Conference on Systems, Man, and Cybernetics (SMC), 2014, pp. 1456–1461.
+   + Z. Wang, J. Nuno da Cruz, and F. Wan, "`Adaptive Fourier decomposition approach for lung-heart sound separation <http://ieeexplore.ieee.org/document/7158631/>`_," in 2015 IEEE International Conference on Computational Intelligence and Virtual Environments for Measurement Systems and Applications (CIVEMSA), 2015, pp. 1–5.
+
++ Model estimation:
+
+   + Q. Chen, T. Qian, Y. Li, W. Mai, X. Zhang, "`Adaptive Fourier tester for statistical estimation <https://doi.org/10.1002/mma.3795>`_," Math. Method. Appl. Sci., vol. 39, no. 12, pp. 3478–3495, 2016.
+   + W. Mi and T. Qian, "`Frequency-domain identification: An algorithm based on an adaptive rational orthogonal system <http://www.sciencedirect.com/science/article/pii/S0005109812000982>`_," Automatica, vol. 48, no. 6, pp. 1154–1162, 2012.
+
++ Time-frequency analysis:
+
+   + L. Zhang, "`Adaptive Fourier decomposition based signal instantaneous frequency computation approach <http://waset.org/publications/2536/adaptive-fourier-decomposition-based-signal-instantaneous-frequency-computation-approach>`_," Int. J. Math. Comput. Phys. Electr. Comput. Eng., vol. 6, no. 8, pp. 1117–1122, 2012.
 
 
 
-Indices and tables
-==================
 
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`
+
+
+   
