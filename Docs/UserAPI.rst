@@ -16,8 +16,8 @@ V2.0
     :param s: Input signal. It can be a single channel or multi-channel signal. The size is :math:`C \times L` where :math:`C` is the number of channels and :math:`L` is the sample number.
     :param G: Analytic form of the input signal ``s``.
     :param t: Phase of input signal. The size is same as the size of ``s``. If user want to define ``t`` by yourself, please check :ref:`decomposition-basis`.
-    :param S1: Objective function values of searching :math:`a_n`. It is a :math:`C \times 1` cell.
-    :param max_loc: Location of maximum function value. It is a :math:`C \times 1` cell.
+    :param S1: Objective function values of searching :math:`a_n`. It is a :math:`C \times (N+1)` cell where :math:`N` is current decomposition level ``level``.
+    :param max_loc: Location of maximum function value. It is a :math:`C \times (N+1)` cell.
     :param Weight: Weights for computing integration.
     :param an: Parameters :math:`a_n` of basis. It is a :math:`C \times 1` cell.
     :param coef: Decomposition coefficients :math:`A_n`. It is a :math:`C \times 1` cell.
@@ -31,7 +31,7 @@ V2.0
     :param dicGenMethod: Method of generating the searching dictionary ``dic_an``. "square" means that points are generated based on their real and imaginary parts. "circle" means that points are generated based on their amplitudes and phases. The fast AFD only supports "circle". "circle" can provide the searching dictionary with high density but will increase the memory usage and the computational time. Normally, the fast AFD is required for "circle".
     :param AFDMethod: Extension method of the AFD. "core" means the core AFD. "unwinding" means the unwinding AFD. To know differences of these extensions and how to choose them, please check :ref:`introductionAFD-label`.
     :param log: log that stores warning and error outputs.
-    :param run_time: computational time of each decomposition level. It is a :math:`C\times (N+1)` matrix where :math:`N` is current decomposition level ``level``.
+    :param run_time: computational time of each decomposition level. It is a :math:`C\times (N+1)` matrix.
     :param time_genDic: computational time of generating searching dictionary. It is a :math:`C\times 1` matrix.
     :param time_genEva: computational time of generating evaluators. It is a :math:`C\times 1` matrix.
     :param r_store: Parameters :math:`r_{n,h}` of inner functions. It is a :math:`C \times (N+1)` cell when using the unwinding AFD.
