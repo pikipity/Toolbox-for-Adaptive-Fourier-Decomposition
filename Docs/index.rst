@@ -10,7 +10,7 @@ This toolbox is intended to help users use the adaptive Fourier decomposition (A
 
 This toolbox contains **different implementations** of the AFD for different types of processed signals and different decomposition process.
 
-There is an `simple online demo <http://zewang.site/AFD>`_ to try the AFD.
+There is an `simple online demo <http://zewang.site/AFD>`_. You can try the AFD quickly.
 
 Content
 --------
