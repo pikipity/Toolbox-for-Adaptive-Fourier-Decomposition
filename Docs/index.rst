@@ -16,6 +16,7 @@ Content
 .. toctree::
    IntroAFD
    BuildToolbox
+   AskHelp
 
 
 
