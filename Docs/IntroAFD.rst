@@ -81,30 +81,37 @@ The basic decomposition process of the core AFD is shown below.
       splines = ortho;
       size="10,5";
 
-      subgraph cluster_searching_an {
-         d -> e[weight=100];
-         d[label=<Calculate objective function values of a<SUB>n</SUB>> shape=box];
-         e[label=<Obtain a<SUB>n</SUB> by searching the maximum objective function value> shape=box];
-         label = <Searching a<SUB>n</SUB>>;
-         labeljust=l;
-         style=dotted;
-      }
-
       a -> b[weight=100];
       b -> c[weight=100];
       c -> i[weight=100];
       i -> d[weight=100];
-      
-      e -> f[weight=100];
-      f -> g[weight=100];
-      g -> d[weight=1];
       a[label="Start" shape=parallelogram];
       b[label="Generate searching dictionary" shape=box];
       c[label="Generate evaluators" shape=box];
       i[label="Initialize decomposition" shape=box];
+
+
+      subgraph cluster_decomposition_loop{
+         label=<Decomposition Loop>;
+         labeljust=l;
+         style=dotted;
+         subgraph cluster_searching_an {
+            d -> e[weight=100];
+            d[label=<Calculate objective function values of a<SUB>n</SUB>> shape=box];
+            e[label=<Obtain a<SUB>n</SUB> by searching the maximum objective function value> shape=box];
+            label = <Searching a<SUB>n</SUB>>;
+            labeljust=l;
+            style=dotted;
+         }         
+         e -> f[weight=100];
+         f -> g[weight=100];
+         g -> d[weight=1];
+         f[label="Construct the decomposition component" shape=box];
+         g[label="Compute reduced remainder" shape=box];
+      }
+
+
       
-      f[label="Construct the decomposition component" shape=box];
-      g[label="Compute reduced remainder" shape=box];
    }
    
 
@@ -153,49 +160,61 @@ The basic decomposition process of the unwinding AFD is shown below.
       splines = ortho;
       size="10,8";
 
-      subgraph cluster_searching_an {
-         d -> e[weight=100];
-         d[label=<Calculate objective function values of a<SUB>n</SUB>> shape=box];
-         e[label=<Obtain a<SUB>n</SUB> by searching the maximum objective function value> shape=box];
-         label = <Searching a<SUB>n</SUB>>;
-         labeljust=l;
-         style=dotted;
-      }
-
-      subgraph cluster_searching_r {
-         d_r -> e_r[weight=100];
-         e_r -> f_r[weight=100];
-         f_r -> d[weight=100 label=No];
-
-         f_r -> g_r[weight=1 label=Yes];
-         g_r -> d_r[weight=1];
-
-         d_r[label=<Calculate objective function values of r<SUB>n,h</SUB>> shape=box];
-         e_r[label=<Obtain r<SUB>n,h</SUB> by searching the minimum objective function value> shape=box];
-         f_r[label=<Is the objective function value small enough?> shape=diamond];
-         g_r[label=<Add obtained r<SUB>n,h</SUB> into zeros> shape=box];
-         label = <Searching zeros>;
-         labeljust=l;
-         style=dotted;
-      }
-
       a -> b[weight=100];
       b -> c[weight=100];
       c -> i[weight=100];
       i -> d_r[weight=100];
-      
-      e -> f[weight=100];
-      f -> g[weight=100];
-
-      g -> d_r[weight=1];
 
       a[label="Start" shape=parallelogram];
       b[label="Generate searching dictionary" shape=box];
       c[label="Generate evaluators" shape=box];
       i[label="Initialize decomposition" shape=box];
+
+      subgraph cluster_decomposition_loop{
+         label = <Decomposition Loop>;
+         labeljust=l;
+         style=dotted;
+
+         subgraph cluster_searching_an {
+            d -> e[weight=100];
+            d[label=<Calculate objective function values of a<SUB>n</SUB>> shape=box];
+            e[label=<Obtain a<SUB>n</SUB> by searching the maximum objective function value> shape=box];
+            label = <Searching a<SUB>n</SUB>>;
+            labeljust=l;
+            style=dotted;
+         }
+
+         subgraph cluster_searching_r {
+            d_r -> e_r[weight=100];
+            e_r -> f_r[weight=100];
+            f_r -> d[weight=100 label=No];
+
+            f_r -> g_r[weight=1 label=Yes];
+            g_r -> d_r[weight=1];
+
+            d_r[label=<Calculate objective function values of r<SUB>n,h</SUB>> shape=box];
+            {
+               rank=same;
+               e_r[label=<Obtain r<SUB>n,h</SUB> by searching the minimum objective function value> shape=box];
+               g_r[label=<Add obtained r<SUB>n,h</SUB> into zeros> shape=box];
+            }
+            f_r[label=<Is the objective function value small enough?> shape=diamond];
+            
+            label = <Searching zeros>;
+            labeljust=l;
+            style=dotted;
+         }
+         
+         e -> f[weight=100];
+         f -> g[weight=100];
+
+         g -> d_r[weight=1];
+         
+         f[label="Construct the decomposition component" shape=box];
+         g[label="Compute reduced remainder" shape=box];
+      }
+
       
-      f[label="Construct the decomposition component" shape=box];
-      g[label="Compute reduced remainder" shape=box];
    }
    
 
@@ -204,7 +223,41 @@ The basic decomposition process of the unwinding AFD is shown below.
 Improving Computational Efficiency
 ------------------------------------
 
+As mentioned above, the searching processes of parameters :math:`a_n` and :math:`r_{n,h}` are the key decomposition steps in the core AFD and the unwinding AFD. They are all based on exhaustive searching, which means that the objective function values are evaluated one by one. As the number of points in the searching dictionary increases, the computational time will increase. To improve the computational efficiency, the fast AFD is proposed. Based on the convolution theory, the computations of objective function values can be simplified by the FFT. 
 
+In the fast AFD, the points in the searching dictionaries of :math:`a_n` and :math:`r_{n,h}` are represented by their amplitudes and phases, which are
+
+.. math::
+   :nowrap:
+
+   \begin{eqnarray}
+      a_n&=&\rho_ne^{j\theta_n}\text{ and }\\
+      r_{n,h}&=&\alpha_{n,h}e^{j\gamma_{n,h}}.
+   \end{eqnarray}
+
+In the core AFD, suppose :math:`t` in the objective function is same as the phase :math:`theta` in the searching dictionary, then the searching process of the basis parameter :math:`a_n` can be represented as
+
+.. math::
+
+   \rho_n,\; \theta_n=\arg\max_{\rho e^{j\theta}\in\mathbb{A}}\left\{ \left| \mathcal{F}^{-1}\left\{ \mathcal{F}\left\{ G_n(\theta) \right\} \cdot \mathcal{F}\left\{ \text{e}_{\left\{\rho\right\}}(\theta) \right\} \right\} \right| \right\},
+
+where :math:`\mathcal{F}` and :math:`\mathcal{F}^{-1}` denote the FFT and the inverse FFT. 
+
+In the unwnding AFD, suppose :math:`t` in the objective function is same as the phase :math:`theta` in the searching dictionary, then the searching process of the basis parameter :math:`a_n` can be represented as
+
+.. math::
+
+   \rho_n,\; \theta_n=\arg\max_{\rho e^{j\theta}\in\mathbb{A}}\left\{ \left| \mathcal{F}^{-1}\left\{ \mathcal{F}\left\{ \frac{G_n(\theta)}{I_n(\theta)} \right\} \cdot \mathcal{F}\left\{ \text{e}_{\left\{\rho\right\}}(\theta) \right\} \right\} \right| \right\}.
+
+And the zeros can be searched by
+
+.. math::
+   :nowrap:
+
+   \begin{eqnarray}
+      \text{minimize} & \; & \left| \mathcal{F}^{-1}\left\{ \mathcal{F}\left\{  G_n(\gamma) \right\}\cdot\mathcal{F}\left\{  \frac{1}{1-\alpha e^{j\gamma}} \right\} \right\} \right|\\
+      \text{subject to} & \; & \alpha e^{j\gamma}\in\mathbb{R} \text{ and } \left| \left< G_n(t),\frac{1}{1-\alpha e^{j(t-\gamma)}} \right> \right|<\epsilon.
+   \end{eqnarray}
 
 Applications
 -----------------
@@ -238,8 +291,8 @@ According to above characteristics, the AFD can applied to many different areas:
    + L. Zhang, "`Adaptive Fourier decomposition based signal instantaneous frequency computation approach <http://waset.org/publications/2536/adaptive-fourier-decomposition-based-signal-instantaneous-frequency-computation-approach>`_," Int. J. Math. Comput. Phys. Electr. Comput. Eng., vol. 6, no. 8, pp. 1117–1122, 2012.
 
 
-   Related Papers
-   -----------------
+Related Papers
+-----------------
 
    + T. Qian, "`Intrinsic mono-component decomposition of functions: an advance of Fourier theory <https://doi.org/10.1002/mma.1214>`_," Math. Methods Appl. Sci., vol. 33, no. 7, pp. 880–891, 2010.
    + T. Qian, L. Zhang, and Z. Li, "`Algorithm of adaptive Fourier decomposition <http://ieeexplore.ieee.org/document/6021385/>`_," IEEE Trans. Signal Process., vol. 59, no. 12, pp. 5899–5906, 2011.
