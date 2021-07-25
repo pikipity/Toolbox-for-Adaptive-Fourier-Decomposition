@@ -22,7 +22,7 @@ where :math:`A_n` is the decomposition coefficient, :math:`B_n(t)` is the decomp
 Decomposition Basis
 ----------------------
 
-The AFD uses the rational orthogonal system :math:`\left\{B_n\right\}_{n=1}^\infty` as its basis where
+The AFD uses the Blaschke product, or say the rational orthogonal system, :math:`\left\{B_n\right\}_{n=1}^\infty` as its basis where
 
 .. math::
 
@@ -73,22 +73,138 @@ The evaluator :math:`\text{e}_{\left\{ a \right\}}(t)` is defined as
 
 The set :math:`\mathbb{A}` is the searching range of :math:`a_n`. Normally, it is set as :math:`\mathbb{A}=\mathbb{D}`. According to requirements of specific applications, :math:`\mathbb{A}` also can be set as a subset of :math:`\mathbb{D}`. It should be noticed that, in real implementation, it is impossible to scan all possible values in :math:`\mathbb{A}`. Therefore, :math:`\mathbb{A}` needs to be discretized. In this toolbox, there are several different ways to discretize :math:`\mathbb{A}`. Of course, the higher density of points in the discretized :math:`\mathbb{A}`, the higher accurate optimization results of :math:`a_n`. The discretized :math:`\mathbb{A}` is called search dictionary of :math:`a_n`.
 
-The whole decomposition process is shown below.
+The basic decomposition process of the core AFD is shown below.
 
 .. graphviz::
 
-   digraph cor_AFD{
-      a -> b;
+   digraph core_AFD {
+      splines = ortho;
+      size="10,5";
+
+      subgraph cluster_searching_an {
+         d -> e[weight=100];
+         d[label=<Calculate objective function values of a<SUB>n</SUB>> shape=box];
+         e[label=<Obtain a<SUB>n</SUB> by searching the maximum objective function value> shape=box];
+         label = <Searching a<SUB>n</SUB>>;
+         labeljust=l;
+         style=dotted;
+      }
+
+      a -> b[weight=100];
+      b -> c[weight=100];
+      c -> i[weight=100];
+      i -> d[weight=100];
+      
+      e -> f[weight=100];
+      f -> g[weight=100];
+      g -> d[weight=1];
       a[label="Start" shape=parallelogram];
       b[label="Generate searching dictionary" shape=box];
+      c[label="Generate evaluators" shape=box];
+      i[label="Initialize decomposition" shape=box];
+      
+      f[label="Construct the decomposition component" shape=box];
+      g[label="Compute reduced remainder" shape=box];
    }
    
+
+|
 
 Unwinding AFD
 ^^^^^^^^^^^^^^
 
+The unwinding AFD is similar as the core AFD but considers the inner function. The inner function is identical with the Blaschke product defined by zeros of the reduced remainder. By considering the inner functions, the decomposition basis components can be described as
+
+.. math::
+
+   B_{n,\text{unwinding}}(t)=B_n(t)\prod_{i=1}^nI_i(t),
+
+where the inner function :math:`I_i(t)` is
+
+.. math::
+
+   I_i(t)=\prod_{h=1}^{H_i}\frac{e^{jt}-r_{i,h}}{1-\overline{r}_{i,h}e^{jt}}.
+
+The basis parameter :math:`a_n` can be searched by
+
+.. math::
+
+   a_n = \arg\max_{a\in\mathbb{A}}\left\{ \left| \left<  \frac{G_n(t)}{I_n(t)},\text{e}_{\left\{ a \right\}}(t) \right> \right| \right\}.
+
+The parameters :math:`\left\{r_{n,h}\right\}_{h=1}^{H_n}` are zeros of the reduced remainder. They are defined in :math:`\mathbb{D}` and need to satisfy :math:`G_n(r_{n,1})=G_n(r_{n,2})= \cdots =G_n(r_{n,H_n})=0`. According to the Cauchy formula, this requirement can be represented as :math:`\left< G_n(t),\frac{1}{1-\overline{r}_{n,h}e^{jt}} \right>=0 \forall h=1,\cdots,H_n`.
+
+In real implementation, :math:`r_{n,h}` can be searched iteratively, whcih is similar as the searching process of :math:`a_n`. The searching process is from :math:`h=1` to :math:`h=H_n`. :math:`r_{n,h}` can be searched by solving
+
+.. math::
+   :nowrap:
+
+   \begin{eqnarray}
+      \text{minimize} & \; & \left| \left< G_n(t)\prod_{i=1}^{h-1}\frac{1-\overline{r}_{n,i}e^{jt}}{e^{jt}-r_{n,i}},\frac{1}{1-\overline{r}e^{jt}} \right> \right|\\
+      \text{subject to} & \; & r\in\mathbb{R} \text{ and } \left| \left< G_n(t),\frac{1}{1-\overline{r}e^{jt}} \right> \right|<\epsilon.
+   \end{eqnarray}
+
+:math:`\mathbb{R}` is the searching range of zeros. To simplify the computation, the searching dictionary of zeros is set as the same as the searching dictionary of :math:`a_n`. Moreover, :math:`\epsilon` is threshold to check whether the objective function value is close to 0 and thus should be set as a very small value. 
+
+The basic decomposition process of the unwinding AFD is shown below.
+
+.. graphviz::
+
+   digraph unwinding_AFD {
+      splines = ortho;
+      size="10,8";
+
+      subgraph cluster_searching_an {
+         d -> e[weight=100];
+         d[label=<Calculate objective function values of a<SUB>n</SUB>> shape=box];
+         e[label=<Obtain a<SUB>n</SUB> by searching the maximum objective function value> shape=box];
+         label = <Searching a<SUB>n</SUB>>;
+         labeljust=l;
+         style=dotted;
+      }
+
+      subgraph cluster_searching_r {
+         d_r -> e_r[weight=100];
+         e_r -> f_r[weight=100];
+         f_r -> d[weight=100 label=No];
+
+         f_r -> g_r[weight=1 label=Yes];
+         g_r -> d_r[weight=1];
+
+         d_r[label=<Calculate objective function values of r<SUB>n,h</SUB>> shape=box];
+         e_r[label=<Obtain r<SUB>n,h</SUB> by searching the minimum objective function value> shape=box];
+         f_r[label=<Is the objective function value small enough?> shape=diamond];
+         g_r[label=<Add obtained r<SUB>n,h</SUB> into zeros> shape=box];
+         label = <Searching zeros>;
+         labeljust=l;
+         style=dotted;
+      }
+
+      a -> b[weight=100];
+      b -> c[weight=100];
+      c -> i[weight=100];
+      i -> d_r[weight=100];
+      
+      e -> f[weight=100];
+      f -> g[weight=100];
+
+      g -> d_r[weight=1];
+
+      a[label="Start" shape=parallelogram];
+      b[label="Generate searching dictionary" shape=box];
+      c[label="Generate evaluators" shape=box];
+      i[label="Initialize decomposition" shape=box];
+      
+      f[label="Construct the decomposition component" shape=box];
+      g[label="Compute reduced remainder" shape=box];
+   }
+   
+
+|
+
 Improving Computational Efficiency
 ------------------------------------
+
+
 
 Applications
 -----------------
