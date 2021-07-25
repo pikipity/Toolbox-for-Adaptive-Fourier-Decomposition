@@ -32,7 +32,8 @@ extensions = [
     'sphinx.ext.graphviz',
     'sphinxcontrib.ghcontributors',
     'sphinx.ext.viewcode',
-    'sphinx.ext.autodoc'
+    'sphinx.ext.autodoc',
+    'sphinxcontrib.matlab'
 ]
 
 # Add any paths that contain templates here, relative to this directory.

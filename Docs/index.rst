@@ -14,9 +14,12 @@ Content
 --------
 
 .. toctree::
+   :maxdepth: 2
+
    IntroAFD
    BuildToolbox
    UserAPI
+   CodeSample
    AskHelp
    License
 

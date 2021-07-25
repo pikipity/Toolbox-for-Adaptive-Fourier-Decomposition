@@ -23,7 +23,7 @@ afdcal.setInputSignal(G);
 afdcal.plot_ori_sig();
 % set decomposition method: Single Channel Conventional AFD
 afdcal.setDecompMethod(1);
-% set searching dictionary generation method: square searching dictionary
+% set searching dictionary generation method: circle searching dictionary
 afdcal.setDicGenMethod(2);
 % generate searching dictionary
 afdcal.genDic(0.02,0.95);

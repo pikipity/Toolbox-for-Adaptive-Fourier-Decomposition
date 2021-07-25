@@ -27,7 +27,7 @@ V2.0
     :param remainder: Reduced remainder at the current decomposition level. The size is same as the size of ``s``.
     :param tem_B: Generated decomposition basis. It is a :math:`C \times 1` cell.
     :param deComp: Decomposition components. It is a :math:`C \times 1` cell.
-    :param decompMethod: Decomposition method. "Single Channel Conventional AFD" means the single channel AFD without the fast AFD. "Single Channel Fast AFD" means the single channel AFD with the fast AFD. For the single channel methods, the multi-channel signals will be analyzed channel by channel. To know whether needs the fast AFD to improve the computational efficiency, please check :ref:`fast-afd`.
+    :param decompMethod: Decomposition method. "Single Channel Conventional AFD" means the single channel AFD without improving the computaitonal efficiency. "Single Channel Fast AFD" means the single channel AFD with improving the computaitonal efficiency. For the single channel methods, the multi-channel signals will be analyzed channel by channel. To know whether needs the fast AFD to improve the computational efficiency, please check :ref:`fast-afd`.
     :param dicGenMethod: Method of generating the searching dictionary ``dic_an``. "square" means that points are generated based on their real and imaginary parts. "circle" means that points are generated based on their amplitudes and phases. The fast AFD only supports "circle". "circle" can provide the searching dictionary with high density but will increase the memory usage and the computational time. Normally, the fast AFD is required for "circle".
     :param AFDMethod: Extension method of the AFD. "core" means the core AFD. "unwinding" means the unwinding AFD. To know differences of these extensions and how to choose them, please check :ref:`introductionAFD-label`.
     :param log: log that stores warning and error outputs.
@@ -206,7 +206,7 @@ V1.0 toolbox is **NOT** recommended.
 
 .. function:: [an,coef,t]=conv_AFD(s,max_level,M [,L])
 
-    Core AFD without using the fast AFD.
+    Core AFD without improving the computaitonal efficiency.
 
     :param s: 1*K processed signal. K is the sample number
     :param max_level: Maximum decomposition level
@@ -217,7 +217,7 @@ V1.0 toolbox is **NOT** recommended.
 
 .. function:: [an,coef,t]=FFT_AFD(s,max_level,M)
 
-    Core AFD using the fast AFD.
+    Core AFD with improving the computaitonal efficiency.
 
     :param s: 1*K processed signal. K is the sample number
     :param max_level: Maximum decomposition level
@@ -253,7 +253,7 @@ V1.0 toolbox is **NOT** recommended.
 
 .. py:function:: conv_AFD(s[,max_level=50,M=20,L=2000])
 
-    Core AFD without using the fast AFD.
+    Core AFD without improving the computaitonal efficiency.
 
     :param s: 1*K processed signal. K is the sample number
     :param max_level: Maximum decomposition level
@@ -264,7 +264,7 @@ V1.0 toolbox is **NOT** recommended.
 
 .. py:function:: FFT_AFD(s[,max_level=50,M=20])
 
-    Core AFD using the fast AFD.
+    Core AFD with improving the computaitonal efficiency.
 
     :param s: 1*K processed signal. K is the sample number
     :param max_level: Maximum decomposition level

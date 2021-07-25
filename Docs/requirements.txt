@@ -5,6 +5,7 @@ charset-normalizer==2.0.3
 colorama==0.4.4
 commonmark==0.9.1
 docutils==0.16
+future==0.18.2
 idna==3.2
 imagesize==1.2.0
 Jinja2==3.0.1
@@ -24,6 +25,7 @@ sphinxcontrib-devhelp==1.0.2
 sphinxcontrib-ghcontributors==0.2.2
 sphinxcontrib-htmlhelp==2.0.0
 sphinxcontrib-jsmath==1.0.1
+sphinxcontrib-matlabdomain==0.12.0
 sphinxcontrib-qthelp==1.0.3
 sphinxcontrib-serializinghtml==1.1.5
 urllib3==1.26.6
