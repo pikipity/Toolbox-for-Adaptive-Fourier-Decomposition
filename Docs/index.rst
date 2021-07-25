@@ -18,6 +18,7 @@ Content
    BuildToolbox
    UserAPI
    AskHelp
+   License
 
 
 
