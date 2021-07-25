@@ -30,7 +30,9 @@ author = 'Ze Wang'
 extensions = [
     'sphinx.ext.mathjax',
     'sphinx.ext.graphviz',
-    'sphinxcontrib.ghcontributors'
+    'sphinxcontrib.ghcontributors',
+    'sphinx.ext.viewcode',
+    'sphinx.ext.autodoc'
 ]
 
 # Add any paths that contain templates here, relative to this directory.

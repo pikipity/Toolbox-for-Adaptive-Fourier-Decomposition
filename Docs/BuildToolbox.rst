@@ -12,7 +12,7 @@ Download
 
     $ git clone  https://github.com/pikipity/Toolbox-for-Adaptive-Fourier-Decomposition
 
-+ You also can directly download this toolbox from `Toolbox-for-Adaptive-Fourier-Decomposition.zip <https://github.com/pikipity/Toolbox-for-Adaptive-Fourier-Decomposition/archive/refs/heads/master.zip>`_
++ You also can directly download this toolbox from :download:`Toolbox-for-Adaptive-Fourier-Decomposition.zip <https://github.com/pikipity/Toolbox-for-Adaptive-Fourier-Decomposition/archive/refs/heads/master.zip>`
 
 Matlab
 --------

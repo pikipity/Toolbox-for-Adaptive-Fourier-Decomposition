@@ -19,6 +19,16 @@ The AFD decomposes the processed signal :math:`g(t)` to a series of orthogonal s
 
 where :math:`A_n` is the decomposition coefficient, :math:`B_n(t)` is the decomposition basis component, and :math:`n` denotes the decomposition level. The decomposition is from :math:`n=1` to :math:`n=\infty`. In each decomposition level, a suitable basis component is generated adaptively to make sure that the corresponding decomposition component matches the processed signal best. Such decomposition process can provide a fast energy convergence. In other words, the AFD applies `matching pursuit <https://en.wikipedia.org/wiki/Matching_pursuit>`_ process to provide a **sparse** approximation of the processed signal. 
 
+It should be noticed that, before using the AFD, the recorded signals should be transferred to their analytic form. This transform can be achieved by the Hilbert transform, which is 
+
+.. math::
+
+   g(t)=s(t)+\mathcal{H}\left\{s(t)\right\},
+
+where :math:`s(t)` is the recorded signal. 
+
+.. _decomposition-basis:
+
 Decomposition Basis
 ----------------------
 
@@ -220,6 +230,8 @@ The basic decomposition process of the unwinding AFD is shown below.
 
 |
 
+.. _fast-afd:
+
 Improving Computational Efficiency
 ------------------------------------
 
@@ -258,6 +270,13 @@ And the zeros can be searched by
       \text{minimize} & \; & \left| \mathcal{F}^{-1}\left\{ \mathcal{F}\left\{  G_n(\gamma) \right\}\cdot\mathcal{F}\left\{  \frac{1}{1-\alpha e^{j\gamma}} \right\} \right\} \right|\\
       \text{subject to} & \; & \alpha e^{j\gamma}\in\mathbb{R} \text{ and } \left| \left< G_n(t),\frac{1}{1-\alpha e^{j(t-\gamma)}} \right> \right|<\epsilon.
    \end{eqnarray}
+
+
+
+Although such implementation can significantly improve the computational efficiency, the fast AFD has some limitations:
+
++ Points in the searching dictionaries must be distributed based on their amplitudes and phases. Users cannot define their own searching dictionaries.
++ The phases of points in the searching dictionaries must be same as the phase of signal, which means that, when users change the phase of signal, the phase of points in the searching dictionary will also be changed. 
 
 Applications
 -----------------
