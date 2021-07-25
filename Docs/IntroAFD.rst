@@ -30,7 +30,7 @@ The AFD uses the rational orthogonal system :math:`\left\{B_n\right\}_{n=1}^\inf
 
 It should be noticed that, in the decomposition level :math:`n`, the basis component :math:`B_n` is only determined by :math:`\left\{a_k\right\}_{k=1}^n`. Suppose parameters :math:`a_k` from :math:`k=1` to :math:`k=n-1` have been obtained in previous decomposition levels, only :math:`a_n` needs to be found in the decomposition level :math:`n`. 
 
-It should be noticed that :math:`t` in :math:`B_n(t)` does not denote the time sample but denotes the phase. :math:`t` in :math:`B_n(t)` is like :math:`\theta` in :math:`\sin(\theta)`. Normally, :math:`t` is defined from :math:`0` to :math:`2\pi`. According to requirements of the applications, :math:`t` also can be defined in other ranges.
+It should be noticed that :math:`t` in :math:`B_n(t)` does not denote the time sample but denotes the phase. :math:`t` in :math:`B_n(t)` is like :math:`\theta` in :math:`\sin(\theta)`. Normally, :math:`t` is defined from :math:`0` to :math:`2\pi`. According to requirements of specific applications, :math:`t` also can be defined in other ranges.
 
 The basis parameter :math:`a_n` is defined in the unit circle :math:`\mathbb{D}` of the complex plane :math:`\mathbb{C}` where :math:`\mathbb{D}=\left\{ z\in\mathbb{C}: \left| z \right|<1 \right\}`. The effects of :math:`a_n` for :math:`B_n(t)` are similar as the effects of shift and scaling factors for the wavelet decomposition as shown in the following figure. Moreover, when :math:`a_1= \cdots =a_n=0`, the basis component of the AFD becomes the basis component of the conventional Fourier decomposition. 
 
@@ -58,8 +58,31 @@ where :math:`G_n(t)`, called reduced remainder, is computed from the remainder i
 The reduced remainder :math:`G_n(t)` can be computed by
 
 .. math::
+   :nowrap:
 
-   G_n(t) = 
+   \begin{eqnarray}
+      G_n(t) & = & R_{n-1}(t)\prod_{k=1}^{n-1}\frac{1-\overline{a}_d e^{jt}}{e^{jt}-a_d}\\
+             & = & \left( G_{n-1}(t)-A_{n-1}\text{e}_{\left\{a_{n-1}\right\}}(t) \right)\frac{1-\overline{a}_{n-1}e^{jt}}{e^{jt}-a_{n-1}}.
+   \end{eqnarray}
+
+The evaluator :math:`\text{e}_{\left\{ a \right\}}(t)` is defined as 
+
+.. math::
+
+   \text{e}_{\left\{ a \right\}}(t) = \frac{\sqrt{1-\left|a\right|^2}}{1-\overline{a}e^{jt}}.
+
+The set :math:`\mathbb{A}` is the searching range of :math:`a_n`. Normally, it is set as :math:`\mathbb{A}=\mathbb{D}`. According to requirements of specific applications, :math:`\mathbb{A}` also can be set as a subset of :math:`\mathbb{D}`. It should be noticed that, in real implementation, it is impossible to scan all possible values in :math:`\mathbb{A}`. Therefore, :math:`\mathbb{A}` needs to be discretized. In this toolbox, there are several different ways to discretize :math:`\mathbb{A}`. Of course, the higher density of points in the discretized :math:`\mathbb{A}`, the higher accurate optimization results of :math:`a_n`. The discretized :math:`\mathbb{A}` is called search dictionary of :math:`a_n`.
+
+The whole decomposition process is shown below.
+
+.. graphviz::
+
+   digraph cor_AFD{
+      a -> b;
+      a[label="Start" shape=parallelogram];
+      b[label="Generate searching dictionary" shape=box];
+   }
+   
 
 Unwinding AFD
 ^^^^^^^^^^^^^^
