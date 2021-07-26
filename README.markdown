@@ -4,9 +4,9 @@ This toolbox is intended to help users use the adaptive Fourier decomposition (A
 
 This toolbox contains **different implementations** of the AFD for different types of processed signals and different decomposition process.
 
-There is an [simple online demo](http://zewang.site/AFD). You can try the AFD quickly.
+There is an [simple *online demo*](http://zewang.site/AFD). You can try the AFD quickly.
 
-Please check the [document](https://toolbox-for-adaptive-fourier-decomposition.readthedocs.io/) for detailed information. 
+Please check the [**document**](https://toolbox-for-adaptive-fourier-decomposition.readthedocs.io/) for detailed information. 
 
 **Advantages of AFD**:
 
