@@ -1,5 +1,5 @@
-clear classes;clear all;clc;close all;
-N=50;
+clear classes;clear all;clc;%close all;
+N=18;
 %% prepare input signal
 fileList={'ECG.mat',...
           'heavysine_signal.mat',...
@@ -17,12 +17,14 @@ for i=1:length(tmp)
     G(i,:)=tmp{i}(1,1:min_sig_len);
 end
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% Single Channel Fast AFD, circle searching dictionary, core AFD, same phase (0~2\pi)
+%% Multi-channel Fast AFD, circle searching dictionary, core AFD, same phase (0~2\pi)
 % init AFD computation module
 afdcal_1=AFDCal();
 afdcal_1.setInputSignal(G);
-% set decomposition method: Single Channel Fast AFD
-afdcal_1.setDecompMethod(2);
+% set decomposition method: Multi-channel Fast AFD
+afdcal_1.setDecompMethod(4);
+% set AFD method: unwinding AFD
+afdcal_1.setAFDMethod(2);
 % generate searching dictionary
 afdcal_1.genDic(0.02,0.95);
 % generate evaluators
@@ -39,14 +41,16 @@ for n=1:N
     end
 end
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% Single Channel Conventional AFD, square searching dictionary, core AFD, same phase (0~2\pi)
+%% Multi-channel Conventional AFD, square searching dictionary, core AFD, same phase (0~2\pi)
 % init AFD computation module
 afdcal_2=AFDCal();
 afdcal_2.setInputSignal(G);
-% set decomposition method: Single Channel Conventional AFD
-afdcal_2.setDecompMethod(1);
+% set decomposition method: Multi-channel Conventional AFD
+afdcal_2.setDecompMethod(3);
 % set searching dictionary generation method: square searching dictionary
 afdcal_2.setDicGenMethod(1);
+% set AFD method: unwinding AFD
+afdcal_2.setAFDMethod(2);
 % generate searching dictionary
 afdcal_2.genDic(0.02,0.95);
 % generate evaluators
@@ -63,14 +67,16 @@ for n=1:N
     end
 end
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% Single Channel Conventional AFD, circle searching dictionary, core AFD, same phase (0~2\pi)
+%% Multi-channel Conventional AFD, circle searching dictionary, core AFD, same phase (0~2\pi)
 % init AFD computation module
 afdcal_3=AFDCal();
 afdcal_3.setInputSignal(G);
 % set decomposition method: Single Channel Conventional AFD
-afdcal_3.setDecompMethod(1);
+afdcal_3.setDecompMethod(3);
 % set searching dictionary generation method: circle searching dictionary
 afdcal_3.setDicGenMethod(2);
+% set AFD method: unwinding AFD
+afdcal_3.setAFDMethod(2);
 % generate searching dictionary
 afdcal_3.genDic(0.02,0.95);
 % generate evaluators

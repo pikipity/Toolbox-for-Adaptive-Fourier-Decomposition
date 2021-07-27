@@ -17,12 +17,12 @@ for i=1:length(tmp)
     G(i,:)=tmp{i}(1,1:min_sig_len);
 end
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% Single Channel Fast AFD, circle searching dictionary, core AFD, same phase (0~2\pi)
+%% Multi-channel Fast AFD, circle searching dictionary, core AFD, same phase (0~2\pi)
 % init AFD computation module
 afdcal_1=AFDCal();
 afdcal_1.setInputSignal(G);
 % set decomposition method: Single Channel Fast AFD
-afdcal_1.setDecompMethod(2);
+afdcal_1.setDecompMethod(4);
 % generate searching dictionary
 afdcal_1.genDic(0.02,0.95);
 % generate evaluators
@@ -39,12 +39,12 @@ for n=1:N
     end
 end
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% Single Channel Conventional AFD, square searching dictionary, core AFD, same phase (0~2\pi)
+%% Multi-channel Conventional AFD, square searching dictionary, core AFD, same phase (0~2\pi)
 % init AFD computation module
 afdcal_2=AFDCal();
 afdcal_2.setInputSignal(G);
 % set decomposition method: Single Channel Conventional AFD
-afdcal_2.setDecompMethod(1);
+afdcal_2.setDecompMethod(3);
 % set searching dictionary generation method: square searching dictionary
 afdcal_2.setDicGenMethod(1);
 % generate searching dictionary
@@ -63,12 +63,12 @@ for n=1:N
     end
 end
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% Single Channel Conventional AFD, circle searching dictionary, core AFD, same phase (0~2\pi)
+%% Multi-channel Conventional AFD, circle searching dictionary, core AFD, same phase (0~2\pi)
 % init AFD computation module
 afdcal_3=AFDCal();
 afdcal_3.setInputSignal(G);
 % set decomposition method: Single Channel Conventional AFD
-afdcal_3.setDecompMethod(1);
+afdcal_3.setDecompMethod(3);
 % set searching dictionary generation method: circle searching dictionary
 afdcal_3.setDicGenMethod(2);
 % generate searching dictionary
@@ -96,8 +96,8 @@ for i=1:length(legLabel)
     legLabel{i}=tmp;
 end
 figure
-for ch_i=1:size(G,1)
-    subplot(2,3,ch_i)
+for ch_i=1
+    subplot(1,1,ch_i)
     hold on
     plot(real(afdcal_1.an{ch_i,1}(2:end)),imag(afdcal_1.an{ch_i,1}(2:end)),'o','markersize',10)
     plot(real(afdcal_2.an{ch_i,1}(2:end)),imag(afdcal_2.an{ch_i,1}(2:end)),'x','markersize',10)
@@ -115,24 +115,24 @@ end
 time_store=[];
 mse_store=[];
 % afdcal_1
-time = [afdcal_1.time_genDic,... 
-        afdcal_1.time_genEva,...
+time = [afdcal_1.time_genDic.',... 
+        afdcal_1.time_genEva.',...
         afdcal_1.run_time];
 time_store(:,1)=sum(time.');
 reSig = afdcal_1.cal_reSig(afdcal_1.level);
 mse = mean(((G-reSig).^2).').';
 mse_store(:,1)=mse;
 % afdcal_2
-time = [afdcal_2.time_genDic,... 
-        afdcal_2.time_genEva,...
+time = [afdcal_2.time_genDic.',... 
+        afdcal_2.time_genEva.',...
         afdcal_2.run_time];
 time_store(:,2)=sum(time.');
 reSig = afdcal_2.cal_reSig(afdcal_2.level);
 mse = mean(((G-reSig).^2).').';
 mse_store(:,2)=mse;
 % afdcal_3
-time = [afdcal_3.time_genDic,... 
-        afdcal_3.time_genEva,...
+time = [afdcal_3.time_genDic.',... 
+        afdcal_3.time_genEva.',...
         afdcal_3.run_time];
 time_store(:,3)=sum(time.');
 reSig = afdcal_3.cal_reSig(afdcal_3.level);
@@ -142,15 +142,7 @@ mse_store(:,3)=mse;
 figure('name','Computational Time (Core AFD)')
 bar(time_store.');
 grid on
-legLabel=fileList;
-for i=1:length(legLabel)
-    tmp=legLabel{i};
-    tmp=tmp(1:findstr(tmp,'.mat')-1);
-    tmp = strrep(tmp,'_',' ');
-    legLabel{i}=tmp;
-end
 xLabel={'Fast AFD (circle)','Conv AFD (square)','Conv AFD (circle)'};
-legend(legLabel,'Location','northeastoutside')
 set(gca,'XTickLabel',xLabel)
 ylabel('Computational Time (s)')
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
