@@ -278,6 +278,13 @@ Although such implementation can significantly improve the computational efficie
 + Points in the searching dictionaries must be distributed based on their amplitudes and phases. Users cannot define their own searching dictionaries.
 + The phases of points in the searching dictionaries must be same as the phase of signal, which means that, when users change the phase of signal, the phase of points in the searching dictionary will also be changed. 
 
+.. _intro-MAFD:
+
+Multi-channel AFD
+------------------------------------
+
+
+
 Applications
 -----------------
 
