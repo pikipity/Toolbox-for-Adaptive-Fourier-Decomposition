@@ -3,7 +3,11 @@ function plot_evaluator(obj)
     for ch_i=1:K
         figure('name',['Magnitude of Evaluators, Ch ' num2str(ch_i)])
         Base=obj.Base{ch_i,1};
-        a=obj.dic_an{ch_i,1};
+        if ~isempty(strfind(obj.decompMethod,'Single Channel'))
+            a=obj.dic_an{ch_i,1};
+        elseif ~isempty(strfind(obj.decompMethod,'Multi-channel'))
+            a=obj.dic_an{1,1};
+        end
         N=size(Base,1);
         M=size(Base,2);
         %
@@ -28,10 +32,11 @@ function plot_evaluator(obj)
         %
         if N>1
             k=floor(N/2);
+            subplot(1,2,2)
         else
             k=1;
+            subplot(1,1,1)
         end
-        subplot(1,2,2)
         hold on
         legend_label={};
         ind=unique(floor(linspace(1,M,5)));
@@ -51,7 +56,11 @@ function plot_evaluator(obj)
     for ch_i=1:K
         figure('name',['Phase of Evaluators, Ch ' num2str(ch_i)])
         Base=obj.Base{ch_i,1};
-        a=obj.dic_an{ch_i,1};
+        if ~isempty(strfind(obj.decompMethod,'Single Channel'))
+            a=obj.dic_an{ch_i,1};
+        elseif ~isempty(strfind(obj.decompMethod,'Multi-channel'))
+            a=obj.dic_an{1,1};
+        end
         N=size(Base,1);
         M=size(Base,2);
         %
@@ -76,10 +85,11 @@ function plot_evaluator(obj)
         %
         if N>1
             k=floor(N/2);
+            subplot(1,2,2)
         else
             k=1;
+            subplot(1,1,1)
         end
-        subplot(1,2,2)
         hold on
         legend_label={};
         ind=unique(floor(linspace(1,M,5)));
