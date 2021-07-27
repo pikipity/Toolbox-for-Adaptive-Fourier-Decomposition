@@ -1,10 +1,18 @@
 function set_an(obj,an)
-    
-    if size(an,1)<size(obj.G,1)
-        obj.addLog('warning: Because the specific a_n arrray is not correct, "set_an" is not successful.')
-        warning('Because the specific a_n arrray is not correct, "set_an" is not successful.')
-        return
+    if ~isempty(strfind(obj.decompMethod,'Single Channel'))
+        if size(an,1)<size(obj.G,1)
+            obj.addLog('warning: Because the specific a_n arrray is not correct, "set_an" is not successful.')
+            warning('Because the specific a_n arrray is not correct, "set_an" is not successful.')
+            return
+        end
+    elseif ~isempty(strfind(obj.decompMethod,'Multi-channel'))
+        if size(an,1)<1
+            obj.addLog('warning: Because the specific a_n arrray is not correct, "set_an" is not successful.')
+            warning('Because the specific a_n arrray is not correct, "set_an" is not successful.')
+            return
+        end
     end
+    
     
     len_an=cellfun(@(x) length(x),an);
     for i=1:length(len_an)

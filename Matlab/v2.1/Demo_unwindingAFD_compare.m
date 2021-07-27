@@ -1,4 +1,4 @@
-clear classes;clear all;clc;%close all;
+clear classes;clear all;clc;close all;
 N=18;
 %% prepare input signal
 fileList={'ECG.mat',...
@@ -102,8 +102,8 @@ for i=1:length(legLabel)
     legLabel{i}=tmp;
 end
 figure
-for ch_i=1:size(G,1)
-    subplot(2,3,ch_i)
+for ch_i=1
+    subplot(1,1,ch_i)
     hold on
     plot(real(afdcal_1.an{ch_i,1}(2:end)),imag(afdcal_1.an{ch_i,1}(2:end)),'o','markersize',10)
     plot(real(afdcal_2.an{ch_i,1}(2:end)),imag(afdcal_2.an{ch_i,1}(2:end)),'x','markersize',10)
@@ -121,24 +121,24 @@ end
 time_store=[];
 mse_store=[];
 % afdcal_1
-time = [afdcal_1.time_genDic,... 
-        afdcal_1.time_genEva,...
+time = [afdcal_1.time_genDic.',... 
+        afdcal_1.time_genEva.',...
         afdcal_1.run_time];
 time_store(:,1)=sum(time.');
 reSig = afdcal_1.cal_reSig(afdcal_1.level);
 mse = mean(((G-reSig).^2).').';
 mse_store(:,1)=mse;
 % afdcal_2
-time = [afdcal_2.time_genDic,... 
-        afdcal_2.time_genEva,...
+time = [afdcal_2.time_genDic.',... 
+        afdcal_2.time_genEva.',...
         afdcal_2.run_time];
 time_store(:,2)=sum(time.');
 reSig = afdcal_2.cal_reSig(afdcal_2.level);
 mse = mean(((G-reSig).^2).').';
 mse_store(:,2)=mse;
 % afdcal_3
-time = [afdcal_3.time_genDic,... 
-        afdcal_3.time_genEva,...
+time = [afdcal_3.time_genDic.',... 
+        afdcal_3.time_genEva.',...
         afdcal_3.run_time];
 time_store(:,3)=sum(time.');
 reSig = afdcal_3.cal_reSig(afdcal_3.level);
@@ -148,15 +148,7 @@ mse_store(:,3)=mse;
 figure('name','Computational Time (Core AFD)')
 bar(time_store.');
 grid on
-legLabel=fileList;
-for i=1:length(legLabel)
-    tmp=legLabel{i};
-    tmp=tmp(1:findstr(tmp,'.mat')-1);
-    tmp = strrep(tmp,'_',' ');
-    legLabel{i}=tmp;
-end
 xLabel={'Fast AFD (circle)','Conv AFD (square)','Conv AFD (circle)'};
-legend(legLabel,'Location','northeastoutside')
 set(gca,'XTickLabel',xLabel)
 ylabel('Computational Time (s)')
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

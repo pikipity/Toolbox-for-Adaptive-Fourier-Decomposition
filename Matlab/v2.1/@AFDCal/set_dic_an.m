@@ -6,10 +6,18 @@ function set_dic_an(obj,dic_an)
             return
     end
     
-    if size(dic_an,1)<size(obj.G,1)
-        obj.addLog('warning: Because the specific searching dictionary is not correct, "set_dic_an" is not successful.')
-        warning('Because the specific searching dictionary is not correct, "set_dic_an" is not successful.')
-        return
+    if ~isempty(strfind(obj.decompMethod,'Single Channel'))
+        if size(dic_an,1)<size(obj.G,1)
+            obj.addLog('warning: Because the specific searching dictionary is not correct, "set_dic_an" is not successful.')
+            warning('Because the specific searching dictionary is not correct, "set_dic_an" is not successful.')
+            return
+        end
+    elseif ~isempty(strfind(obj.decompMethod,'Multi-channel'))
+        if size(dic_an,1)<1
+            obj.addLog('warning: Because the specific searching dictionary is not correct, "set_dic_an" is not successful.')
+            warning('Because the specific searching dictionary is not correct, "set_dic_an" is not successful.')
+            return
+        end
     end
     
     obj.setDicGenMethod(1);
