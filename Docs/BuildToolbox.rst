@@ -12,7 +12,7 @@ Download
 
     $ git clone  https://github.com/pikipity/Toolbox-for-Adaptive-Fourier-Decomposition
 
-+ You also can directly download this toolbox from :download:`Toolbox-for-Adaptive-Fourier-Decomposition.zip <https://github.com/pikipity/Toolbox-for-Adaptive-Fourier-Decomposition/archive/refs/heads/master.zip>`
++ You also can directly download this toolbox: :download:`Toolbox-for-Adaptive-Fourier-Decomposition.zip <https://github.com/pikipity/Toolbox-for-Adaptive-Fourier-Decomposition/archive/refs/heads/master.zip>`
 
 Matlab
 --------
@@ -21,7 +21,7 @@ From this toolbox, you can find the corresponding folder :file:`Matlab/`. Under 
 
 .. code-block::
 
-    >> addpath(genpath('Toolbox-for-Adaptive-Fourier-Decomposition/Matlab/v2.0'))
+    >> addpath(genpath('Toolbox-for-Adaptive-Fourier-Decomposition/Matlab/v2.1'))
 
 Python
 -------
