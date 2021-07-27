@@ -18,6 +18,13 @@ function setPhase(obj,channel,phase)
         error('Because the size of phase is not correct, setting phase is not successful.')
     end
     
+    switch obj.decompMethod
+        case 'Multi-channel Fast AFD'
+            obj.addLog('warning: Multi-channel Fast AFD does not support different phases')
+            warning('Multi-channel Fast AFD does not support different phases.')
+            return
+    end
+    
     obj.t(channel,:)=phase;
     
     obj.addLog(['Setting phase for channel ' num2str(channel) ' correctly'])

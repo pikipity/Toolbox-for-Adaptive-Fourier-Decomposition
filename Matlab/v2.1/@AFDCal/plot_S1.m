@@ -7,17 +7,20 @@ function plot_S1(obj,level)
     end
     figure('name',['Energy Distribution at level ' num2str(level)])
     
-    K=size(obj.G,1);
+    if ~isempty(strfind(obj.decompMethod,'Single Channel'))
+        K=size(obj.G,1);
+    elseif ~isempty(strfind(obj.decompMethod,'Multi-channel'))
+        K=1;
+    end
     for ch_i=1:K
         subplot(1,K,ch_i)
         S1 = obj.S1{ch_i,level+1};
         max_loc = obj.max_loc{ch_i,level+1};
-        switch obj.decompMethod
-           case 'Single Channel Conventional AFD'
-               XX = real(obj.dic_an{ch_i,1});
-               YY = imag(obj.dic_an{ch_i,1});
-           case 'Single Channel Fast AFD'
-               [XX,YY]=meshgrid(obj.t(ch_i,:),obj.dic_an{ch_i,1});
+        if ~isempty(strfind(obj.decompMethod,'Conventional AFD'))
+            XX = real(obj.dic_an{ch_i,1});
+            YY = imag(obj.dic_an{ch_i,1});
+        elseif ~isempty(strfind(obj.decompMethod,'Fast AFD'))
+            [XX,YY]=meshgrid(obj.t(ch_i,:),obj.dic_an{ch_i,1});
         end
         ZZ = abs(S1);
         try
@@ -54,11 +57,10 @@ function plot_S1(obj,level)
                   ZZ(ind_1,ind_2),...
                   'rx')
         end
-        switch obj.decompMethod
-           case 'Single Channel Conventional AFD'
+        if ~isempty(strfind(obj.decompMethod,'Conventional AFD'))
                xlabel('Real')
                ylabel('Imag')
-           case 'Single Channel Fast AFD'
+        elseif ~isempty(strfind(obj.decompMethod,'Fast AFD'))
                xlabel('Phase')
                ylabel('Magnitude')
         end

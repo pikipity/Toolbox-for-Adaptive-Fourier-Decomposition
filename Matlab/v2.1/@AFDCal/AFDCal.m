@@ -19,6 +19,8 @@ classdef AFDCal  < handle
         decompMethod % set decomposition method: 
                      %     1: Single Channel Conventional AFD (default)
                      %     2: Single Channel Fast AFD
+                     %     3. Multi-channel Conventional AFD
+                     %     4. Multi-channel Fast AFD
         dicGenMethod % set dictionary generation method:
                      %     1: square (default)
                      %     2: circle (Fast AFD only uses 'circle')

@@ -13,40 +13,73 @@ function genDic(obj,dist,max_an_mag)
     end
     
     obj.time_genDic=zeros(size(obj.G,1),1);
-    switch obj.decompMethod
-        case 'Single Channel Conventional AFD'
-            switch obj.dicGenMethod
-                case 'square'
-                    for ch_i=1:size(obj.G,1)
+    if ~isempty(strfind(obj.decompMethod,'Single Channel'))
+        % Single Channel AFD
+        switch obj.decompMethod
+            case 'Single Channel Conventional AFD'
+                switch obj.dicGenMethod
+                    case 'square'
+                        for ch_i=1:size(obj.G,1)
+                            tic
+                            obj.dic_an{ch_i,1} = obj.Unit_Disk(dist,max_an_mag);
+                            obj.time_genDic(ch_i,1)=toc;
+                        end
+                    case 'circle'
+                        K = size(obj.G,2);
+                        for ch_i=1:size(obj.G,1)
+                            tic
+                            obj.dic_an{ch_i,1} = obj.Circle_Disk(dist,max_an_mag,0:2*pi/K:(2*pi-2*pi/K));
+                            obj.time_genDic(ch_i,1)=toc;
+                        end
+                end
+            case 'Single Channel Fast AFD'
+                switch obj.dicGenMethod
+                    case 'square'
+                        obj.addLog('error: Because dicGenMethod is not correct (fast AFD only can use "circle"), genDic is not successful.')
+                        error('Because dicGenMethod is not correct (fast AFD only can use "circle"), genDic is not successful.')
+                    case 'circle'
+                        K = size(obj.G,2);
+                        for ch_i=1:size(obj.G,1)
+                            tic
+                            cont = max_an_mag;
+                            abs_a=0:dist:1;
+                            abs_a(abs(abs_a) >= cont) = [];
+                            obj.dic_an{ch_i,1} = abs_a;
+                            obj.time_genDic(ch_i,1)=toc;
+                        end
+                end
+        end
+    elseif ~isempty(strfind(obj.decompMethod,'Multi-channel'))
+        % Multi-channel AFD
+        switch obj.decompMethod
+            case 'Multi-channel Conventional AFD'
+                switch obj.dicGenMethod
+                    case 'square'
                         tic
-                        obj.dic_an{ch_i,1} = obj.Unit_Disk(dist,max_an_mag);
-                        obj.time_genDic(ch_i,1)=toc;
-                    end
-                case 'circle'
-                    K = size(obj.G,2);
-                    for ch_i=1:size(obj.G,1)
+                        obj.dic_an{1,1} = obj.Unit_Disk(dist,max_an_mag);
+                        obj.time_genDic(1,1)=toc;
+                    case 'circle'
+                        K = size(obj.G,2);
                         tic
-                        obj.dic_an{ch_i,1} = obj.Circle_Disk(dist,max_an_mag,0:2*pi/K:(2*pi-2*pi/K));
-                        obj.time_genDic(ch_i,1)=toc;
-                    end
-            end
-        case 'Single Channel Fast AFD'
-            switch obj.dicGenMethod
-                case 'square'
-                    obj.addLog('error: Because dicGenMethod is not correct (fast AFD only can use "circle"), genDic is not successful.')
-                    error('Because dicGenMethod is not correct (fast AFD only can use "circle"), genDic is not successful.')
-                case 'circle'
-                    K = size(obj.G,2);
-                    for ch_i=1:size(obj.G,1)
+                        obj.dic_an{1,1} = obj.Circle_Disk(dist,max_an_mag,0:2*pi/K:(2*pi-2*pi/K));
+                        obj.time_genDic(1,1)=toc;
+                end
+            case 'Multi-channel Fast AFD'
+                switch obj.dicGenMethod
+                    case 'square'
+                        obj.addLog('error: Because dicGenMethod is not correct (fast AFD only can use "circle"), genDic is not successful.')
+                        error('Because dicGenMethod is not correct (fast AFD only can use "circle"), genDic is not successful.')
+                    case 'circle'
                         tic
                         cont = max_an_mag;
                         abs_a=0:dist:1;
                         abs_a(abs(abs_a) >= cont) = [];
-                        obj.dic_an{ch_i,1} = abs_a;
-                        obj.time_genDic(ch_i,1)=toc;
-                    end
-            end
+                        obj.dic_an{1,1} = abs_a;
+                        obj.time_genDic(1,1)=toc;
+                end
+        end
     end
+    
     
     obj.addLog('generate searching dictionary successfully.')
 end

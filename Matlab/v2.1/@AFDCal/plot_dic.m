@@ -1,6 +1,10 @@
 function plot_dic(obj)
     figure('name','Searching Dictionary')
-    K=size(obj.G,1);
+    if ~isempty(strfind(obj.decompMethod,'Single Channel'))
+        K=size(obj.G,1);
+    elseif ~isempty(strfind(obj.decompMethod,'Multi-channel'))
+        K=1;
+    end
     for ch_i=1:K
         if K<=5
             subplot(1,K,ch_i)
