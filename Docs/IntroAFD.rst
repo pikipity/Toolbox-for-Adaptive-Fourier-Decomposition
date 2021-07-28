@@ -11,13 +11,13 @@ The adaptive Fourier decomposition is an **adaptive** signal decomposition:
 Basic Idea
 -------------
 
-The AFD decomposes the processed signal :math:`g(t)` to a series of orthogonal signals, which can be expressed as
+The AFD decomposes the processed signal :math:`g(t)` to a series of **orthogonal** signals, which can be expressed as
 
 .. math::
 
    g(t) = \sum_{n=1}^\infty A_n B_n(t),
 
-where :math:`A_n` is the decomposition coefficient, :math:`B_n(t)` is the decomposition basis component, and :math:`n` denotes the decomposition level. The decomposition is from :math:`n=1` to :math:`n=\infty`. In each decomposition level, a suitable basis component is generated adaptively to make sure that the corresponding decomposition component matches the processed signal best. Such decomposition process can provide a fast energy convergence. In other words, the AFD applies `matching pursuit <https://en.wikipedia.org/wiki/Matching_pursuit>`_ process to provide a **sparse** approximation of the processed signal. 
+where :math:`A_n` is the decomposition coefficient, :math:`B_n(t)` is the decomposition basis component, and :math:`n` denotes the decomposition level. The decomposition is from :math:`n=1` to :math:`n=\infty`. In each decomposition level, a suitable basis component is generated **adaptively** to make sure that the corresponding decomposition component **matches the processed signal best**. Such decomposition process can provide a fast energy convergence. In other words, the AFD applies `matching pursuit <https://en.wikipedia.org/wiki/Matching_pursuit>`_ process to provide a **sparse** approximation of the processed signal. 
 
 It should be noticed that, before using the AFD, the recorded signals should be transferred to their analytic form. This transform can be achieved by the Hilbert transform, which is 
 
@@ -40,7 +40,7 @@ The AFD uses the Blaschke product, or say the rational orthogonal system, :math:
 
 It should be noticed that, in the decomposition level :math:`n`, the basis component :math:`B_n` is only determined by :math:`\left\{a_k\right\}_{k=1}^n`. Suppose parameters :math:`a_k` from :math:`k=1` to :math:`k=n-1` have been obtained in previous decomposition levels, only :math:`a_n` needs to be found in the decomposition level :math:`n`. 
 
-It should be noticed that :math:`t` in :math:`B_n(t)` does not denote the time sample but denotes the phase. :math:`t` in :math:`B_n(t)` is like :math:`\theta` in :math:`\sin(\theta)`. Normally, :math:`t` is defined from :math:`0` to :math:`2\pi`. According to requirements of specific applications, :math:`t` also can be defined in other ranges.
+It should be noticed that :math:`t` in :math:`B_n(t)` does not denote the time sample but denotes the **phase**. :math:`t` in :math:`B_n(t)` is like :math:`\theta` in :math:`\sin(\theta)`. Normally, :math:`t` is defined from :math:`0` to :math:`2\pi`. According to requirements of specific applications, :math:`t` also can be defined in other ranges.
 
 The basis parameter :math:`a_n` is defined in the unit circle :math:`\mathbb{D}` of the complex plane :math:`\mathbb{C}` where :math:`\mathbb{D}=\left\{ z\in\mathbb{C}: \left| z \right|<1 \right\}`. The effects of :math:`a_n` for :math:`B_n(t)` are similar as the effects of shift and scaling factors for the wavelet decomposition as shown in the following figure. Moreover, when :math:`a_1= \cdots =a_n=0`, the basis component of the AFD becomes the basis component of the conventional Fourier decomposition. 
 
@@ -57,7 +57,7 @@ In this toolbox, the following extensions of the AFD have been included.
 Core AFD
 ^^^^^^^^^^^
 
-The core AFD is the fundamental implementation of the AFD. It is an iterative decomposition process. In each decomposition level :math:`n`, the basis parameter :math:`a_n` is searched by
+The core AFD is the fundamental implementation of the AFD. It is an **iterative decomposition process**. In each decomposition level :math:`n`, the basis parameter :math:`a_n` is searched by
 
 .. math::
 
@@ -130,7 +130,9 @@ The basic decomposition process of the core AFD is shown below.
 Unwinding AFD
 ^^^^^^^^^^^^^^
 
-The unwinding AFD is similar as the core AFD but considers the inner function. The inner function is identical with the Blaschke product defined by zeros of the reduced remainder. By considering the inner functions, the decomposition basis components can be described as
+The unwinding AFD is similar as the core AFD but considers the **inner function**. The inner function is identical with the Blaschke product defined by zeros of the reduced remainder. The inner functions can be considered as a stable oscillations. If the processed signals contain **stable oscillations**, you may would like to use the unwinding AFD to achieve faster energy convergence. 
+
+By considering the inner functions, the decomposition basis components can be described as
 
 .. math::
 
@@ -235,7 +237,7 @@ The basic decomposition process of the unwinding AFD is shown below.
 Improving Computational Efficiency
 ------------------------------------
 
-As mentioned above, the searching processes of parameters :math:`a_n` and :math:`r_{n,h}` are the key decomposition steps in the core AFD and the unwinding AFD. They are all based on exhaustive searching, which means that the objective function values are evaluated one by one. As the number of points in the searching dictionary increases, the computational time will increase. To improve the computational efficiency, the fast AFD is proposed. Based on the convolution theory, the computations of objective function values can be simplified by the FFT. 
+As mentioned above, the searching processes of parameters :math:`a_n` and :math:`r_{n,h}` are the key decomposition steps in the core AFD and the unwinding AFD. They are all based on exhaustive searching, which means that the objective function values are evaluated one by one. As the number of points in the searching dictionary increases, the computational time will increase. To improve the computational efficiency, the fast AFD is proposed. Based on the convolution theory, the computations of objective function values can be **simplified by the FFT**. 
 
 In the fast AFD, the points in the searching dictionaries of :math:`a_n` and :math:`r_{n,h}` are represented by their amplitudes and phases, which are
 
@@ -273,7 +275,7 @@ And the zeros can be searched by
 
 
 
-Although such implementation can significantly improve the computational efficiency, the fast AFD has some limitations:
+Although such implementation can significantly improve the computational efficiency, the fast AFD has some **limitations**:
 
 + Points in the searching dictionaries must be distributed based on their amplitudes and phases. Users cannot define their own searching dictionaries.
 + The phases of points in the searching dictionaries must be same as the phase of signal, which means that, when users change the phase of signal, the phase of points in the searching dictionary will also be changed. 
@@ -283,7 +285,34 @@ Although such implementation can significantly improve the computational efficie
 Multi-channel AFD
 ------------------------------------
 
+The AFD generates its decomposition basis components based on the processed signals. When the single channel AFD decomposes signals channel by channel, different parameters, i.e. :math:`\left\{a_n\right\}_{n=1}^N` and :math:`\left\{\left\{r_{n,h}\right\}_{h=1}^{H_n}\right\}_{n=1}^N`, will be searched for different channels, which leads different sets of basis components for different channels. However, if the processed multi-channel signals are recorded **from the same system or contain same components**, we would like to use **same set of basis components** to conduct the decomposition. 
 
+Suppose that the processed signal contain total :math:`C` channels, then, in the core AFD, the parameters of decomposition components can be searched by 
+
+.. math::
+
+   a_n = \arg\max_{a\in\mathbb{A}}\left\{ \sum_{c=1}^C\left| \left< G_{n,c}(t),\text{e}_{\left\{ a \right\}}(t) \right> \right| \right\}.
+
+In the unwinding AFD, zeros can be searched by 
+
+.. math::
+   :nowrap:
+
+   \begin{eqnarray}
+      \text{minimize} & \; & \sum_{c=1}^C\left| \left< G_{n,c}(t)\prod_{i=1}^{h-1}\frac{1-\overline{r}_{n,i}e^{jt}}{e^{jt}-r_{n,i}},\frac{1}{1-\overline{r}e^{jt}} \right> \right|\\
+      \text{subject to} & \; & r\in\mathbb{R} \text{ and } \sum_{c=1}^C\left| \left< G_{n,c}(t),\frac{1}{1-\overline{r}e^{jt}} \right> \right|<\epsilon.
+   \end{eqnarray}
+
+And the parameters of decomposition components in the unwinding AFD can be searched by
+
+.. math::
+
+   a_n = \arg\max_{a\in\mathbb{A}}\left\{ \sum_{c=1}^C\left| \left<  \frac{G_{n,c}(t)}{I_{n,c}(t)},\text{e}_{\left\{ a \right\}}(t) \right> \right| \right\}.
+
+It should be **noticed** that, 
+
++ If the processed multi-channel signals do not contain same components or are not suitable to be analyzed by same basis components, the multi-channel AFD cannnot provide good performance. 
++ Suppose values of :math:`t` are not same for different channels, the values of basis components are different. However, the parameters :math:`a_n` and :math:`r_{n,h}` are same for all channels. 
 
 Applications
 -----------------

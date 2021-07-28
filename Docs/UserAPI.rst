@@ -6,8 +6,8 @@ User API
 Matlab API Reference
 ----------------------
 
-V2.1
-^^^^^^
+Matlab -- V2.1
+^^^^^^^^^^^^^^^
 
 The Multi-channel core AFD and the multi-channel unwinding AFD has been added in V2.1. To know whether the multi-channel AFD is required, please check :ref:`intro-MAFD` 
 
@@ -26,8 +26,8 @@ The basic API is the same as :ref:`matlabV20-label`. The key differences are
 
 .. _matlabV20-label:
 
-V2.0
-^^^^^^
+Matlab -- V2.0
+^^^^^^^^^^^^^^^^
 
 .. function:: AFDCal()
 
@@ -219,8 +219,8 @@ V2.0
     :param level: level order.
 
 
-V1.0
-^^^^^^
+Matlab -- V1.0
+^^^^^^^^^^^^^^^^^
 
 V1.0 toolbox is **NOT** recommended.
 
@@ -261,13 +261,13 @@ V1.0 toolbox is **NOT** recommended.
 Python API Reference
 ---------------------
 
-V2.0
-^^^^^^
+Python -- V2.0
+^^^^^^^^^^^^^^^^
 
 *Under development*
 
-V1.0
-^^^^^
+Python -- V1.0
+^^^^^^^^^^^^^^^
 
 V1.0 toolbox is **NOT** recommended.
 

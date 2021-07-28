@@ -4,8 +4,8 @@ Code Samples
 Matlab
 ----------------
 
-V2.1
-^^^^^^
+Matlab -- V2.1
+^^^^^^^^^^^^^^^
 
 Demos of the single channel AFD are in :file:`Matlab/v2.1/Demo of Single Channel AFD`. They are same as demos in V2.0.
 
@@ -137,8 +137,8 @@ Compare methods in Demos 1, 2 and 3 of the multi-channel unwinding AFD.
 .. literalinclude:: ../Matlab/v2.1/Demo of Multi-channel AFD/Demo_unwindingAFD_compare.m
     :language: matlab
 
-Different phases for different channels
-""""""""""""""""""""""""""""""""""""""""""
+Different phases for different channels (multi-channel AFD)
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 This demo shows how to set different phases for different signals.
 
@@ -147,8 +147,8 @@ This demo shows how to set different phases for different signals.
 .. literalinclude:: ../Matlab/v2.1/Demo of Multi-channel AFD/Demo_set_diffPhases.m
     :language: matlab
 
-Decomposition using user-defined parameters without searching parameters
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+Decomposition using user-defined parameters without searching parameters (multi-channel AFD)
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 This demo shows how to use the pre-defined parameters to conduct the decomposition without searching parameters. It should be noticed that, when using user-defined parameters, the decomposition is not adaptive. 
 
@@ -157,8 +157,8 @@ This demo shows how to use the pre-defined parameters to conduct the decompositi
 .. literalinclude:: ../Matlab/v2.1/Demo of Multi-channel AFD/Demo_set_existing_an.m
     :language: matlab
 
-V2.0
-^^^^^^
+Matlab -- V2.0
+^^^^^^^^^^^^^^^^
 
 You can find all demo codes in the toolbox :file:`Matlab/v2.0/Demo`. To run these codes, you need the sample data in this folder.
 
@@ -288,8 +288,8 @@ Compare methods in Demos 1, 2 and 3 of the single channel unwinding AFD.
 .. literalinclude:: ../Matlab/v2.0/Demo/Demo_unwindingAFD_compare.m
     :language: matlab
 
-Different phases for different channels
-""""""""""""""""""""""""""""""""""""""""""
+Different phases for different channels (single channel AFD)
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 This demo shows how to set different phases for different signals.
 
@@ -298,8 +298,8 @@ This demo shows how to set different phases for different signals.
 .. literalinclude:: ../Matlab/v2.0/Demo/Demo_set_diffPhases.m
     :language: matlab
 
-User-defined searching dictionary
-"""""""""""""""""""""""""""""""""""
+User-defined searching dictionary (single channel AFD)
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 This demo shows how to define the searching dictionary.
 
@@ -308,8 +308,8 @@ This demo shows how to define the searching dictionary.
 .. literalinclude:: ../Matlab/v2.0/Demo/Demo_set_searchingDictionary.m
     :language: matlab
 
-Decomposition using user-defined parameters without searching parameters
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+Decomposition using user-defined parameters without searching parameters (single channel AFD)
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 This demo shows how to use the pre-defined parameters to conduct the decomposition without searching parameters. It should be noticed that, when using user-defined parameters, the decomposition is not adaptive. 
 
@@ -319,8 +319,8 @@ This demo shows how to use the pre-defined parameters to conduct the decompositi
     :language: matlab
 
 
-V1.0
-^^^^^
+Matlab -- V1.0
+^^^^^^^^^^^^^^^^
 
 V1.0 toolbox is **NOT** recommended.
 
