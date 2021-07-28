@@ -17,7 +17,8 @@ function initSetting(obj)
         K=size(obj.G,2);
         ch_num=size(obj.G,1);
         obj.t=repmat(0:2*pi/K:(2*pi-2*pi/K),ch_num,1);
-        obj.Weight=ones(K,1);
+        obj.genWeight(1,K,0);
+        %obj.Weight=ones(K,1);
     end
     
     obj.S1={};
