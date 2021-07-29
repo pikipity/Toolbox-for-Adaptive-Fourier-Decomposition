@@ -106,6 +106,60 @@ end
 set(gcf,'position',[0 0        1543         269]);
 saveas(h_figure,'Demo_Results/Demo1_Basis_components_single_channel_AFD_ch2.jpg')
 close(h_figure)
+%
+MAFD_basis = unwright_decomp_new;
+AFD_basis = unwright_decomp_new_single;
+h_figure=figure;
+for n=1:2
+    subplot(2,2,2*(n-1)+1);hold on
+    plot(t,real(MAFD_basis(n,:))/400,'linewidth',3,'color',color_sel(1,:))
+    plot(t,real(AFD_basis{1}(n,:))/400,'linewidth',3,'color',color_sel(2,:))
+    grid on
+%     title(['Real Part, Decomposition level: ' num2str(n) ', ch 2'])
+    set(gca,'fontsize',12)
+    xaxis([min(t) max(t)])
+%     R=corrcoef(real(unwright_decomp(n,:)).'/400,real(unwright_decomp_new_single{2}(n,:)).'/400);
+%     disp(R(1,2));
+    
+    subplot(2,2,2*(n-1)+2);hold on
+    plot(t,imag(MAFD_basis(n,:))/400,'linewidth',3,'color',color_sel(1,:))
+    plot(t,imag(AFD_basis{1}(n,:))/400,'linewidth',3,'color',color_sel(2,:))
+    grid on
+%     title(['Imaginary Part, Decomposition level: ' num2str(n) ', ch 2'])
+    set(gca,'fontsize',12)
+    xaxis([min(t) max(t)])
+%     R=corrcoef(imag(unwright_decomp(n,:)).'/400,imag(unwright_decomp_new_single{2}(n,:)).'/400);
+%     disp(R(1,2));
+end
+set(gcf,'position',[413         601        1205         269]);
+saveas(h_figure,'Demo_Results/Demo1_Basis_components_compare_ch1.jpg')
+close(h_figure)
+%
+h_figure=figure;
+for n=1:2
+    subplot(2,2,2*(n-1)+1);hold on
+    plot(t,real(MAFD_basis(n,:))/400,'linewidth',3,'color',color_sel(1,:))
+    plot(t,real(AFD_basis{2}(n,:))/400,'linewidth',3,'color',color_sel(2,:))
+    grid on
+%     title(['Real Part, Decomposition level: ' num2str(n) ', ch 2'])
+    set(gca,'fontsize',12);hold on
+    xaxis([min(t) max(t)])
+%     R=corrcoef(real(unwright_decomp(n,:)).'/400,real(unwright_decomp_new_single{2}(n,:)).'/400);
+%     disp(R(1,2));
+    
+    subplot(2,2,2*(n-1)+2);hold on
+    plot(t,imag(MAFD_basis(n,:))/400,'linewidth',3,'color',color_sel(1,:))
+    plot(t,imag(AFD_basis{2}(n,:))/400,'linewidth',3,'color',color_sel(2,:))
+    grid on
+%     title(['Imaginary Part, Decomposition level: ' num2str(n) ', ch 2'])
+    set(gca,'fontsize',12)
+    xaxis([min(t) max(t)])
+%     R=corrcoef(imag(unwright_decomp(n,:)).'/400,imag(unwright_decomp_new_single{2}(n,:)).'/400);
+%     disp(R(1,2));
+end
+set(gcf,'position',[413         601        1205         269]);
+saveas(h_figure,'Demo_Results/Demo1_Basis_components_compare_ch2.jpg')
+close(h_figure)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Demo 2: Energy Convergence Rate
 disp('Demo 2: Energy Convergence Rate')
