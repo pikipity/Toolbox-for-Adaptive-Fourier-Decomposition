@@ -4,7 +4,7 @@ clear;clc;close all;
 %% Demo 1: Compare basis components obtained from the single channel AFD and MAFD
 disp('Demo 1: Compare basis components obtained from the single channel AFD and MAFD')
 % Construct original signal
-load('demo_decomposition_basis.mat')
+load('Demo_1.mat')
 X_new=S1.'*unwright_decomp;
 unwright_decomp=unwright_decomp(2:end,:);
 % MAFD
@@ -110,7 +110,7 @@ close(h_figure)
 %% Demo 2: Energy Convergence Rate
 disp('Demo 2: Energy Convergence Rate')
 % Load original signal
-load('demo_energy_convergence.mat')
+load('Demo_2.mat')
 % MAFD
 N=11;
 [~, ~, ~, ~, F]=AFD(1,X,N,0.1,0.95);
