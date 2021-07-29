@@ -19,7 +19,7 @@ function search_r(obj,ch_i)
             switch obj.decompMethod
                 case 'Single Channel Conventional AFD'
                     % S
-                    tmp=conj(squeeze(reshape(obj.Base_r{ch_i,1},1,size(obj.Base_r{ch_i,1},1)*size(obj.Base_r{ch_i,1},2),size(obj.Base_r{ch_i,1},3)))*(f_r(ch_i,:)'.*obj.Weight));
+                    tmp=conj((reshape(obj.Base_r{ch_i,1},size(obj.Base_r{ch_i,1},1)*size(obj.Base_r{ch_i,1},2),size(obj.Base_r{ch_i,1},3)))*(f_r(ch_i,:)'.*obj.Weight));
                     S=reshape(tmp,size(obj.Base_r{ch_i,1},1),size(obj.Base_r{ch_i,1},2));
 %                     for i=1:size(obj.Base_r{ch_i,1},1)
 %                         S(i,:) = conj(squeeze(obj.Base_r{ch_i,1}(i,:,:))*(f_r(ch_i,:)'.*obj.Weight));
@@ -33,7 +33,8 @@ function search_r(obj,ch_i)
                 case 'Single Channel Fast AFD'
                     % S
                     phase_a=obj.t(ch_i,:);
-                    Base=squeeze(obj.Base_r{ch_i,1}(1,:,:)); 
+                    Base=obj.Base_r{ch_i,1}(1,:,:);
+                    Base=reshape(Base,size(Base,1)*size(Base,2),size(Base,3));
                     S=ifft(repmat(fft(f_r(ch_i,:).*obj.Weight.',length(phase_a)),size(Base,1),1).*Base,length(phase_a),2);
                     [min_row_i,min_col_i]=find(S==min(min(S)));
                     min_row_i=min_row_i(1);
@@ -46,13 +47,13 @@ function search_r(obj,ch_i)
                     S=[];
                     for ch_i=1:ch_N
                         if ch_i ==1
-                            tmp=conj(squeeze(reshape(obj.Base_r{ch_i,1},1,size(obj.Base_r{ch_i,1},1)*size(obj.Base_r{ch_i,1},2),size(obj.Base_r{ch_i,1},3)))*(f_r(ch_i,:)'.*obj.Weight));
+                            tmp=conj((reshape(obj.Base_r{ch_i,1},size(obj.Base_r{ch_i,1},1)*size(obj.Base_r{ch_i,1},2),size(obj.Base_r{ch_i,1},3)))*(f_r(ch_i,:)'.*obj.Weight));
                             S=reshape(tmp,size(obj.Base_r{ch_i,1},1),size(obj.Base_r{ch_i,1},2));
 %                             for i=1:size(obj.Base_r{ch_i,1},1)
 %                                 S(i,:) = conj(squeeze(obj.Base_r{ch_i,1}(i,:,:))*(f_r(ch_i,:)'.*obj.Weight));
 %                             end
                         else
-                            tmp=conj(squeeze(reshape(obj.Base_r{ch_i,1},1,size(obj.Base_r{ch_i,1},1)*size(obj.Base_r{ch_i,1},2),size(obj.Base_r{ch_i,1},3)))*(f_r(ch_i,:)'.*obj.Weight));
+                            tmp=conj((reshape(obj.Base_r{ch_i,1},size(obj.Base_r{ch_i,1},1)*size(obj.Base_r{ch_i,1},2),size(obj.Base_r{ch_i,1},3)))*(f_r(ch_i,:)'.*obj.Weight));
                             S=S + reshape(tmp,size(obj.Base_r{ch_i,1},1),size(obj.Base_r{ch_i,1},2));
 %                             for i=1:size(obj.Base_r{ch_i,1},1)
 %                                 S(i,:) = S(i,:).' + conj(squeeze(obj.Base_r{ch_i,1}(i,:,:))*(f_r(ch_i,:)'.*obj.Weight));
@@ -70,7 +71,8 @@ function search_r(obj,ch_i)
                     S=[];
                     for ch_i=1:ch_N
                         phase_a=obj.t(ch_i,:);
-                        Base=squeeze(obj.Base_r{ch_i,1}(1,:,:)); 
+                        Base=obj.Base_r{ch_i,1}(1,:,:);
+                        Base=reshape(Base,size(Base,1)*size(Base,2),size(Base,3));
                         if ch_i==1
                             S=ifft(repmat(fft(f_r(ch_i,:).*obj.Weight.',length(phase_a)),size(Base,1),1).*Base,length(phase_a),2);
                         else

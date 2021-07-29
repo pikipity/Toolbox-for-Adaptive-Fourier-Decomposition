@@ -18,8 +18,6 @@ afdcal=AFDCal();
 afdcal.setInputSignal(G);
 % set decomposition method: Multi-channel Conventional AFD
 afdcal.setDecompMethod(3);
-% set dictionary generation method: circle
-afdcal.setDicGenMethod(2);
 % set AFD method: core
 afdcal.setAFDMethod(1);
 % generate searching dictionary manually. Generate magnitude and phase randomly

@@ -35,6 +35,8 @@ function genWeight(obj,method_no,n,newtonOrder)
             y((n-nleft):n) = y((n-nleft):n) + ...
                 nonzeros(Newton(:,nleft))*nleft/(n-1);
         end
+        
+        y=y.*size(obj.t,2);
     end
     obj.Weight = y;
 end

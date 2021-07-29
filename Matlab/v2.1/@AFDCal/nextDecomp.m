@@ -159,7 +159,7 @@ function nextDecomp(obj,varargin)
                         case 'Single Channel Conventional AFD'
                             % S1
                             obj.S1{ch_i,obj.level+1}=[];
-                            tmp=conj(squeeze(reshape(obj.Base{ch_i,1},1,size(obj.Base{ch_i,1},1)*size(obj.Base{ch_i,1},2),size(obj.Base{ch_i,1},3)))*(obj.remainder(ch_i,:)'.*obj.Weight));
+                            tmp=conj((reshape(obj.Base{ch_i,1},size(obj.Base{ch_i,1},1)*size(obj.Base{ch_i,1},2),size(obj.Base{ch_i,1},3)))*(obj.remainder(ch_i,:)'.*obj.Weight));
                             obj.S1{ch_i,obj.level+1}=reshape(tmp,size(obj.Base{ch_i,1},1),size(obj.Base{ch_i,1},2));
     %                         for i=1:size(obj.Base{ch_i,1},1)
     %                             obj.S1{ch_i,obj.level+1}(i,:)=conj(squeeze(obj.Base{ch_i,1}(i,:,:))*(obj.remainder(ch_i,:)'.*obj.Weight));
@@ -242,13 +242,13 @@ function nextDecomp(obj,varargin)
                         obj.S1{1,obj.level+1}=[];
                         for ch_i=1:K
                             if ch_i==1
-                                tmp=abs(conj(squeeze(reshape(obj.Base{ch_i,1},1,size(obj.Base{ch_i,1},1)*size(obj.Base{ch_i,1},2),size(obj.Base{ch_i,1},3)))*(obj.remainder(ch_i,:)'.*obj.Weight)));
+                                tmp=abs(conj((reshape(obj.Base{ch_i,1},size(obj.Base{ch_i,1},1)*size(obj.Base{ch_i,1},2),size(obj.Base{ch_i,1},3)))*(obj.remainder(ch_i,:)'.*obj.Weight)));
                                 obj.S1{1,obj.level+1}=reshape(tmp,size(obj.Base{ch_i,1},1),size(obj.Base{ch_i,1},2));
     %                             for i=1:size(obj.Base{ch_i,1},1)
     %                                 obj.S1{1,obj.level+1}(i,:)=abs(conj(squeeze(obj.Base{ch_i,1}(i,:,:))*(obj.remainder(ch_i,:)'.*obj.Weight)));
     %                             end
                             else
-                                tmp=abs(conj(squeeze(reshape(obj.Base{ch_i,1},1,size(obj.Base{ch_i,1},1)*size(obj.Base{ch_i,1},2),size(obj.Base{ch_i,1},3)))*(obj.remainder(ch_i,:)'.*obj.Weight)));
+                                tmp=abs(conj((reshape(obj.Base{ch_i,1},size(obj.Base{ch_i,1},1)*size(obj.Base{ch_i,1},2),size(obj.Base{ch_i,1},3)))*(obj.remainder(ch_i,:)'.*obj.Weight)));
                                 obj.S1{1,obj.level+1}=obj.S1{1,obj.level+1} + reshape(tmp,size(obj.Base{ch_i,1},1),size(obj.Base{ch_i,1},2));
     %                             for i=1:size(obj.Base{ch_i,1},1)
     %                                 obj.S1{1,obj.level+1}(i,:)=obj.S1{1,obj.level+1}(i,:).' + abs(conj(squeeze(obj.Base{ch_i,1}(i,:,:))*(obj.remainder(ch_i,:)'.*obj.Weight)));
@@ -266,7 +266,8 @@ function nextDecomp(obj,varargin)
                         % S1
                         for ch_i=1:K
                             phase_a=obj.t(ch_i,:);
-                            Base=squeeze(obj.Base{ch_i,1}(1,:,:));
+                            Base=obj.Base{ch_i,1}(1,:,:);
+                            Base=reshape(Base,size(Base,1)*size(Base,2),size(Base,3));
                             % obj.S1{ch_i,obj.level+1}=ifft(repmat(fft(obj.remainder(ch_i,:).*obj.Weight.',length(phase_a)),size(Base,1),1).*Base,length(phase_a),2);
                             if ch_i==1
                                 obj.S1{1,obj.level+1}=abs(ifft(repmat(fft(obj.remainder(ch_i,:).*obj.Weight.',length(phase_a)),size(Base,1),1).*Base,length(phase_a),2));
