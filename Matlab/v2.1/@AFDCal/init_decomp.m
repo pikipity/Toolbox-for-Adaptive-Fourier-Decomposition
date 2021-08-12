@@ -8,8 +8,13 @@ function init_decomp(obj,varargin)
     
     if length(varargin)<1
         searching_an_flag = 1;
-    else
+        searching_coef_flag = 1;
+    elseif length(varargin)<2
         searching_an_flag = varargin{1};
+        searching_coef_flag = 1;
+    elseif length(varargin)>=2
+        searching_an_flag = varargin{1};
+        searching_coef_flag = varargin{2};
     end
     
     % check parameters for single channel AFD
@@ -163,9 +168,13 @@ function init_decomp(obj,varargin)
                 an=obj.an{ch_i,1}(obj.level+1);
             end
             % coef
-            obj.coef{ch_i,1}=[];
-            coef=conj(obj.e_a(an,exp(obj.t(ch_i,:).*1i))*(obj.remainder(ch_i,:)'.*obj.Weight))./length(obj.t(ch_i,:));%obj.intg(obj.G(ch_i,:),ones(size(obj.t(ch_i,:))),obj.Weight);
-            obj.coef{ch_i,1}=[obj.coef{ch_i,1} coef];
+            if searching_coef_flag
+                obj.coef{ch_i,1}=[];
+                coef=conj(obj.e_a(an,exp(obj.t(ch_i,:).*1i))*(obj.remainder(ch_i,:)'.*obj.Weight))./length(obj.t(ch_i,:));%obj.intg(obj.G(ch_i,:),ones(size(obj.t(ch_i,:))),obj.Weight);
+                obj.coef{ch_i,1}=[obj.coef{ch_i,1} coef];
+            else
+                coef=obj.coef{ch_i,1}(:,1);
+            end
             % tem_B
             obj.tem_B{ch_i,1}=[];
             tem_B = (sqrt(1-abs(an)^2)./(1-conj(an)*exp(obj.t(ch_i,:).*1i)));
@@ -231,9 +240,13 @@ function init_decomp(obj,varargin)
         end
         for ch_i=1:K
             % coef
-            obj.coef{ch_i,1}=[];
-            coef=conj(obj.e_a(an,exp(obj.t(ch_i,:).*1i))*(obj.remainder(ch_i,:)'.*obj.Weight))./length(obj.t(ch_i,:));%obj.intg(obj.G(ch_i,:),ones(size(obj.t(ch_i,:))),obj.Weight);
-            obj.coef{ch_i,1}=[obj.coef{ch_i,1} coef];
+            if searching_coef_flag
+                obj.coef{ch_i,1}=[];
+                coef=conj(obj.e_a(an,exp(obj.t(ch_i,:).*1i))*(obj.remainder(ch_i,:)'.*obj.Weight))./length(obj.t(ch_i,:));%obj.intg(obj.G(ch_i,:),ones(size(obj.t(ch_i,:))),obj.Weight);
+                obj.coef{ch_i,1}=[obj.coef{ch_i,1} coef];
+            else
+                coef=obj.coef{ch_i,1}(:,1);
+            end
             % tem_B
             obj.tem_B{ch_i,1}=[];
             tem_B = (sqrt(1-abs(an)^2)./(1-conj(an)*exp(obj.t(ch_i,:).*1i)));

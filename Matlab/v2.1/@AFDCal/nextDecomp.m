@@ -10,8 +10,13 @@ function nextDecomp(obj,varargin)
     
     if length(varargin)<1
         searching_an_flag = 1;
-    else
+        searching_coef_flag = 1;
+    elseif length(varargin)<2
         searching_an_flag = varargin{1};
+        searching_coef_flag = 1;
+    elseif length(varargin)>=2
+        searching_an_flag = varargin{1};
+        searching_coef_flag = varargin{2};
     end
     
     % check parameters for single channel AFD
@@ -200,8 +205,12 @@ function nextDecomp(obj,varargin)
                     an=obj.an{ch_i,1}(obj.level+1);
                 end
                 % coef
-                coef=conj(obj.e_a(an,exp(obj.t(ch_i,:).*1i))*(obj.remainder(ch_i,:)'.*obj.Weight))./length(obj.t(ch_i,:));%obj.intg(obj.G(ch_i,:),ones(size(obj.t(ch_i,:))),obj.Weight);
-                obj.coef{ch_i,1}=[obj.coef{ch_i,1} coef];
+                if searching_coef_flag
+                    coef=conj(obj.e_a(an,exp(obj.t(ch_i,:).*1i))*(obj.remainder(ch_i,:)'.*obj.Weight))./length(obj.t(ch_i,:));%obj.intg(obj.G(ch_i,:),ones(size(obj.t(ch_i,:))),obj.Weight);
+                    obj.coef{ch_i,1}=[obj.coef{ch_i,1} coef];
+                else
+                    coef=obj.coef{ch_i,1}(:,obj.level+1);
+                end
                 % tem_B
                 tem_B = (sqrt(1-abs(an)^2)./(1-conj(an)*exp(obj.t(ch_i,:).*1i))).*((exp(1i*obj.t(ch_i,:))-obj.an{ch_i,1}(obj.level))./(sqrt(1-abs(obj.an{ch_i,1}(obj.level))^2))).*obj.tem_B{ch_i,1}(obj.level,:);
                 switch obj.AFDMethod
@@ -303,8 +312,12 @@ function nextDecomp(obj,varargin)
 
             for ch_i=1:K
                 % coef
-                coef=conj(obj.e_a(an,exp(obj.t(ch_i,:).*1i))*(obj.remainder(ch_i,:)'.*obj.Weight))./length(obj.t(ch_i,:));%obj.intg(obj.G(ch_i,:),ones(size(obj.t(ch_i,:))),obj.Weight);
-                obj.coef{ch_i,1}=[obj.coef{ch_i,1} coef];
+                if searching_coef_flag
+                    coef=conj(obj.e_a(an,exp(obj.t(ch_i,:).*1i))*(obj.remainder(ch_i,:)'.*obj.Weight))./length(obj.t(ch_i,:));%obj.intg(obj.G(ch_i,:),ones(size(obj.t(ch_i,:))),obj.Weight);
+                    obj.coef{ch_i,1}=[obj.coef{ch_i,1} coef];
+                else
+                    coef=obj.coef{ch_i,1}(:,obj.level+1);
+                end
                 % tem_B
                 tem_B = (sqrt(1-abs(an)^2)./(1-conj(an)*exp(obj.t(ch_i,:).*1i))).*((exp(1i*obj.t(ch_i,:))-obj.an{1,1}(obj.level))./(sqrt(1-abs(obj.an{1,1}(obj.level))^2))).*obj.tem_B{ch_i,1}(obj.level,:);
                 switch obj.AFDMethod
