@@ -29,7 +29,7 @@ function setInputSignal(obj,inputSig)
     % init calculation settings
     obj.initSetting();
     % display class information
-    obj.dispInfo();
+    % obj.dispInfo();
     
     obj.addLog('Set input signal correctly')
 end
