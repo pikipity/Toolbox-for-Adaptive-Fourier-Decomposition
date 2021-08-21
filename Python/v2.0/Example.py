@@ -27,7 +27,7 @@ if __name__=="__main__":
     # init AFD calculation
     afdcal = AFDCal(s)
     #afdcal.plot_ori_sig()
-    afdcal.setAFDMethod(1) # 1:core; 2. unwinding
+    afdcal.setAFDMethod(2) # 1:core; 2. unwinding
     # generate dictionary
     afdcal.setDicGenMethod(2) # 1. square; 2. circle
     afdcal.setDecompMethod(1) # 1. Single Channel Conventional AFD; 

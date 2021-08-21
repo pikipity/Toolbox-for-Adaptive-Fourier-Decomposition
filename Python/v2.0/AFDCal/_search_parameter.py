@@ -19,6 +19,7 @@ def search_r(self,ch_i):
     for j in range(int(N)-1):
         if self.decompMethod=='Single Channel Conventional AFD':
             # S
+            phase_a=np.array([self.t[ch_i,:]])
             Base_r=self.Base_r[ch_i]
             S=np.zeros((np.shape(Base_r)[0],np.shape(Base_r)[1]),dtype=np.complex_)
             for i in range(np.shape(Base_r)[0]):
