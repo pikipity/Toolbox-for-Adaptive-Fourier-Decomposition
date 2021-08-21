@@ -155,3 +155,35 @@ def plot_evaluator(self):
         self.plot_sig(plot_t,plot_s,'phase',' ')
         pt.legend(legend_label)
             
+def plot_decompComp(self,level):
+    if level>self.level:
+        raise ValueError('Level is too large')
+    if level<0:
+        raise ValueError('Level is too small')
+    pt.figure('Decomposition Component at level '+str(level))
+    K=np.shape(self.G)[0]
+    for ch_i in range(K):
+        pt.subplot(K,1,ch_i+1)
+        self.plot_sig([self.t[ch_i,:],self.t[ch_i,:]],
+                    [np.real(self.G[ch_i,:]),np.real(self.deComp[ch_i][level][0,:])],
+                    'phase',' ')
+        pt.legend(['Original Signal','Decomposition Component'])
+        
+def plot_reSig(self,level):
+    if level>self.level:
+        raise ValueError('Level is too large')
+    if level<0:
+        raise ValueError('Level is too small')
+    pt.figure('Reconstructed Signal of first '+str(level)+' levels')
+    K=np.shape(self.G)[0]
+    for ch_i in range(K):
+        pt.subplot(K,1,ch_i+1)
+        for n in range(level+1):
+            if n==0:
+                reSig=self.deComp[ch_i][n][0,:]
+            else:
+                reSig += self.deComp[ch_i][n][0,:]
+        self.plot_sig([self.t[ch_i,:],self.t[ch_i,:]],
+                    [np.real(self.G[ch_i,:]),np.real(reSig)],
+                    'phase',' ')
+        pt.legend(['Original Signal','Reconstructed Signal'])

@@ -31,12 +31,15 @@ if __name__=="__main__":
     # generate dictionary
     afdcal.setDicGenMethod(2) # 1. square; 2. circle
     afdcal.setDecompMethod(2) # 1. Single Channel Conventional AFD; 
-                              # 2. Single Channel Fast AFD'
+                              # 2. Single Channel Fast AFD
     afdcal.genDic(0.1,0.9)
     #afdcal.plot_dic()
     # generate evaluator
     afdcal.genEva()
     #afdcal.plot_evaluator()
     afdcal.init_decomp()
+    #afdcal.plot_decompComp(0)
+    #afdcal.plot_reSig(0)
+    afdcal.nextDecomp()
     
         

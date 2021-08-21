@@ -15,6 +15,7 @@ def search_r(self,ch_i):
         self.r_store.append([])
     while len(self.r_store[ch_i]) < (self.level+1+1):
         self.r_store[ch_i].append([])
+    self.r_store[ch_i][self.level+1]=[]
     for j in range(int(N)-1):
         if self.decompMethod=='Single Channel Conventional AFD':
             # S
@@ -40,8 +41,8 @@ def search_r(self,ch_i):
             min_col_i=min_S_loc[1][0]
             # r
             min_S=abs_S[min_row_i,min_col_i]
-            r=self.dic_an[ch_i][0,min_row_i]*math.e**phase_a[0,min_col_i]
-        f_r[ch_i,:]=f_r[ch_i,:]*(1-r.conj()*math.e**(1j*phase_a))/(math.e**(1j*phase_a)-r)
+            r=self.dic_an[ch_i][0,min_row_i]*math.e**(phase_a[0,min_col_i]*1j)
+        f_r[ch_i,:]=f_r[ch_i,:]*(1-np.conj(r)*math.e**(1j*phase_a))/(math.e**(1j*phase_a)-r)
         if min_S/np.shape(self.t)[1]>tol:
             break
         else:

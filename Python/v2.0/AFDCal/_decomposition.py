@@ -122,6 +122,7 @@ def init_decomp(self,searching_an_flag=1):
         print('warning: AFD only can use circle searching dictionary.')
         return
     self.level=-1
+    self.run_time = np.zeros((np.shape(self.G)[0],1))
     K=np.shape(self.G)[0]
     self.remainder=self.G.copy()
     for ch_i in range(K):
@@ -132,4 +133,98 @@ def init_decomp(self,searching_an_flag=1):
                 self.search_r(ch_i)
                 while len(self.InProd) < (ch_i+1):
                     self.InProd.append([])
-                
+                self.InProd[ch_i]=[]
+                inprod = self.blaschke1(self.r_store[ch_i][self.level+1],np.array([self.t[ch_i,:]]))
+                self.InProd[ch_i].append(inprod)
+                self.remainder=self.remainder/inprod
+            # init energy dictribution
+            while len(self.S1)<(ch_i+1):
+                self.S1.append([])
+            while len(self.S1[ch_i])<(self.level+1+1):
+                self.S1[ch_i].append([])
+            self.S1[ch_i][self.level+1]=[]
+            while len(self.max_loc)<(ch_i+1):
+                self.max_loc.append([])
+            while len(self.max_loc[ch_i])<(self.level+1+1):
+                self.max_loc[ch_i].append([])
+            self.max_loc[ch_i][self.level+1]=[]
+            # init an
+            while len(self.an)<(ch_i+1):
+                self.an.append([])
+            while len(self.an[ch_i])<(self.level+1+1):
+                self.an[ch_i].append([])
+            self.an[ch_i][self.level+1]=[]
+            an=0j
+            self.an[ch_i][self.level+1].append(an)
+        else:
+            # r
+            if self.AFDMethod=='unwinding':
+                while len(self.InProd) < (ch_i+1):
+                    self.InProd.append([])
+                self.InProd[ch_i]=[]
+                inprod = self.blaschke1(self.r_store[ch_i][self.level+1],np.array([self.t[ch_i,:]]))
+                self.InProd[ch_i].append(inprod)
+                self.remainder=self.remainder/inprod
+            # init energy dictribution
+            while len(self.S1)<(ch_i+1):
+                self.S1.append([])
+            while len(self.S1[ch_i])<(self.level+1+1):
+                self.S1[ch_i].append([])
+            self.S1[ch_i][self.level+1]=[]
+            while len(self.max_loc)<(ch_i+1):
+                self.max_loc.append([])
+            while len(self.max_loc[ch_i])<(self.level+1+1):
+                self.max_loc[ch_i].append([])
+            self.max_loc[ch_i][self.level+1]=[]
+            # init an
+            an=self.an[ch_i][self.level+1][0]
+        # coef
+        while len(self.coef)<(ch_i+1):
+            self.coef.append([])
+        while len(self.coef[ch_i])<(0+1):
+            self.coef[ch_i].append([])
+        self.coef[ch_i][0]=[]
+        t_tmp=np.array([self.t[ch_i,:]])
+        e_a_tmp=self.e_a(an,math.e**(1j*t_tmp[0,:]))
+        coef=e_a_tmp.conj() @ (np.transpose(np.array([self.remainder[ch_i,:]]))*self.Weight)/np.shape(t_tmp)[1]
+        self.coef[ch_i][0].append(coef[0,0])
+        # tem_B
+        while len(self.tem_B)<(ch_i+1):
+            self.tem_B.append([])
+        self.tem_B[ch_i]=[]
+        tem_B = np.sqrt(1-np.abs(an)**2)/(1-np.conj(an)*math.e**(t_tmp*1j))
+        if self.AFDMethod == 'unwinding':
+            while len(self.OutProd)<(ch_i+1):
+                self.OutProd.append([])
+            self.OutProd[ch_i]=[]
+            self.OutProd[ch_i].append(tem_B)
+            tem_B=tem_B*inprod
+        self.tem_B[ch_i].append(tem_B)
+        # deComp
+        while len(self.deComp)<(ch_i+1):
+            self.deComp.append([])
+        self.deComp[ch_i]=[]
+        deComp=coef*tem_B
+        self.deComp[ch_i].append(deComp)
+        # remainder
+        self.remainder[ch_i,:]=(self.remainder[ch_i,:]-coef*e_a_tmp)*(1-np.conj(an)*math.e**(1j*t_tmp))/(math.e**(1j*t_tmp)-an)
+        # time
+        self.run_time[ch_i,0]=timeit.default_timer() - tic
+    self.level += 1
+    self.addLog('The decomposition has been initilized.')
+    
+def nextDecomp(self,searching_an_flag=1):
+    if self.isempty(self.s):
+        self.addLog('warning: Because there is not input signal, the decomposition cannot be initilized.')
+        print('warning: Because there is not input signal, the decomposition cannot be initilized.')
+        return
+    if self.decompMethod=='Single Channel Fast AFD' and self.dicGenMethod=='square':
+        self.addLog('warning: AFD only can use circle searching dictionary.')
+        print('warning: AFD only can use circle searching dictionary.')
+        return
+    K=np.shape(self.G)[0]
+    for ch_i in range(K):
+        tic=timeit.default_timer()
+        if searching_an_flag:
+            # r
+            if self.AFDMethod=='unwinding':

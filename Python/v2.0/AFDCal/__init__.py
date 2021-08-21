@@ -24,7 +24,7 @@ class AFDCal:
         
     from ._logfun import addLog, dispLog
     from ._initfun import setInputSignal, initSetting, set_an, set_coef, set_dic_an, set_parameters_searchingZeros, set_r, setAFDMethod, setDecompMethod, setDicGenMethod
-    from ._side import isempty, checkInput, Unit_Disk, Circle_Disk, e_a, e_a_r
-    from ._decomposition import genDic, genEva, init_decomp
-    from ._plot import plot_sig, plot_ori_sig, plot_point, plot_dic, plot_evaluator
+    from ._side import isempty, checkInput, Unit_Disk, Circle_Disk, e_a, e_a_r, blaschke1
+    from ._decomposition import genDic, genEva, init_decomp, nextDecomp
+    from ._plot import plot_sig, plot_ori_sig, plot_point, plot_dic, plot_evaluator, plot_decompComp, plot_reSig
     from ._search_parameter import search_r

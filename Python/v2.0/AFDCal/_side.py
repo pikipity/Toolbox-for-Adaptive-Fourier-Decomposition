@@ -4,12 +4,24 @@ import numpy as np
 from numpy.matlib import repmat
 import math
 
+def blaschke1(self,r,t):
+    x = math.e ** (1j*t)
+    B = np.ones(np.shape(t))
+    if r!=[]:
+        a1 = r[np.abs(r)!=0]
+        for k in range(len(a1)):
+            B=B*(x-a1[k])/(1-np.conj(a1[k])*x)*(-1*np.conj(a1[k])/np.abs(a1[k]))
+            # B = B.*(x-a1(k))./(1-conj(a1(k))*x).*(-conj(a1(k))/abs(a1(k)));
+        n=len(r)-len(a1)
+        B=B*(x**n)
+    return B
+
 def e_a_r(self,a,z):
     num1=1
-    num2=(1-a.conj()*z)
+    num2=(1-np.conj(a)*z)
     ret =np.zeros((1,len(num2)),dtype=np.complex_)
     for k in range(len(num2)):
-        if num2[k]==0 or np.isnan(num2[k]):
+        if (num2[k]==0).all() or np.isnan(num2[k]).all():
             ret[0,k]=None
         else:
             ret[0,k]=num1/num2[k]
@@ -17,10 +29,10 @@ def e_a_r(self,a,z):
 
 def e_a(self,a,z):
     num1 = ((1-np.abs(a)**2)**0.5)
-    num2 = (1-a.conj()*z)
+    num2 = (1-np.conj(a)*z)
     ret =np.zeros((1,len(num2)),dtype=np.complex_)
     for k in range(len(num2)):
-        if num2[k]==0 or np.isnan(num2[k]):
+        if (num2[k]==0).all() or np.isnan(num2[k]).all():
             ret[0,k]=None
         else:
             ret[0,k]=num1/num2[k]
