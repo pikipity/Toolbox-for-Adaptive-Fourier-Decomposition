@@ -3,7 +3,8 @@
 import numpy as np
 import timeit
 import math
-from numpy.fft import fft
+from numpy.fft import fft, ifft
+from numpy.matlib import repmat
 
 def genDic(self, dist, max_an_mag):
     # check inputs
@@ -228,3 +229,78 @@ def nextDecomp(self,searching_an_flag=1):
         if searching_an_flag:
             # r
             if self.AFDMethod=='unwinding':
+                self.search_r(ch_i)
+                inprod = self.blaschke1(self.r_store[ch_i][self.level+1],np.array([self.t[ch_i,:]]))
+                self.InProd[ch_i].append(inprod)
+                self.remainder=self.remainder/inprod
+            # search an
+            if self.decompMethod=='Single Channel Conventional AFD':
+                while len(self.S1)<(ch_i+1):
+                    self.S1.append([])
+                while len(self.S1[ch_i])<(self.level+1+1):
+                    self.S1[ch_i].append([])
+                Base=self.Base[ch_i]
+                self.S1[ch_i][self.level+1]=np.zeros((np.shape(Base)[0],np.shape(Base)[1]),dtype=np.complex_)
+                for i in range(np.shape(Base)[0]):
+                    self.S1[ch_i][self.level+1][i,:]=np.conj(np.transpose(Base[i,:,:] @ (np.conj(np.transpose(np.array([self.remainder[ch_i,:]])))*self.Weight)))
+                abs_S=np.abs(self.S1[ch_i][self.level+1])
+                max_S_loc=np.where(abs_S==np.nanmax(abs_S))
+                max_row_i=max_S_loc[0][0]
+                max_col_i=max_S_loc[1][0]
+                while len(self.max_loc)<(ch_i+1):
+                    self.max_loc.append([])
+                while len(self.max_loc[ch_i])<(self.level+1+1):
+                    self.max_loc[ch_i].append([])
+                self.max_loc[ch_i][self.level+1]=[]
+                self.max_loc[ch_i][self.level+1].append([max_row_i,max_col_i])
+                an=self.dic_an[ch_i][max_row_i,max_col_i]
+                while len(self.an)<(ch_i+1):
+                    self.an.append([])
+                while len(self.an[ch_i])<(self.level+1+1):
+                    self.an[ch_i].append([])
+                self.an[ch_i][self.level+1]=[]
+                self.an[ch_i][self.level+1].append(an)
+            elif self.decompMethod=='Single Channel Fast AFD':
+                phase_a=np.array([self.t[ch_i,:]])
+                Base=self.Base[ch_i][0,:,:]
+                while len(self.S1)<(ch_i+1):
+                    self.S1.append([])
+                while len(self.S1[ch_i])<(self.level+1+1):
+                    self.S1[ch_i].append([])
+                self.S1[ch_i][self.level+1]=ifft(repmat(fft(np.array([self.remainder[ch_i,:]])*np.transpose(self.Weight),np.shape(self.remainder)[1]),np.shape(Base)[0],1)*Base,np.shape(self.remainder)[1],1)
+                abs_S=np.abs(self.S1[ch_i][self.level+1])
+                max_S_loc=np.where(abs_S==np.nanmax(abs_S))
+                max_row_i=max_S_loc[0][0]
+                max_col_i=max_S_loc[1][0]
+                while len(self.max_loc)<(ch_i+1):
+                    self.max_loc.append([])
+                while len(self.max_loc[ch_i])<(self.level+1+1):
+                    self.max_loc[ch_i].append([])
+                self.max_loc[ch_i][self.level+1]=[]
+                self.max_loc[ch_i][self.level+1].append([max_row_i,max_col_i])
+                an=self.dic_an[ch_i][0,max_row_i]*math.e**(phase_a[0,max_col_i]*1j)
+                while len(self.an)<(ch_i+1):
+                    self.an.append([])
+                while len(self.an[ch_i])<(self.level+1+1):
+                    self.an[ch_i].append([])
+                self.an[ch_i][self.level+1]=[]
+                self.an[ch_i][self.level+1].append(an)
+        else:
+            # r
+            if self.AFDMethod=='unwinding':
+                inprod = self.blaschke1(self.r_store[ch_i][self.level+1],np.array([self.t[ch_i,:]]))
+                self.InProd[ch_i].append(inprod)
+                self.remainder=self.remainder/inprod
+            while len(self.S1)<(ch_i+1):
+                self.S1.append([])
+            while len(self.S1[ch_i])<(self.level+1+1):
+                self.S1[ch_i].append([])
+            self.S1[ch_i][self.level+1]=[]
+            while len(self.max_loc)<(ch_i+1):
+                self.max_loc.append([])
+            while len(self.max_loc[ch_i])<(self.level+1+1):
+                self.max_loc[ch_i].append([])
+            self.max_loc[ch_i][self.level+1]=[]
+            an=self.an[ch_i][self.level+1][0]
+        
+            
