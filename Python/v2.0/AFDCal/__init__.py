@@ -23,6 +23,8 @@ class AFDCal:
         self.setInputSignal(s)
         
     from ._logfun import addLog, dispLog
-    from ._initfun import setInputSignal, initSetting
-    from ._side import isempty, checkInput, Unit_Disk
-    from ._decomposition import genDic
+    from ._initfun import setInputSignal, initSetting, set_an, set_coef, set_dic_an, set_parameters_searchingZeros, set_r, setAFDMethod, setDecompMethod, setDicGenMethod
+    from ._side import isempty, checkInput, Unit_Disk, Circle_Disk, e_a, e_a_r
+    from ._decomposition import genDic, genEva, init_decomp
+    from ._plot import plot_sig, plot_ori_sig, plot_point, plot_dic, plot_evaluator
+    from ._search_parameter import search_r

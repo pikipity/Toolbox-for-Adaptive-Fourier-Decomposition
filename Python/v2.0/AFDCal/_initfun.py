@@ -68,6 +68,15 @@ def initSetting(self):
     self.run_time=[]
     self.time_genDic=[]
     self.time_genEva=[]
+    #
+    self.r_store=[]
+    self.InProd=[]
+    self.OutProd=[]
+    self.Base_r=[]
+    self.N_r=1e3
+    self.tol_r=1e-3
+    #
+    self.addLog('Initialize settings correctly')
 
 # =============================================================================
 #     def genWeight(self,method_no,n,newtonOrder):
@@ -86,3 +95,62 @@ def initSetting(self):
 #                 iter = np.arange(1,k+1,1)
 #                 nonNewton = (Newton[:,6-1]!=0)
 # =============================================================================
+
+def setDicGenMethod(self,method_no):
+    if method_no==1:
+        self.dicGenMethod='square'
+    elif method_no==2:
+        self.dicGenMethod='circle'
+    else:
+        self.addLog('error: Because the specific dicGenMethod is unknown, setDicGenMethod is not successful.')
+        raise ValueError('Because the specific dicGenMethod is unknown, setDicGenMethod is not successful.')
+    self.addLog('setDicGenMethod is successful.')
+    
+def setDecompMethod(self,method_no):
+    if method_no==1:
+        self.decompMethod = 'Single Channel Conventional AFD'
+    elif method_no==2:
+        self.decompMethod = 'Single Channel Fast AFD'
+        self.addLog('Fast AFD only can use the "circle" dictionary. So the dicGenMethod is changed.')
+        self.setDicGenMethod(2)
+    else:
+        self.addLog('error: Because the specific decompMethod is unknown, setDecompMethod is not successful.')
+        raise ValueError('Because the specific decompMethod is unknown, setDecompMethod is not successful.')
+    self.addLog('setDecompMethod is successful.')
+    
+def setAFDMethod(self,method_no):
+    if method_no==1:
+        self.AFDMethod='core'
+    elif method_no==2:
+        self.AFDMethod='unwinding'
+    else:
+        self.addLog('error: Because the specific AFDMethod is unknown, setAFDMethod is not successful.')
+        raise ValueError('Because the specific AFDMethod is unknown, setAFDMethod is not successful.')
+    self.addLog('setAFDMethod is successful.')
+    
+def set_r(self,r_store):
+    self.r_store=r_store.copy()
+    
+def set_parameters_searchingZeros(self,N_r,tol_r):
+    self.N_r=N_r
+    self.tol_r=tol_r
+    
+def set_dic_an(self,dic_an):
+    if self.decompMethod=='Single Channel Fast AFD':
+        self.addLog('warning: Fast AFD is not allowed to set searching dictionary manually.')
+        print('warning: Fast AFD is not allowed to set searching dictionary manually.')
+        return
+    # if np.shape(dic_an)[0]<np.shape(dic_an)[1]:
+    #     self.addLog('warning: Because the specific searching dictionary is not correct, "set_dic_an" is not successful.')
+    #     print('warning: Because the specific searching dictionary is not correct, "set_dic_an" is not successful.')
+    #     return
+    self.setDicGenMethod(1)
+    for ch_i in range(np.shape(dic_an)[0]):
+        dic_an[ch_i,:,:]=np.unique(dic_an[ch_i])
+    self.dic_an=dic_an.copy()
+    
+def set_coef(self,coef):
+    self.coef=coef.copy()
+    
+def set_an(self,an):
+    self.an=an.copy()

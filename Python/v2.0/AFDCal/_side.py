@@ -2,6 +2,29 @@
 
 import numpy as np
 from numpy.matlib import repmat
+import math
+
+def e_a_r(self,a,z):
+    num1=1
+    num2=(1-a.conj()*z)
+    ret =np.zeros((1,len(num2)),dtype=np.complex_)
+    for k in range(len(num2)):
+        if num2[k]==0 or np.isnan(num2[k]):
+            ret[0,k]=None
+        else:
+            ret[0,k]=num1/num2[k]
+    return ret
+
+def e_a(self,a,z):
+    num1 = ((1-np.abs(a)**2)**0.5)
+    num2 = (1-a.conj()*z)
+    ret =np.zeros((1,len(num2)),dtype=np.complex_)
+    for k in range(len(num2)):
+        if num2[k]==0 or np.isnan(num2[k]):
+            ret[0,k]=None
+        else:
+            ret[0,k]=num1/num2[k]
+    return ret
 
 def isempty(self,s):
     if np.shape(s)[0]==0:
@@ -21,7 +44,7 @@ def checkInput(self):
     return errorFlag
 
 def Unit_Disk(self,dist,cont):
-    t = np.array([np.arange(-1,1+0.1,0.1)])
+    t = np.array([np.arange(-1,1+dist,dist)])
     n = np.shape(t)[1]
     real = repmat(t,n,1)
     image = repmat(np.transpose(t),1,n)
@@ -37,7 +60,36 @@ def Unit_Disk(self,dist,cont):
     ret = np.delete(ret, remove_row, 0)
     remove_col=[]
     for j in range(np.shape(ret)[1]):
-        if np.sum(np.isnan(ret[:,i]))==np.shape(ret)[0]:
+        if np.sum(np.isnan(ret[:,j]))==np.shape(ret)[0]:
             remove_col.append(j)
     ret = np.delete(ret, remove_col, 1)
+    #
+    return ret
 
+def Circle_Disk(self,dist,cont,phase):
+    # generate magnitude and phase
+    abs_a=np.array([np.arange(0,1,dist)])
+    phase_a=phase.copy()
+    #
+    tmp=np.zeros((np.shape(abs_a)[1],np.shape(phase_a)[1]),dtype=np.complex_)
+    for m in range(np.shape(abs_a)[1]):
+        for l in range(np.shape(phase_a)[1]):
+            tmp[m,l]=abs_a[0,m] * math.e ** ( 1j*phase_a[0,l] )
+    ret1=tmp.copy()
+    del tmp
+    ret1[np.abs(ret1)>=cont] = None
+    ret = ret1.copy()
+    del ret1
+    #
+    remove_row=[]
+    for i in range(np.shape(ret)[0]):
+        if np.sum(np.isnan(ret[i,:]))==np.shape(ret)[1]:
+            remove_row.append(i)
+    ret = np.delete(ret, remove_row, 0)
+    remove_col=[]
+    for j in range(np.shape(ret)[1]):
+        if np.sum(np.isnan(ret[:,j]))==np.shape(ret)[0]:
+            remove_col.append(j)
+    ret = np.delete(ret, remove_col, 1)
+    #
+    return ret
