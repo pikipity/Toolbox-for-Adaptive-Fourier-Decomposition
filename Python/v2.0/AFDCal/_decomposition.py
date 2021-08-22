@@ -187,7 +187,7 @@ def init_decomp(self,searching_an_flag=1):
         self.coef[ch_i][0]=[]
         t_tmp=np.array([self.t[ch_i,:]])
         e_a_tmp=self.e_a(an,math.e**(1j*t_tmp[0,:]))
-        coef=e_a_tmp.conj() @ (np.transpose(np.array([self.remainder[ch_i,:]]))*self.Weight)/np.shape(t_tmp)[1]
+        coef=np.conj(e_a_tmp @ (np.conj(np.transpose(np.array([self.remainder[ch_i,:]])))*self.Weight))/np.shape(t_tmp)[1]
         self.coef[ch_i][0].append(coef[0,0])
         # tem_B
         while len(self.tem_B)<(ch_i+1):
@@ -291,6 +291,7 @@ def nextDecomp(self,searching_an_flag=1):
                 inprod = self.blaschke1(self.r_store[ch_i][self.level+1],np.array([self.t[ch_i,:]]))
                 self.InProd[ch_i].append(inprod)
                 self.remainder=self.remainder/inprod
+            # search an
             while len(self.S1)<(ch_i+1):
                 self.S1.append([])
             while len(self.S1[ch_i])<(self.level+1+1):
@@ -302,5 +303,36 @@ def nextDecomp(self,searching_an_flag=1):
                 self.max_loc[ch_i].append([])
             self.max_loc[ch_i][self.level+1]=[]
             an=self.an[ch_i][self.level+1][0]
+        # coef
+        while len(self.coef)<(ch_i+1):
+            self.coef.append([])
+        while len(self.coef[ch_i])<(self.level+1+1):
+            self.coef[ch_i].append([])
+        self.coef[ch_i][self.level+1]=[]
+        t_tmp=np.array([self.t[ch_i,:]])
+        e_a_tmp=self.e_a(an,math.e**(1j*t_tmp[0,:]))
+        coef=np.conj(e_a_tmp @ (np.conj(np.transpose(np.array([self.remainder[ch_i,:]])))*self.Weight))/np.shape(t_tmp)[1]
+        self.coef[ch_i][self.level+1].append(coef[0,0])
+        # tem_B
+        while len(self.tem_B)<(ch_i+1):
+            self.tem_B.append([])
+        tem_B = np.sqrt(1-np.abs(an)**2)/(1-np.conj(an)*math.e**(t_tmp*1j))
+        if self.AFDMethod == 'unwinding':
+            while len(self.OutProd)<(ch_i+1):
+                self.OutProd.append([])
+            self.OutProd[ch_i].append(tem_B)
+            tem_B=tem_B*inprod
+        self.tem_B[ch_i].append(tem_B)
+        # deComp
+        while len(self.deComp)<(ch_i+1):
+            self.deComp.append([])
+        deComp=coef*tem_B
+        self.deComp[ch_i].append(deComp)
+        # remainder
+        self.remainder[ch_i,:]=(self.remainder[ch_i,:]-coef*e_a_tmp)*(1-np.conj(an)*math.e**(1j*t_tmp))/(math.e**(1j*t_tmp)-an)
+        # time
+        self.run_time[ch_i,0] += timeit.default_timer() - tic
+    self.level += 1
+    self.addLog('The decomposition at level ' +str(self.level)+ ' has been finished.')
         
             

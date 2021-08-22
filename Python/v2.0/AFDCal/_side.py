@@ -8,7 +8,9 @@ def blaschke1(self,r,t):
     x = math.e ** (1j*t)
     B = np.ones(np.shape(t))
     if r!=[]:
-        a1 = r[np.abs(r)!=0]
+        a1 = []
+        for a1_i in np.where(np.abs(r)!=0)[0]:
+            a1.append(r[a1_i])
         for k in range(len(a1)):
             B=B*(x-a1[k])/(1-np.conj(a1[k])*x)*(-1*np.conj(a1[k])/np.abs(a1[k]))
             # B = B.*(x-a1(k))./(1-conj(a1(k))*x).*(-conj(a1(k))/abs(a1(k)));

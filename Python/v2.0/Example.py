@@ -29,8 +29,8 @@ if __name__=="__main__":
     #afdcal.plot_ori_sig()
     afdcal.setAFDMethod(2) # 1:core; 2. unwinding
     # generate dictionary
-    afdcal.setDicGenMethod(2) # 1. square; 2. circle
-    afdcal.setDecompMethod(1) # 1. Single Channel Conventional AFD; 
+    afdcal.setDicGenMethod(1) # 1. square; 2. circle
+    afdcal.setDecompMethod(2) # 1. Single Channel Conventional AFD; 
                               # 2. Single Channel Fast AFD
     afdcal.genDic(0.1,0.9)
     #afdcal.plot_dic()
@@ -40,5 +40,9 @@ if __name__=="__main__":
     afdcal.init_decomp()
     #afdcal.plot_decompComp(0)
     #afdcal.plot_reSig(0)
+    for k in range(10):
+        afdcal.nextDecomp()
+    afdcal.plot_decompComp(1)
+    afdcal.plot_reSig(1)
     
         
