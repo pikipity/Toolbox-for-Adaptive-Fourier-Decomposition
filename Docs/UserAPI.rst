@@ -6,8 +6,28 @@ User API
 Matlab API Reference
 ----------------------
 
-V2.0
-^^^^^^
+Matlab -- V2.1
+^^^^^^^^^^^^^^^
+
+The Multi-channel core AFD and the multi-channel unwinding AFD has been added in V2.1. To know whether the multi-channel AFD is required, please check :ref:`intro-MAFD` 
+
+The basic API is the same as :ref:`matlabV20-label`. The key differences are
+
++ The size of ``AFDCal.an`` is changed to :math:`1 \times 1` for multi-channel AFD.
++ The size of ``AFDCal.dic_an`` is changed to :math:`1 \times 1` for multi-channel AFD.
++ The size of ``AFDCal.r_store`` is changed to :math:`1 \times (N+1)` for multi-channel unwinding AFD.
++ Although ``AFDCal.tem_B`` has many channels' results, they are same when ``AFDCal.t`` are same for different channels.
++ When using ``AFDCal.setDecompMethod(method_no)``, 
+  
+  + ``method_no=1`` means "Single Channel Conventional AFD"
+  + ``method_no=2`` means "Single Channel Fast AFD"
+  + ``method_no=3`` means "Multi-channel Conventional AFD"
+  + ``method_no=4`` means "Multi-channel Fast AFD"
+
+.. _matlabV20-label:
+
+Matlab -- V2.0
+^^^^^^^^^^^^^^^^
 
 .. function:: AFDCal()
 
@@ -199,8 +219,8 @@ V2.0
     :param level: level order.
 
 
-V1.0
-^^^^^^
+Matlab -- V1.0
+^^^^^^^^^^^^^^^^^
 
 V1.0 toolbox is **NOT** recommended.
 
@@ -241,13 +261,13 @@ V1.0 toolbox is **NOT** recommended.
 Python API Reference
 ---------------------
 
-V2.0
-^^^^^^
+Python -- V2.0
+^^^^^^^^^^^^^^^^
 
 *Under development*
 
-V1.0
-^^^^^
+Python -- V1.0
+^^^^^^^^^^^^^^^
 
 V1.0 toolbox is **NOT** recommended.
 

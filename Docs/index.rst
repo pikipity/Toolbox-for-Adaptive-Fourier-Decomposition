@@ -12,6 +12,32 @@ This toolbox contains **different implementations** of the AFD for different typ
 
 There is a `simple online demo <http://zewang.site/AFD>`_. You can try the AFD quickly.
 
+This toolbox includes
+
++ Core AFD:
+
+  + Single channel: 
+  
+    + without FFT (slow)
+    + with FFT (fast)
+  
+  + Multi-channel:
+
+    + without FFT (slow)
+    + with FFT (fast)
+
++ Unwinding AFD:
+
+  + Single channel: 
+  
+    + without FFT (slow)
+    + with FFT (fast)
+
+  + Multi-channel:
+
+    + without FFT (slow)
+    + with FFT (fast)
+
 Content
 --------
 

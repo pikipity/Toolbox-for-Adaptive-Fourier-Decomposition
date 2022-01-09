@@ -11,9 +11,9 @@ Please check the [**document**](https://toolbox-for-adaptive-fourier-decompositi
 **Advantages of AFD**:
 
 + Adaptive decomposition:
-  + Adaptive basis
+  + Adaptive basis;
   + Orthogonal decomposition components;
-  + Decomposition components are  mono-components that only contain non-negative analytic phase derivatives
+  + Decomposition components are  mono-components that only contain non-negative analytic phase derivatives;
   + Fast energy convergence;
   + Rigorous mathematical foundation.
 + Provide the transient time-frequency distribution:
@@ -24,9 +24,17 @@ Please check the [**document**](https://toolbox-for-adaptive-fourier-decompositi
 **AFD methods included in the toolbox**:
 
 + Core AFD:
-  + Single channel core AFD without FFT (slow)
-  + Single channel core AFD with FFT (fast)
+  + Single channel
+    + without FFT (slow)
+    + with FFT (fast)
+  + Multi-channel
+    + without FFT (slow)
+    + with FFT (fast)
 + Unwinding AFD:
-  + Single channel unwinding AFD without FFT (slow)
-  + Single channel unwinding AFD with FFT (fast)
+  + Single channel 
+    + without FFT (slow)
+    + with FFT (fast)
+  + Multi-channel
+    + without FFT (slow)
+    + with FFT (fast)
 
