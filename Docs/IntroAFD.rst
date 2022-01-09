@@ -314,6 +314,21 @@ It should be **noticed** that,
 + If the processed multi-channel signals do not contain same components or are not suitable to be analyzed by same basis components, the multi-channel AFD cannnot provide good performance. 
 + Suppose values of :math:`t` are not same for different channels, the values of basis components are different. However, the parameters :math:`a_n` and :math:`r_{n,h}` are same for all channels. 
 
+Mathematical Foundation and Implementations
+-----------------
+
+   + T. Qian, "`Intrinsic mono-component decomposition of functions: an advance of Fourier theory <https://doi.org/10.1002/mma.1214>`_," Math. Methods Appl. Sci., vol. 33, no. 7, pp. 880–891, 2010.
+   + T. Qian, L. Zhang, and Z. Li, "`Algorithm of adaptive Fourier decomposition <http://ieeexplore.ieee.org/document/6021385/>`_," IEEE Trans. Signal Process., vol. 59, no. 12, pp. 5899–5906, 2011.
+   + T. Qian and Y. Wang, "`Remarks on adaptive Fourier decomposition <http://www.worldscientific.com/doi/pdf/10.1142/S0219691313500070>`_," Int. J. Wavelets, Multiresolution Inf. Process., vol. 11, no. 1, p. 1350007, 2013.
+   + T. Qian, "`Cyclic AFD algorithm for the best rational approximation <https://doi.org/10.1002/mma.2843>`_," Math. Methods Appl. Sci., vol. 37, no. 6, pp. 846–859, 2014.
+   + T. Qian, "`Adaptive Fourier decompositions and rational approximations — part I: Theory <http://www.worldscientific.com/doi/pdf/10.1142/S0219691314610086>`_," Int. J. Wavelets, Multiresolution Inf. Process., vol. 12, no. 5, p. 1461008, 2014.
+   + L. Zhang, W. Hong, W. Mai, and T. Qian, "`Adaptive Fourier decomposition and rational approximation — part II: Software system design and development <http://www.worldscientific.com/doi/pdf/10.1142/S0219691314610098>`_," Int. J. Wavelets, Multiresolution Inf. Process., vol. 12, no. 5, p. 1461009, 2014.
+   + T. Qian, H. Li, and M. Stessin, "`Comparison of adaptive mono-component decompositions <http://www.sciencedirect.com/science/article/pii/S1468121812001770>`_," Nonlinear Anal. Real World Appl., vol. 14, no. 2, pp. 1055–1074, 2013.
+   + Y. Gao, M. Ku, T. Qian, and J. Wang, "`FFT formulations of adaptive Fourier decomposition <http://www.sciencedirect.com/science/article/pii/S0377042717302005>`_," J. Comput. Appl. Math., Apr. 2017.
+   + Z. Wang, F. Wan, C. M. Wong, and T. Qian, "`Fast basis search for adaptive Fourier decomposition <https://link.springer.com/article/10.1186/s13634-018-0593-1>`_," EURASIP J. Adv. Sig. Pr., vol. 74, no. 1, 2018.
+   + T. Qian, "`Sparse representations of random signals <https://doi.org/10.1002/mma.8033>`_," Math Meth Appl Sci., 2021.
+   + Z. Wang, C. M. Wong, A. Rosa, T. Qian, and F. Wan, "`Adaptive Fourier decomposition for multi-channel signal analysis `_," accepted by IEEE Trans. Signal Process., 2021. 
+
 Applications
 -----------------
 
@@ -346,15 +361,3 @@ According to above characteristics, the AFD can applied to many different areas:
    + L. Zhang, "`Adaptive Fourier decomposition based signal instantaneous frequency computation approach <http://waset.org/publications/2536/adaptive-fourier-decomposition-based-signal-instantaneous-frequency-computation-approach>`_," Int. J. Math. Comput. Phys. Electr. Comput. Eng., vol. 6, no. 8, pp. 1117–1122, 2012.
 
 
-Related Papers
------------------
-
-   + T. Qian, "`Intrinsic mono-component decomposition of functions: an advance of Fourier theory <https://doi.org/10.1002/mma.1214>`_," Math. Methods Appl. Sci., vol. 33, no. 7, pp. 880–891, 2010.
-   + T. Qian, L. Zhang, and Z. Li, "`Algorithm of adaptive Fourier decomposition <http://ieeexplore.ieee.org/document/6021385/>`_," IEEE Trans. Signal Process., vol. 59, no. 12, pp. 5899–5906, 2011.
-   + T. Qian and Y. Wang, "`Remarks on adaptive Fourier decomposition <http://www.worldscientific.com/doi/pdf/10.1142/S0219691313500070>`_," Int. J. Wavelets, Multiresolution Inf. Process., vol. 11, no. 1, p. 1350007, 2013.
-   + T. Qian, "`Cyclic AFD algorithm for the best rational approximation <https://doi.org/10.1002/mma.2843>`_," Math. Methods Appl. Sci., vol. 37, no. 6, pp. 846–859, 2014.
-   + T. Qian, "`Adaptive Fourier decompositions and rational approximations — part I: Theory <http://www.worldscientific.com/doi/pdf/10.1142/S0219691314610086>`_," Int. J. Wavelets, Multiresolution Inf. Process., vol. 12, no. 5, p. 1461008, 2014.
-   + L. Zhang, W. Hong, W. Mai, and T. Qian, "`Adaptive Fourier decomposition and rational approximation — part II: Software system design and development <http://www.worldscientific.com/doi/pdf/10.1142/S0219691314610098>`_," Int. J. Wavelets, Multiresolution Inf. Process., vol. 12, no. 5, p. 1461009, 2014.
-   + T. Qian, H. Li, and M. Stessin, "`Comparison of adaptive mono-component decompositions <http://www.sciencedirect.com/science/article/pii/S1468121812001770>`_," Nonlinear Anal. Real World Appl., vol. 14, no. 2, pp. 1055–1074, 2013.
-   + Y. Gao, M. Ku, T. Qian, and J. Wang, "`FFT formulations of adaptive Fourier decomposition <http://www.sciencedirect.com/science/article/pii/S0377042717302005>`_," J. Comput. Appl. Math., Apr. 2017.
-   + Z. Wang, F. Wan, C. M. Wong, and T. Qian, "`Fast basis search for adaptive Fourier decomposition <https://link.springer.com/article/10.1186/s13634-018-0593-1>`_," EURASIP J. Adv. Sig. Pr., vol. 74, no. 1, 2018.
