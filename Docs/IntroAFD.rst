@@ -8,6 +8,8 @@ The adaptive Fourier decomposition is an **adaptive** signal decomposition:
 + Compared with the conventional signal decomposition methods, e.g. Fourier decomposition and wavelet decomposition, the AFD uses **adaptive orthogonal basis**. These adaptive basis can make the decomposition components match the processed signals best and thus can provide good time-frequency resolution without pre-defined basis. 
 + Compared with other adaptive decomposition methods, e.g. empirical mode decomposition (EMD), the AFD has the **rigorous mathematical foundation**, which allowed users further analyze detailed decomposition coefficients and decomposition components.
 
+Chinese introduction blogs related to the basic principles of the AFD and the implementation of the fast AFD can be found in `zewang.site <http://zewang.site/bloglist>`_.
+
 Basic Idea
 -------------
 
