@@ -316,7 +316,7 @@ It should be **noticed** that,
 + If the processed multi-channel signals do not contain same components or are not suitable to be analyzed by same basis components, the multi-channel AFD cannnot provide good performance. 
 + Suppose values of :math:`t` are not same for different channels, the values of basis components are different. However, the parameters :math:`a_n` and :math:`r_{n,h}` are same for all channels. 
 
-Mathematical Foundation and Implementations
+Papers Related to Mathematical Foundation and Implementations
 -----------------
 
    + T. Qian, "`Intrinsic mono-component decomposition of functions: an advance of Fourier theory <https://doi.org/10.1002/mma.1214>`_," *Math. Methods Appl. Sci.*, vol. 33, no. 7, pp. 880–891, 2010.
@@ -331,7 +331,7 @@ Mathematical Foundation and Implementations
    + T. Qian, "`Sparse representations of random signals <https://doi.org/10.1002/mma.8033>`_," *Math Meth Appl Sci.*, 2021.
    + Z. Wang, C. M. Wong, A. Rosa, T. Qian, and F. Wan, "Adaptive Fourier decomposition for multi-channel signal analysis," accepted by *IEEE Trans. Signal Process.*, 2022. 
 
-Applications
+Papers Related to Applications
 -----------------
 
 According to above characteristics, the AFD can applied to many different areas:
