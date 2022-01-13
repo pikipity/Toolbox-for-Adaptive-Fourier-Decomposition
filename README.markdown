@@ -8,7 +8,7 @@ There is a [simple *online demo*](http://zewang.site/AFD) based on Python versio
 
 Please check the [**document**](https://toolbox-for-adaptive-fourier-decomposition.readthedocs.io/) for detailed information. 
 
-**Advantages of AFD**:
+## Advantages of AFD
 
 + Adaptive decomposition:
   + Adaptive basis;
@@ -21,7 +21,7 @@ Please check the [**document**](https://toolbox-for-adaptive-fourier-decompositi
   + Non-negative real-valuedness;
   + Weak and strong finite suports.
 
-**AFD methods included in the toolbox**:
+## AFD methods included in the toolbox
 
 + Core AFD:
   + Single channel
@@ -38,3 +38,6 @@ Please check the [**document**](https://toolbox-for-adaptive-fourier-decompositi
     + without FFT (slow)
     + with FFT (fast)
 
+## License
+
+This toolbox follows ["Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)"](https://creativecommons.org/licenses/by-nc-nd/4.0/deed.en).
