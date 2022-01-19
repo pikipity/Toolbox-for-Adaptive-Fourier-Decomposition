@@ -38,6 +38,20 @@ Please check the [**document**](https://toolbox-for-adaptive-fourier-decompositi
     + without FFT (slow)
     + with FFT (fast)
 
+## Related Papers
+
+A list of papers related to the mathematical Foundation, implementations, and applications of the AFD can be found in the [document](https://toolbox-for-adaptive-fourier-decomposition.readthedocs.io/en/latest/IntroAFD.html).
+
+If you use the single-channel AFD method in this toolbox, please at least cite [“Algorithm of adaptive Fourier decomposition”](http://ieeexplore.ieee.org/document/6021385/).
+
+> T. Qian, L. Zhang, and Z. Li, “Algorithm of adaptive Fourier decomposition,” IEEE Trans. Signal Process., vol. 59, no. 12, pp. 5899–5906, 2011.
+
+If you use the multi-channel AFD method in this toolbox, please at least cite [“Adaptive Fourier decomposition for multi-channel signal analysis”](https://doi.org/10.1109/TSP.2022.3143723).
+
+> Z. Wang, C. M. Wong, A. Rosa, T. Qian, and F. Wan, “Adaptive Fourier decomposition for multi-channel signal analysis,” IEEE Trans. Signal Process., in press, 2022.
+
+
 ## License
 
 This toolbox follows ["Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)"](https://creativecommons.org/licenses/by-nc-nd/4.0/deed.en).
+
