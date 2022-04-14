@@ -48,7 +48,7 @@ If you use the single-channel AFD method in this toolbox, please at least cite [
 
 If you use the multi-channel AFD method in this toolbox, please at least cite [“Adaptive Fourier decomposition for multi-channel signal analysis”](https://doi.org/10.1109/TSP.2022.3143723).
 
-> Z. Wang, C. M. Wong, A. Rosa, T. Qian, and F. Wan, “Adaptive Fourier decomposition for multi-channel signal analysis,” IEEE Trans. Signal Process., in press, 2022.
+> Z. Wang, C. M. Wong, A. Rosa, T. Qian, and F. Wan, “Adaptive Fourier decomposition for multi-channel signal analysis,” IEEE Trans. Signal Process., vol. 70, pp. 903–918, 2022.
 
 
 ## License

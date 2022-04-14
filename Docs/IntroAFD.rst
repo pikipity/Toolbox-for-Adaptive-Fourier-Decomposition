@@ -329,7 +329,7 @@ Papers Related to Mathematical Foundation and Implementations
    + Y. Gao, M. Ku, T. Qian, and J. Wang, "`FFT formulations of adaptive Fourier decomposition <http://www.sciencedirect.com/science/article/pii/S0377042717302005>`_," *J. Comput. Appl. Math.*, Apr. 2017.
    + Z. Wang, F. Wan, C. M. Wong, and T. Qian, "`Fast basis search for adaptive Fourier decomposition <https://link.springer.com/article/10.1186/s13634-018-0593-1>`_," *EURASIP J. Adv. Sig. Pr.*, vol. 74, no. 1, 2018.
    + T. Qian, "`Sparse representations of random signals <https://doi.org/10.1002/mma.8033>`_," *Math Meth Appl Sci.*, 2021.
-   + Z. Wang, C. M. Wong, A. Rosa, T. Qian, and F. Wan, "`Adaptive Fourier decomposition for multi-channel signal analysis <https://doi.org/10.1109/TSP.2022.3143723>`_," *IEEE Trans. Signal Process.*, in press, 2022. 
+   + Z. Wang, C. M. Wong, A. Rosa, T. Qian, and F. Wan, "`Adaptive Fourier decomposition for multi-channel signal analysis <https://doi.org/10.1109/TSP.2022.3143723>`_," *IEEE Trans. Signal Process.*, vol. 70, pp. 903–918, 2022. 
 
 Papers Related to Applications
 -----------------
