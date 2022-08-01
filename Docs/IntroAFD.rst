@@ -318,8 +318,9 @@ It should be **noticed** that,
 
 Papers Related to Mathematical Foundation and Implementations
 -----------------
-
+   
    + T. Qian, "`Intrinsic mono-component decomposition of functions: an advance of Fourier theory <https://doi.org/10.1002/mma.1214>`_," *Math. Methods Appl. Sci.*, vol. 33, no. 7, pp. 880–891, 2010.
+   + T. Qian, Y. B. Wang, “`Adaptive Fourier series -- a variation of greedy algorithm <https://link.springer.com/article/10.1007/s10444-010-9153-4>`_," Adv. Comput. Math., vol. 34, no. 3, pp. 279–293, 2011.
    + T. Qian, L. Zhang, and Z. Li, "`Algorithm of adaptive Fourier decomposition <http://ieeexplore.ieee.org/document/6021385/>`_," *IEEE Trans. Signal Process.*, vol. 59, no. 12, pp. 5899–5906, 2011.
    + T. Qian and Y. Wang, "`Remarks on adaptive Fourier decomposition <http://www.worldscientific.com/doi/pdf/10.1142/S0219691313500070>`_," *Int. J. Wavelets, Multiresolution Inf. Process.*, vol. 11, no. 1, p. 1350007, 2013.
    + T. Qian, "`Cyclic AFD algorithm for the best rational approximation <https://doi.org/10.1002/mma.2843>`_," *Math. Methods Appl. Sci.*, vol. 37, no. 6, pp. 846–859, 2014.
