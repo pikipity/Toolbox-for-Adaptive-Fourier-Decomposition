@@ -42,7 +42,7 @@ Please check the [**document**](https://toolbox-for-adaptive-fourier-decompositi
 
 A list of papers related to the mathematical Foundation, implementations, and applications of the AFD can be found in the [document](https://toolbox-for-adaptive-fourier-decomposition.readthedocs.io/en/latest/IntroAFD.html).
 
-If you use the single-channel AFD method in this toolbox, please at least cite these papers.
+If you use the single-channel AFD method in this toolbox, please at least cite these papers:
 
 > T. Qian, L. Zhang, and Z. Li, “Algorithm of adaptive Fourier decomposition,” IEEE Trans. Signal Process., vol. 59, no. 12, pp. 5899–5906, 2011.
 
