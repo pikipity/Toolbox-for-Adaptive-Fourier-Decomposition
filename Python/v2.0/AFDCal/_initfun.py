@@ -1,156 +1,187 @@
-# -*- coding: utf-8 -*-
-
-from datetime import datetime
+from numpy import ndarray
+from typing import Union, Optional, Dict, List, Tuple
+import os.path as op
 import numpy as np
-from numpy.matlib import repmat
-from scipy.signal import hilbert
-import math
+import scipy.signal as pysig
+from math import pi
 
-def setInputSignal(self,inputSig):
-    logStr = '---------- '+datetime.now().strftime('%Y-%m-%d %I:%M:%S.%f %p')+' ----------'
-    self.addLog(logStr)
-    # Init input signal
-    self.s = inputSig
-    # Check input
-    errorFlag = self.checkInput()
-    if not self.isempty(errorFlag):
-        for error_i in range(len(errorFlag)):
-            if error_i == 1:
-                logStr='warning: Input is empty. Please remember to set a input signal by "setInputSignal"'
-                self.addLog(logStr)
-                print(logStr)
-            elif error_i == 2:
-                logStr = 'warning: Please double check input signal. The first dimension should be channel. The second dimension should be sample.'
-                self.addLog(logStr)
-                print(logStr)
-            elif error_i == 3:
-                logStr = 'Error: The dimension of input signal is wrong. The input signal only can have 2 dimentions.'
-                self.addLog(logStr)
-                raise ValueError('The dimension of input signal is wrong. The input signal only can have 2 dimentions.')
-    self.addLog('Input new signal')
-    self.addLog('Initialize settings')
-    # Init calculation settings
-    self.initSetting()
-    self.addLog('Set input signal correctly')
-        
+from ._io import loaddata
+from ._utils import genWeight
 
 def initSetting(self):
-    if self.isempty(self.s):
-        # empty input signal
-        logStr = 'warning: Because there is not input signal, the computational settings are not initialized successfully.'
-        self.addLog(logStr)
-        print(logStr)
-        self.G = []
-        self.t = []
-        self.Weight = []
-    else:
-        if np.isreal(self.s).all():
-            self.G = np.transpose(hilbert(np.transpose(self.s)))
+    """
+    Set all parameters to default values
+    """
+    self.s = [] # Original input signal
+    self.G = [] # Analytic representation of the original input signal "s"
+    self.t = [] # Phase of the original input signal "s"
+    self.S1 = [] # Energy distribution
+    self.max_loc = [] # Location of maximum energy
+    self.weight = [] # Weight for computing numerical integration
+    self.an = [] # Searching results of the basis parameter
+    self.coef = [] # Decomposition coefficients 
+    self.level = 0 # Decomposition level (initial level is 0)
+    self.dic_an = [] # Searching dictionary of an
+    self.Base = [] # Evaluators of searching an
+    self.remainder = [] # Decomposition remainder
+    self.tem_B = [] # Decomposition basis components
+    self.deComp = [] # Decomposition components
+    self.decompMethod = 1 # Decomposition methods:
+                          # 1. Single Channel Conventional AFD (default)
+                          # 2. Single Channel Fast AFD
+    self.dicGenMethod = 1 # Dictionary generation methods:
+                          # 1. Square (default)
+                          # 2. Circle (Fast AFD must be "circle")
+    self.AFDMethod = 1 # AFD methods:
+                       # 1. core (default)
+    self.log = ''
+    self.run_time = [] # Running time of decomposition
+    self.time_genDic = 0 # Running time of generating searching dictionary
+    self.time_genEva = 0 # Running time of generating evaluators
+
+def setDecompMethod(self,
+                    decompMethod : Union[int, str]):
+    """
+    Set decomposition method
+
+    Parameters
+    -------------
+    decompMethod : Union[int, str]
+        The order or the name of the decomposition method
+        Current supported methods:
+            1. Single Channel Conventional AFD (default)
+            2. Single Channel Fast AFD
+    """
+    HelpStr = "\nCurrent supported methods:\n1. Single Channel Conventional AFD (default)\n2. Single Channel Fast AFD"
+    if type(decompMethod) is int:
+        if decompMethod < 3:
+            self.decompMethod = decompMethod
         else:
-            self.G = self.s.copy()
-        K = np.shape(self.G)[1]
-        ch_num = np.shape(self.G)[0]
-        self.t = repmat(np.arange(0,2*math.pi,2*math.pi/K), ch_num, 1)
-        self.Weight = np.ones((K,1))
-    self.S1=[]
-    self.max_loc=[]
-    self.an=[]
-    self.coef=[]
-    self.level=[]
-    self.dic_an=[]
-    self.Base=[]
-    self.remainder=[]
-    self.tem_B=[]
-    self.deComp=[]
-    self.decompMethod = 'Single Channel Conventional AFD'
-    self.dicGenMethod = 'square'
-    self.AFDMethod = 'core'
-    self.run_time=[]
-    self.time_genDic=[]
-    self.time_genEva=[]
-    #
-    self.r_store=[]
-    self.InProd=[]
-    self.OutProd=[]
-    self.Base_r=[]
-    self.N_r=1e3
-    self.tol_r=1e-3
-    #
-    self.addLog('Initialize settings correctly')
+            raise ValueError("Unknow decomposition method." + HelpStr)
+    elif type(decompMethod) is str:
+        if decompMethod.lower() == 'Single Channel Conventional AFD'.lower():
+            self.decompMethod = 1
+        elif decompMethod.lower() == 'Single Channel Fast AFD'.lower():
+            self.decompMethod = 2
+        else:
+            raise ValueError("Unknow decomposition method." + HelpStr)
+    else:
+        raise ValueError("The decomposition method must be an integer number or a string")
 
-# =============================================================================
-#     def genWeight(self,method_no,n,newtonOrder):
-#         y = np.ones([n,1])
-#         if method_no == 2:
-#             y = np.zeros([n,1])
-#             Newton = np.zeros([newtonOrder+1,newtonOrder])
-#             Newton[0:2,0]=np.array([1/2,1/2])
-#             Newton[0:3,1]=np.array([1/6,4/6,1/6])
-#             Newton[0:4,2]=np.array([1/8,3/8,3/8,1/8])
-#             Newton[0:5,3]=np.array([7/90,16/45,2/15,16/45,7/90])
-#             Newton[0:6,4]=np.array([19/288,25/96,25/144,25/144,25/96,19/288])
-#             Newton[0:7,5]=np.array([41/840,9/35,9/280,34/105,9/280,9/35,41/840])
-#             k = np.floor((n-1)/newtonOrder)
-#             if k>0:
-#                 iter = np.arange(1,k+1,1)
-#                 nonNewton = (Newton[:,6-1]!=0)
-# =============================================================================
+def setDicGenMethod(self,
+                    dicGenMethod : Union[int, str]):
+    """
+    Set dictionary generation method
 
-def setDicGenMethod(self,method_no):
-    if method_no==1:
-        self.dicGenMethod='square'
-    elif method_no==2:
-        self.dicGenMethod='circle'
+    Parameters
+    -------------
+    dicGenMethod : Union[int, str]
+        The order or the name of the dictionary generation method
+        Current supported methods:
+            1. Square (default)
+            2. Circle (Fast AFD must be "circle")
+    """
+    HelpStr = "\nCurrent supported methods:\n1. Square (default)\n2. Circle (Fast AFD must be 'circle')"
+    if type(dicGenMethod) is int:
+        if dicGenMethod < 3:
+            self.dicGenMethod = dicGenMethod
+        else:
+            raise ValueError("Unknow dictionary generation method." + HelpStr)
+    elif type(dicGenMethod) is str:
+        if dicGenMethod.lower() == 'Square'.lower():
+            self.dicGenMethod = 1
+        elif dicGenMethod.lower() == 'Circle'.lower():
+            self.dicGenMethod = 2
+        else:
+            raise ValueError("Unknow dictionary generation method." + HelpStr)
     else:
-        self.addLog('error: Because the specific dicGenMethod is unknown, setDicGenMethod is not successful.')
-        raise ValueError('Because the specific dicGenMethod is unknown, setDicGenMethod is not successful.')
-    self.addLog('setDicGenMethod is successful.')
-    
-def setDecompMethod(self,method_no):
-    if method_no==1:
-        self.decompMethod = 'Single Channel Conventional AFD'
-    elif method_no==2:
-        self.decompMethod = 'Single Channel Fast AFD'
-        self.addLog('Fast AFD only can use the "circle" dictionary. So the dicGenMethod is changed.')
-        self.setDicGenMethod(2)
+        raise ValueError("The dictionary generation method must be an integer number or a string")
+
+def setAFDMethod(self,
+                 AFDMethod : Union[int, str]):
+    """
+    Set AFD method
+
+    Parameters
+    -------------
+    AFDMethod : Union[int, str]
+        The order or the name of the AFD method
+        Current supported methods:
+            1. core (default)
+    """
+    HelpStr = "\nCurrent supported methods:\n1. core (default)"
+    if type(AFDMethod) is int:
+        if AFDMethod < 2:
+            self.AFDMethod = AFDMethod
+        else:
+            raise ValueError("Unknow AFD method." + HelpStr)
+    elif type(AFDMethod) is str:
+        if AFDMethod.lower() == 'core'.lower():
+            self.AFDMethod = 1
+        else:
+            raise ValueError("Unknow AFD method." + HelpStr)
     else:
-        self.addLog('error: Because the specific decompMethod is unknown, setDecompMethod is not successful.')
-        raise ValueError('Because the specific decompMethod is unknown, setDecompMethod is not successful.')
-    self.addLog('setDecompMethod is successful.')
-    
-def setAFDMethod(self,method_no):
-    if method_no==1:
-        self.AFDMethod='core'
-    elif method_no==2:
-        self.AFDMethod='unwinding'
+        raise ValueError("The AFD method must be an integer number or a string")
+
+
+def loadInputSignal(self, 
+                    input_signal : Union[ndarray, str]):
+    """
+    Load input signal
+
+    Parameters
+    ----------------------
+    input_signal : Union[ndarray, str] 
+        The input signal. Now, the input signal must be a single-channel signal. 
+        The format can be 
+            + numpy array: Input signal. The dimension must be 1 * N where N is the total sampling number.
+            + String: File of storing the input signal. Current supporting file format:
+                - ".mat": matlab file. Signal is stored in a matrix called "G". The dimension must be 1 * N where N is the total sampling number.
+                - ".npy": numpy file. Signal is stored in a numpy array called "G". The dimension must be 1 * N where N is the total sampling number.
+    """
+    # Load signal
+    if type(input_signal) is str:
+        # Check whether file exists
+        if not op.exists(input_signal):
+            raise ValueError("The provided input file location does not exist!!")
+        # Load signal from file
+        file_name, file_extension = op.splitext(input_signal)
+        if len(file_extension) == 0:
+            raise ValueError("Cannot get the extension of the input file!!")
+        if file_extension[1:].lower() == 'mat':
+            data = loaddata(input_signal, save_type = 'mat')
+            s = data['G']
+        elif file_extension[1:].lower() == 'npy':
+            data = loaddata(input_signal, save_type = 'np')
+            s = data['G']
+        else:
+            raise ValueError("Unknown extension of the input file!!")
+    elif type(input_signal) is ndarray:
+        s = input_signal.copy()
     else:
-        self.addLog('error: Because the specific AFDMethod is unknown, setAFDMethod is not successful.')
-        raise ValueError('Because the specific AFDMethod is unknown, setAFDMethod is not successful.')
-    self.addLog('setAFDMethod is successful.')
-    
-def set_r(self,r_store):
-    self.r_store=r_store.copy()
-    
-def set_parameters_searchingZeros(self,N_r,tol_r):
-    self.N_r=N_r
-    self.tol_r=tol_r
-    
-def set_dic_an(self,dic_an):
-    if self.decompMethod=='Single Channel Fast AFD':
-        self.addLog('warning: Fast AFD is not allowed to set searching dictionary manually.')
-        print('warning: Fast AFD is not allowed to set searching dictionary manually.')
-        return
-    # if np.shape(dic_an)[0]<np.shape(dic_an)[1]:
-    #     self.addLog('warning: Because the specific searching dictionary is not correct, "set_dic_an" is not successful.')
-    #     print('warning: Because the specific searching dictionary is not correct, "set_dic_an" is not successful.')
-    #     return
-    self.setDicGenMethod(1)
-    for ch_i in range(np.shape(dic_an)[0]):
-        dic_an[ch_i,:,:]=np.unique(dic_an[ch_i])
-    self.dic_an=dic_an.copy()
-    
-def set_coef(self,coef):
-    self.coef=coef.copy()
-    
-def set_an(self,an):
-    self.an=an.copy()
+        raise ValueError("The type of 'input_signal' must be a numpy array or a string")
+    # Check dimension
+    if len(s.shape) == 1:
+        s = np.expand_dims(s, axis = 0)
+    if len(s.shape) != 2:
+        raise ValueError("The dimension of the input signal must be 1*N !!")
+    N_ch, N_sample = s.shape
+    if N_ch == 1:
+        print("The dimension of the input signal is {:n}*{:n}.".format(N_ch, N_sample))
+    elif N_sample == 1:
+        s = s.T
+    else:
+        raise ValueError("The dimension of the input signal must be 1*N !!")
+    # Store signal
+    self.s = s.copy()
+    # Hilbert transform
+    if np.isreal(self.s).all():
+        self.G = pysig.hilbert(self.s)
+    else:
+        self.G = self.s.copy()
+    # set phase
+    N_ch, N_sample = self.G.shape
+    t = np.arange(0, 2*pi, 2*pi/N_sample)
+    self.t = np.expand_dims(t, axis = 0)
+    # generate weights
+    self.weight = genWeight(N_sample)

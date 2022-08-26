@@ -1,30 +1,25 @@
-# -*- coding: utf-8 -*-
-
-# =============================================================================
-# from numpy import *
-# import numpy as np
-# from numpy.matlib import repmat
-# from numpy.fft import fft, ifft
-# from scipy.signal import hilbert
-# import pickle 
-# import os
-# from scipy.io import loadmat
-# from matplotlib import pyplot as pt
-# from matplotlib import cm
-# from datetime import datetime
-# import math
-# =============================================================================
+from numpy import ndarray
+from typing import Union, Optional, Dict, List, Tuple
 
 import importlib
 
 class AFDCal:
-    def __init__(self,s=[]):
-        self.log=''
-        self.setInputSignal(s)
-        
-    from ._logfun import addLog, dispLog
-    from ._initfun import setInputSignal, initSetting, set_an, set_coef, set_dic_an, set_parameters_searchingZeros, set_r, setAFDMethod, setDecompMethod, setDicGenMethod
-    from ._side import isempty, checkInput, Unit_Disk, Circle_Disk, e_a, e_a_r, blaschke1
-    from ._decomposition import genDic, genEva, init_decomp, nextDecomp
-    from ._plot import plot_sig, plot_ori_sig, plot_point, plot_dic, plot_evaluator, plot_decompComp, plot_reSig
-    from ._search_parameter import search_r
+    def __init__(self, 
+                 n_jobs : Optional[int] = None):
+        """
+        Initialize AFD calculation
+
+        Parameters
+        -----------------
+        n_jobs : Optional[int] = None
+            Number of threadings for parallel computing
+        """
+        self.n_jobs = n_jobs
+        self.initSetting()
+    
+    from ._initfun import initSetting, loadInputSignal, setDecompMethod, setDicGenMethod, setAFDMethod
+    from ._logfun import clearLog, addLog, dispLog
+    from ._decomposition import genDic, genEva, init_decomp
+    from ._plot import plot_dict, plot_base, plot_decomp
+
+    

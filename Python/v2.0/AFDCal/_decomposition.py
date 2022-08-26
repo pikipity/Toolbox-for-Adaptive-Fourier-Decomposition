@@ -1,338 +1,116 @@
-# -*- coding: utf-8 -*-
-
+from numpy import ndarray
+from typing import Union, Optional, Dict, List, Tuple
 import numpy as np
-import timeit
-import math
-from numpy.fft import fft, ifft
-from numpy.matlib import repmat
+import numpy.fft as pyfft
+from math import pi
 
-def genDic(self, dist, max_an_mag):
-    # check inputs
-    if dist<0 or dist>1:
-        self.addLog('error: Because the specific dist is unknown, genDic is not successful.')
-        raise ValueError('Because the specific dist is unknown, genDic is not successful.')
-    if max_an_mag<0 or max_an_mag>1:
-        self.addLog('error: Because the specific max_an_mag is unknown, genDic is not successful.')
-        raise ValueError('Because the specific max_an_mag is unknown, genDic is not successful.')
-    # init time recorder
-    self.time_genDic = np.zeros((np.shape(self.G)[0],1))
-    if self.decompMethod=='Single Channel Conventional AFD':
-        if self.dicGenMethod=='square':
-            for ch_i in range(np.shape(self.G)[0]):
-                tic = timeit.default_timer()
-                if len(self.dic_an)>=ch_i+1:
-                    self.dic_an[ch_i] = self.Unit_Disk(dist, max_an_mag)
-                else:
-                    self.dic_an.append(self.Unit_Disk(dist, max_an_mag))
-                self.time_genDic[ch_i,0] = timeit.default_timer() - tic
-        elif self.dicGenMethod=='circle':
-            K = np.shape(self.G)[1]
-            for ch_i in range(np.shape(self.G)[0]):
-                tic = timeit.default_timer()
-                if len(self.dic_an)>=ch_i+1:
-                    self.dic_an[ch_i] = self.Circle_Disk(dist,max_an_mag,np.array([np.arange(0,2*math.pi,2*math.pi/K)]))
-                else:
-                    self.dic_an.append(self.Circle_Disk(dist,max_an_mag,np.array([np.arange(0,2*math.pi,2*math.pi/K)])))
-                self.time_genDic[ch_i,0] = timeit.default_timer() - tic
-    elif self.decompMethod=='Single Channel Fast AFD':
-        if self.dicGenMethod=='square':
-            self.addLog('error: Because dicGenMethod is not correct (fast AFD only can use "circle"), genDic is not successful.')
-            raise ValueError('Because dicGenMethod is not correct (fast AFD only can use "circle"), genDic is not successful.')
-        elif self.dicGenMethod=='circle':
-            K = np.shape(self.G)[1]
-            for ch_i in range(np.shape(self.G)[0]):
-                tic = timeit.default_timer()
-                # cont=max_an_mag
-                # ret1=np.array([np.arange(0,1+dist,dist)])
-                # ret1[np.abs(ret1)>=cont] = None
-                # ret = ret1.copy()
-                # del ret1
-                # remove_col=[]
-                # for j in range(np.shape(ret)[1]):
-                #     if np.sum(np.isnan(ret[:,j]))==np.shape(ret)[0]:
-                #         remove_col.append(j)
-                # abs_a = np.delete(ret, remove_col, 1)
-                ret1 = self.Circle_Disk(dist,max_an_mag,np.array([np.arange(0,2*math.pi,2*math.pi/K)]))
-                abs_a = np.array([np.unique(np.abs(ret1))])
-                abs_a = np.array([abs_a[~np.isnan(abs_a)]])
-                if len(self.dic_an)>=ch_i+1:
-                    self.dic_an[ch_i] = abs_a
-                else:
-                    self.dic_an.append(abs_a)
-                self.time_genDic[ch_i,0] = timeit.default_timer() - tic
-    self.addLog('generate searching dictionary successfully.')
-    
-    
+import warnings
+from time import time
+
+from ._utils import Unit_Disk, Circle_Disk, e_a, intg
+
+def genDic(self, 
+           dist : float,
+           max_an_mag : float):
+    """
+    Generate searching dictionary
+
+    Parameters
+    -------------
+    dist : float
+        Distance between two adjacent magnitude values
+    max_an_mag: float
+        Maximum magnitude of an
+    """
+    # Check generation method
+    if self.decompMethod == 2 and self.dicGenMethod == 1:
+        self.setDecompMethod(2)
+        warnings.warn("The fast AFD must use the 'circle' dictionary. But the given dictionary generation method is 'square'. To use the fast AFD, the dictionary generation method is automatically changed to 'circle'.")
+    # Check inputs
+    if dist < 0 or dist > 1:
+        raise ValueError("The distance between two adjacent magnitude values must be within 0~1")
+    if max_an_mag < 0 or max_an_mag > 1:
+        raise ValueError("The maximum magnitude must be within 0~1")
+    if len(self.s) == 0:
+        raise ValueError("Please load input signal first")
+    # Generate searching dictionary
+    start_time = time()
+    if self.decompMethod == 1:
+        if self.dicGenMethod == 1:
+            self.dic_an = Unit_Disk(dist, max_an_mag)
+        elif self.dicGenMethod == 2:
+            _, sig_len = self.s.shape
+            self.dic_an = Circle_Disk(dist, max_an_mag, sig_len, 2*pi-2*pi/sig_len)
+    elif self.decompMethod == 2:
+        if self.dicGenMethod == 1:
+            raise ValueError("The fast AFD cannot use the 'square' dictionary.")
+        elif self.dicGenMethod == 2:
+            self.dic_an = Circle_Disk(dist, max_an_mag, len(self.s), 0)
+    self.time_genDic = time() - start_time
+
 def genEva(self):
-    self.time_genEva = np.zeros((np.shape(self.G)[0],1))
-    if self.decompMethod == 'Single Channel Conventional AFD':
-        self.Base=[]
-        for ch_i in range(np.shape(self.G)[0]):
-            tic = timeit.default_timer()
-            dic_tmp=self.dic_an[ch_i]
-            t_tmp=self.t[ch_i,:]
-            self.Base.append(np.zeros((np.shape(dic_tmp)[0],np.shape(dic_tmp)[1],len(t_tmp)),dtype=np.complex_))
-            for i in range(np.shape(dic_tmp)[0]):
-                for j in range(np.shape(dic_tmp)[1]):
-                    self.Base[ch_i][i,j,:]=self.e_a(dic_tmp[i,j],math.e**(1j*t_tmp))
-            self.time_genEva[ch_i,0] = timeit.default_timer() - tic
-        # evaluator for r
-        if self.AFDMethod == 'unwinding':
-            self.Base_r=[]
-            for ch_i in range(np.shape(self.G)[0]):
-                tic = timeit.default_timer()
-                dic_tmp=self.dic_an[ch_i]
-                t_tmp=self.t[ch_i,:]
-                self.Base_r.append(np.zeros((np.shape(dic_tmp)[0],np.shape(dic_tmp)[1],len(t_tmp)),dtype=np.complex_))
-                for i in range(np.shape(dic_tmp)[0]):
-                    for j in range(np.shape(dic_tmp)[1]):
-                        self.Base_r[ch_i][i,j,:]=self.e_a_r(dic_tmp[i,j],math.e**(1j*t_tmp))
-                self.time_genEva[ch_i,0] += timeit.default_timer() - tic
-    elif self.decompMethod == 'Single Channel Fast AFD':
-        self.Base=[]
-        for ch_i in range(np.shape(self.G)[0]):
-            tic = timeit.default_timer()
-            dic_tmp=self.dic_an[ch_i]
-            t_tmp=self.t[ch_i,:]
-            self.Base.append(np.zeros((np.shape(dic_tmp)[0],np.shape(dic_tmp)[1],len(t_tmp)),dtype=np.complex_))
-            for i in range(np.shape(dic_tmp)[0]):
-                for j in range(np.shape(dic_tmp)[1]):
-                    self.Base[ch_i][i,j,:]=fft(self.e_a(dic_tmp[i,j],math.e**(1j*t_tmp)),len(t_tmp))
-            self.time_genEva[ch_i,0] = timeit.default_timer() - tic
-        # evaluator for r
-        if self.AFDMethod == 'unwinding':
-            self.Base_r=[]
-            for ch_i in range(np.shape(self.G)[0]):
-                tic = timeit.default_timer()
-                dic_tmp=self.dic_an[ch_i]
-                t_tmp=self.t[ch_i,:]
-                self.Base_r.append(np.zeros((np.shape(dic_tmp)[0],np.shape(dic_tmp)[1],len(t_tmp)),dtype=np.complex_))
-                for i in range(np.shape(dic_tmp)[0]):
-                    for j in range(np.shape(dic_tmp)[1]):
-                        self.Base_r[ch_i][i,j,:]=fft(self.e_a_r(dic_tmp[i,j],math.e**(1j*t_tmp)),len(t_tmp))
-                self.time_genEva[ch_i,0] += timeit.default_timer() - tic
-    self.addLog('generate evaluators successfully.')
+    """
+    Generate evaluators
+    """
+    # Check dictionary
+    if len(self.dic_an) == 0:
+        raise ValueError("Please generate the searching dictionary first!!")
+
+    start_time = time()
+
+    # Initilize evaluator
+    dic_row, dic_col = self.dic_an.shape
+    _, N_sample = self.t.shape
+    self.Base = np.zeros((dic_row, dic_col, N_sample), 'complex')
+    # Generate evaluators
+    if self.decompMethod == 1:
+        for i in range(dic_row):
+            for j in range(dic_col):
+                self.Base[i,j,:] = e_a(self.dic_an[i,j], self.t)
+    elif self.decompMethod == 2:
+        for i in range(dic_row):
+            for j in range(dic_col):
+                self.Base[i,j,:] = pyfft.fft(e_a(self.dic_an[i,j], self.t), N_sample) 
+
+    self.time_genEva = time() - start_time
+
+def init_decomp(self):
+    """
+    Initilize decomposition
+    """
+    # Remove historical decomposition
+    self.S1 = [] # Energy distribution
+    self.max_loc = [] # Location of maximum energy
+    self.an = [] # Searching results of the basis parameter
+    self.coef = [] # Decomposition coefficients 
+    self.level = 0 # Decomposition level (initial level is 0)
+    self.remainder = [] # Decomposition remainder
+    self.tem_B = [] # Decomposition basis components
+    self.deComp = [] # Decomposition components
+    self.run_time = [] # Running time of decomposition
+
+    start_time = time()
+
+    self.remainder = self.G.copy()
+
+    self.S1.append(None)
+    self.max_loc.append(None)
+
+    an = 0
+    self.an.append(an)
+    coef = intg(self.remainder, np.ones((1,self.t.shape[1])), self.weight)
+    self.coef.append(coef)
+
+    tem_B = (np.sqrt(1-np.abs(an)**2)/(1-np.conj(an)*np.exp(self.t*1j)))
+    self.tem_B.append(tem_B)
+
+    deComp = self.coef[self.level] * self.tem_B[self.level]
+    self.deComp.append(deComp)
+
+    self.run_time.append(time() - start_time)
+
+
+
+
     
-def init_decomp(self,searching_an_flag=1):
-    if self.isempty(self.s):
-        self.addLog('warning: Because there is not input signal, the decomposition cannot be initilized.')
-        print('warning: Because there is not input signal, the decomposition cannot be initilized.')
-        return
-    if self.decompMethod=='Single Channel Fast AFD' and self.dicGenMethod=='square':
-        self.addLog('warning: AFD only can use circle searching dictionary.')
-        print('warning: AFD only can use circle searching dictionary.')
-        return
-    self.level=-1
-    self.run_time = np.zeros((np.shape(self.G)[0],1))
-    K=np.shape(self.G)[0]
-    self.remainder=self.G.copy()
-    for ch_i in range(K):
-        tic=timeit.default_timer()
-        if searching_an_flag:
-            # r
-            if self.AFDMethod=='unwinding':
-                self.search_r(ch_i)
-                while len(self.InProd) < (ch_i+1):
-                    self.InProd.append([])
-                self.InProd[ch_i]=[]
-                inprod = self.blaschke1(self.r_store[ch_i][self.level+1],np.array([self.t[ch_i,:]]))
-                self.InProd[ch_i].append(inprod)
-                self.remainder=self.remainder/inprod
-            # init energy dictribution
-            while len(self.S1)<(ch_i+1):
-                self.S1.append([])
-            while len(self.S1[ch_i])<(self.level+1+1):
-                self.S1[ch_i].append([])
-            self.S1[ch_i][self.level+1]=[]
-            while len(self.max_loc)<(ch_i+1):
-                self.max_loc.append([])
-            while len(self.max_loc[ch_i])<(self.level+1+1):
-                self.max_loc[ch_i].append([])
-            self.max_loc[ch_i][self.level+1]=[]
-            # init an
-            while len(self.an)<(ch_i+1):
-                self.an.append([])
-            while len(self.an[ch_i])<(self.level+1+1):
-                self.an[ch_i].append([])
-            self.an[ch_i][self.level+1]=[]
-            an=0j
-            self.an[ch_i][self.level+1].append(an)
-        else:
-            # r
-            if self.AFDMethod=='unwinding':
-                while len(self.InProd) < (ch_i+1):
-                    self.InProd.append([])
-                self.InProd[ch_i]=[]
-                inprod = self.blaschke1(self.r_store[ch_i][self.level+1],np.array([self.t[ch_i,:]]))
-                self.InProd[ch_i].append(inprod)
-                self.remainder=self.remainder/inprod
-            # init energy dictribution
-            while len(self.S1)<(ch_i+1):
-                self.S1.append([])
-            while len(self.S1[ch_i])<(self.level+1+1):
-                self.S1[ch_i].append([])
-            self.S1[ch_i][self.level+1]=[]
-            while len(self.max_loc)<(ch_i+1):
-                self.max_loc.append([])
-            while len(self.max_loc[ch_i])<(self.level+1+1):
-                self.max_loc[ch_i].append([])
-            self.max_loc[ch_i][self.level+1]=[]
-            # init an
-            an=self.an[ch_i][self.level+1][0]
-        # coef
-        while len(self.coef)<(ch_i+1):
-            self.coef.append([])
-        while len(self.coef[ch_i])<(0+1):
-            self.coef[ch_i].append([])
-        self.coef[ch_i][0]=[]
-        t_tmp=np.array([self.t[ch_i,:]])
-        e_a_tmp=self.e_a(an,math.e**(1j*t_tmp[0,:]))
-        coef=np.conj(e_a_tmp @ (np.conj(np.transpose(np.array([self.remainder[ch_i,:]])))*self.Weight))/np.shape(t_tmp)[1]
-        self.coef[ch_i][0].append(coef[0,0])
-        # tem_B
-        while len(self.tem_B)<(ch_i+1):
-            self.tem_B.append([])
-        self.tem_B[ch_i]=[]
-        tem_B = np.sqrt(1-np.abs(an)**2)/(1-np.conj(an)*math.e**(t_tmp*1j))
-        if self.AFDMethod == 'unwinding':
-            while len(self.OutProd)<(ch_i+1):
-                self.OutProd.append([])
-            self.OutProd[ch_i]=[]
-            self.OutProd[ch_i].append(tem_B)
-            tem_B=tem_B*inprod
-        self.tem_B[ch_i].append(tem_B)
-        # deComp
-        while len(self.deComp)<(ch_i+1):
-            self.deComp.append([])
-        self.deComp[ch_i]=[]
-        deComp=coef*tem_B
-        self.deComp[ch_i].append(deComp)
-        # remainder
-        self.remainder[ch_i,:]=(self.remainder[ch_i,:]-coef*e_a_tmp)*(1-np.conj(an)*math.e**(1j*t_tmp))/(math.e**(1j*t_tmp)-an)
-        # time
-        self.run_time[ch_i,0]=timeit.default_timer() - tic
-    self.level += 1
-    self.addLog('The decomposition has been initilized.')
     
-def nextDecomp(self,searching_an_flag=1):
-    if self.isempty(self.s):
-        self.addLog('warning: Because there is not input signal, the decomposition cannot be initilized.')
-        print('warning: Because there is not input signal, the decomposition cannot be initilized.')
-        return
-    if self.decompMethod=='Single Channel Fast AFD' and self.dicGenMethod=='square':
-        self.addLog('warning: AFD only can use circle searching dictionary.')
-        print('warning: AFD only can use circle searching dictionary.')
-        return
-    K=np.shape(self.G)[0]
-    for ch_i in range(K):
-        tic=timeit.default_timer()
-        if searching_an_flag:
-            # r
-            if self.AFDMethod=='unwinding':
-                self.search_r(ch_i)
-                inprod = self.blaschke1(self.r_store[ch_i][self.level+1],np.array([self.t[ch_i,:]]))
-                self.InProd[ch_i].append(inprod)
-                self.remainder=self.remainder/inprod
-            # search an
-            if self.decompMethod=='Single Channel Conventional AFD':
-                while len(self.S1)<(ch_i+1):
-                    self.S1.append([])
-                while len(self.S1[ch_i])<(self.level+1+1):
-                    self.S1[ch_i].append([])
-                Base=self.Base[ch_i]
-                self.S1[ch_i][self.level+1]=np.zeros((np.shape(Base)[0],np.shape(Base)[1]),dtype=np.complex_)
-                for i in range(np.shape(Base)[0]):
-                    self.S1[ch_i][self.level+1][i,:]=np.conj(np.transpose(Base[i,:,:] @ (np.conj(np.transpose(np.array([self.remainder[ch_i,:]])))*self.Weight)))
-                abs_S=np.abs(self.S1[ch_i][self.level+1])
-                max_S_loc=np.where(abs_S==np.nanmax(abs_S))
-                max_row_i=max_S_loc[0][0]
-                max_col_i=max_S_loc[1][0]
-                while len(self.max_loc)<(ch_i+1):
-                    self.max_loc.append([])
-                while len(self.max_loc[ch_i])<(self.level+1+1):
-                    self.max_loc[ch_i].append([])
-                self.max_loc[ch_i][self.level+1]=[]
-                self.max_loc[ch_i][self.level+1].append([max_row_i,max_col_i])
-                an=self.dic_an[ch_i][max_row_i,max_col_i]
-                while len(self.an)<(ch_i+1):
-                    self.an.append([])
-                while len(self.an[ch_i])<(self.level+1+1):
-                    self.an[ch_i].append([])
-                self.an[ch_i][self.level+1]=[]
-                self.an[ch_i][self.level+1].append(an)
-            elif self.decompMethod=='Single Channel Fast AFD':
-                phase_a=np.array([self.t[ch_i,:]])
-                Base=self.Base[ch_i][0,:,:]
-                while len(self.S1)<(ch_i+1):
-                    self.S1.append([])
-                while len(self.S1[ch_i])<(self.level+1+1):
-                    self.S1[ch_i].append([])
-                self.S1[ch_i][self.level+1]=ifft(repmat(fft(np.array([self.remainder[ch_i,:]])*np.transpose(self.Weight),np.shape(self.remainder)[1]),np.shape(Base)[0],1)*Base,np.shape(self.remainder)[1],1)
-                abs_S=np.abs(self.S1[ch_i][self.level+1])
-                max_S_loc=np.where(abs_S==np.nanmax(abs_S))
-                max_row_i=max_S_loc[0][0]
-                max_col_i=max_S_loc[1][0]
-                while len(self.max_loc)<(ch_i+1):
-                    self.max_loc.append([])
-                while len(self.max_loc[ch_i])<(self.level+1+1):
-                    self.max_loc[ch_i].append([])
-                self.max_loc[ch_i][self.level+1]=[]
-                self.max_loc[ch_i][self.level+1].append([max_row_i,max_col_i])
-                an=self.dic_an[ch_i][0,max_row_i]*math.e**(phase_a[0,max_col_i]*1j)
-                while len(self.an)<(ch_i+1):
-                    self.an.append([])
-                while len(self.an[ch_i])<(self.level+1+1):
-                    self.an[ch_i].append([])
-                self.an[ch_i][self.level+1]=[]
-                self.an[ch_i][self.level+1].append(an)
-        else:
-            # r
-            if self.AFDMethod=='unwinding':
-                inprod = self.blaschke1(self.r_store[ch_i][self.level+1],np.array([self.t[ch_i,:]]))
-                self.InProd[ch_i].append(inprod)
-                self.remainder=self.remainder/inprod
-            # search an
-            while len(self.S1)<(ch_i+1):
-                self.S1.append([])
-            while len(self.S1[ch_i])<(self.level+1+1):
-                self.S1[ch_i].append([])
-            self.S1[ch_i][self.level+1]=[]
-            while len(self.max_loc)<(ch_i+1):
-                self.max_loc.append([])
-            while len(self.max_loc[ch_i])<(self.level+1+1):
-                self.max_loc[ch_i].append([])
-            self.max_loc[ch_i][self.level+1]=[]
-            an=self.an[ch_i][self.level+1][0]
-        # coef
-        while len(self.coef)<(ch_i+1):
-            self.coef.append([])
-        while len(self.coef[ch_i])<(self.level+1+1):
-            self.coef[ch_i].append([])
-        self.coef[ch_i][self.level+1]=[]
-        t_tmp=np.array([self.t[ch_i,:]])
-        e_a_tmp=self.e_a(an,math.e**(1j*t_tmp[0,:]))
-        coef=np.conj(e_a_tmp @ (np.conj(np.transpose(np.array([self.remainder[ch_i,:]])))*self.Weight))/np.shape(t_tmp)[1]
-        self.coef[ch_i][self.level+1].append(coef[0,0])
-        # tem_B
-        while len(self.tem_B)<(ch_i+1):
-            self.tem_B.append([])
-        tem_B = np.sqrt(1-np.abs(an)**2)/(1-np.conj(an)*math.e**(t_tmp*1j))
-        if self.AFDMethod == 'unwinding':
-            while len(self.OutProd)<(ch_i+1):
-                self.OutProd.append([])
-            self.OutProd[ch_i].append(tem_B)
-            tem_B=tem_B*inprod
-        self.tem_B[ch_i].append(tem_B)
-        # deComp
-        while len(self.deComp)<(ch_i+1):
-            self.deComp.append([])
-        deComp=coef*tem_B
-        self.deComp[ch_i].append(deComp)
-        # remainder
-        self.remainder[ch_i,:]=(self.remainder[ch_i,:]-coef*e_a_tmp)*(1-np.conj(an)*math.e**(1j*t_tmp))/(math.e**(1j*t_tmp)-an)
-        # time
-        self.run_time[ch_i,0] += timeit.default_timer() - tic
-    self.level += 1
-    self.addLog('The decomposition at level ' +str(self.level)+ ' has been finished.')
-        
-            

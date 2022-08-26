@@ -1,48 +1,34 @@
-# -*- coding: utf-8 -*-
-
-from scipy.io import loadmat
-import h5py
 import numpy as np
 
 from AFDCal import AFDCal
-            
 
-            
-if __name__=="__main__":
-    # load data
-    data = loadmat('bump_signal.mat')
-    L = 1080
-    s = np.zeros((4,L))
-    s[0,:] = data['G'].copy()[0,0:L]
-    data = loadmat('doppler_signal.mat')
-    s[1,:] = data['G'].copy()[0,0:L]
-    data = loadmat('heavysine_signal.mat')
-    s[2,:] = data['G'].copy()[0,0:L]
-    f = h5py.File('ECG.mat')
-    for k,v in f.items():
-        if k=='G':
-            data = np.transpose(np.array(v))
-    s[3,:] = data[0,0:L]
-    del data
-    # init AFD calculation
-    afdcal = AFDCal(s)
-    #afdcal.plot_ori_sig()
-    afdcal.setAFDMethod(2) # 1:core; 2. unwinding
-    # generate dictionary
-    afdcal.setDicGenMethod(1) # 1. square; 2. circle
-    afdcal.setDecompMethod(2) # 1. Single Channel Conventional AFD; 
-                              # 2. Single Channel Fast AFD
-    afdcal.genDic(0.1,0.9)
-    #afdcal.plot_dic()
-    # generate evaluator
-    afdcal.genEva()
-    #afdcal.plot_evaluator()
-    afdcal.init_decomp()
-    #afdcal.plot_decompComp(0)
-    #afdcal.plot_reSig(0)
-    for k in range(10):
-        afdcal.nextDecomp()
-    afdcal.plot_decompComp(1)
-    afdcal.plot_reSig(1)
-    
-        
+# init AFD Calculation
+afdcal = AFDCal(10)
+# Load input signal
+afdcal.loadInputSignal('bump_signal.mat')
+# set decomposition method: Single Channel Conventional AFD
+afdcal.setDecompMethod(1)
+# set dictionary generation method: circle
+afdcal.setDicGenMethod(2)
+# generate dictionary
+afdcal.genDic(0.1, 0.9)
+
+fig, _ = afdcal.plot_dict()
+print("Time of generating the searching dictionary: {:n} s".format(afdcal.time_genDic))
+fig.savefig('example_res/searching_dictionary.jpg', 
+            bbox_inches='tight', dpi=300)
+# generate evaluator
+afdcal.genEva()
+
+row_dic, col_dic = afdcal.dic_an.shape
+fig, _ = afdcal.plot_base(np.random.randint(0,row_dic),np.random.randint(0,col_dic))
+print("Time of generating evaluators: {:n} s".format(afdcal.time_genEva))
+fig.savefig('example_res/evaluator.jpg', 
+            bbox_inches='tight', dpi=300)
+# Initilize decomposition
+afdcal.init_decomp()
+
+fig, _ = afdcal.plot_decomp(0)
+print("Time of decomposition at level={:n}: {:n} s".format(0,afdcal.run_time[0]))
+fig.savefig('example_res/decomp_comp_level_{:n}.jpg'.format(0), 
+            bbox_inches='tight', dpi=300)
