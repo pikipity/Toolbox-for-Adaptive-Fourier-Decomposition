@@ -7,7 +7,7 @@ from math import pi
 import warnings
 from time import time
 
-from ._utils import Unit_Disk, Circle_Disk, e_a, intg
+from ._utils import Unit_Disk, Circle_Disk, e_a, calCoef
 
 def genDic(self, 
            dist : float,
@@ -98,7 +98,8 @@ def init_decomp(self):
 
     an = 0
     self.an.append(an)
-    coef = intg(self.remainder, np.ones((1,self.t.shape[1])), self.weight)
+    # coef = intg(self.remainder, np.ones((1,self.t.shape[1])), self.weight)
+    coef = calCoef(an, self.t, self.remainder, self.weight)
     self.coef.append(coef)
 
     tem_B = (np.sqrt(1-np.abs(an)**2)/(1-np.conj(an)*np.exp(self.t*1j)))

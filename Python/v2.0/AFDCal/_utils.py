@@ -103,6 +103,9 @@ def e_a(a, t):
 def genWeight(N):
     return np.ones((N,1),'complex')
 
-def intg(f,g,W):
-    y = f.dot(g.T*W)
-    return y/f.shape[1]
+# def intg(f,g,W):
+#     y = f.dot(g.T*W)
+#     return y/f.shape[1]
+
+def calCoef(a, t, G, W):
+    return np.conj(e_a(a, t).dot(G.conj().T * W))/G.shape[1]
