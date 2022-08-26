@@ -85,21 +85,19 @@ def init_decomp(self):
     self.coef = [] # Decomposition coefficients 
     self.level = 0 # Decomposition level (initial level is 0)
     self.remainder = [] # Decomposition remainder
+    self.remainder.append(self.G.copy())
     self.tem_B = [] # Decomposition basis components
     self.deComp = [] # Decomposition components
     self.run_time = [] # Running time of decomposition
 
     start_time = time()
 
-    self.remainder = self.G.copy()
-
     self.S1.append(None)
     self.max_loc.append(None)
 
     an = 0
     self.an.append(an)
-    # coef = intg(self.remainder, np.ones((1,self.t.shape[1])), self.weight)
-    coef = calCoef(an, self.t, self.remainder, self.weight)
+    coef = calCoef(an, self.t, self.remainder[self.level], self.weight)
     self.coef.append(coef)
 
     tem_B = (np.sqrt(1-np.abs(an)**2)/(1-np.conj(an)*np.exp(self.t*1j)))
@@ -108,8 +106,23 @@ def init_decomp(self):
     deComp = self.coef[self.level] * self.tem_B[self.level]
     self.deComp.append(deComp)
 
+    remainder = (self.remainder[self.level]-coef*e_a(an, self.t)) * (1-np.conj(an) * np.exp(1j * self.t)) / (np.exp(1j * self.t)-an)
+    self.remainder.append(remainder)
+
     self.run_time.append(time() - start_time)
 
+def nextDecomp(self):
+    """
+    Next decomposition
+    """
+    self.level += 1
+
+    start_time = time()
+
+    
+
+    self.run_time.append(time() - start_time)
+    
 
 
 
