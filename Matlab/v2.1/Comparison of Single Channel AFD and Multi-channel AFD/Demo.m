@@ -52,6 +52,7 @@ for n=1:2
     disp(R(1,2));
 end
 set(gcf,'position',[0 0         1543         269]);
+saveas(h_figure,'Demo_Results/Demo1_Basis_components_MAFD.fig')
 saveas(h_figure,'Demo_Results/Demo1_Basis_components_MAFD.jpg')
 close(h_figure)
 %
@@ -64,8 +65,8 @@ for n=1:2
     title(['Real Part, Decomposition level: ' num2str(n) ', ch 1'])
     set(gca,'fontsize',10);hold on
     xaxis([min(t) max(t)])
-    R=corrcoef(real(unwright_decomp(n,:)).'/400,real(unwright_decomp_new_single{1}(n,:)).'/400);
-    disp(R(1,2));
+%     R=corrcoef(real(unwright_decomp(n,:)).'/400,real(unwright_decomp_new_single{1}(n,:)).'/400);
+%     disp(R(1,2));
     
     subplot(2,2,2*(n-1)+2);hold on
     plot(t,imag(unwright_decomp(n,:))/400,'linewidth',3,'color',color_sel(1,:))
@@ -74,10 +75,11 @@ for n=1:2
     title(['Imaginary Part, Decomposition level: ' num2str(n) ', ch 1'])
     set(gca,'fontsize',10)
     xaxis([min(t) max(t)])
-    R=corrcoef(imag(unwright_decomp(n,:)).'/400,imag(unwright_decomp_new_single{1}(n,:)).'/400);
-    disp(R(1,2));
+%     R=corrcoef(imag(unwright_decomp(n,:)).'/400,imag(unwright_decomp_new_single{1}(n,:)).'/400);
+%     disp(R(1,2));
 end
 set(gcf,'position',[0 0        1543         269]);
+saveas(h_figure,'Demo_Results/Demo1_Basis_components_single_channel_AFD_ch1.fig')
 saveas(h_figure,'Demo_Results/Demo1_Basis_components_single_channel_AFD_ch1.jpg')
 close(h_figure)
 %
@@ -90,8 +92,8 @@ for n=1:2
     title(['Real Part, Decomposition level: ' num2str(n) ', ch 2'])
     set(gca,'fontsize',10);hold on
     xaxis([min(t) max(t)])
-    R=corrcoef(real(unwright_decomp(n,:)).'/400,real(unwright_decomp_new_single{2}(n,:)).'/400);
-    disp(R(1,2));
+%     R=corrcoef(real(unwright_decomp(n,:)).'/400,real(unwright_decomp_new_single{2}(n,:)).'/400);
+%     disp(R(1,2));
     
     subplot(2,2,2*(n-1)+2);hold on
     plot(t,imag(unwright_decomp(n,:))/400,'linewidth',3,'color',color_sel(1,:))
@@ -100,10 +102,11 @@ for n=1:2
     title(['Imaginary Part, Decomposition level: ' num2str(n) ', ch 2'])
     set(gca,'fontsize',10)
     xaxis([min(t) max(t)])
-    R=corrcoef(imag(unwright_decomp(n,:)).'/400,imag(unwright_decomp_new_single{2}(n,:)).'/400);
-    disp(R(1,2));
+%     R=corrcoef(imag(unwright_decomp(n,:)).'/400,imag(unwright_decomp_new_single{2}(n,:)).'/400);
+%     disp(R(1,2));
 end
 set(gcf,'position',[0 0        1543         269]);
+saveas(h_figure,'Demo_Results/Demo1_Basis_components_single_channel_AFD_ch2.fig')
 saveas(h_figure,'Demo_Results/Demo1_Basis_components_single_channel_AFD_ch2.jpg')
 close(h_figure)
 %
@@ -132,6 +135,7 @@ for n=1:2
 %     disp(R(1,2));
 end
 set(gcf,'position',[413         601        1205         269]);
+saveas(h_figure,'Demo_Results/Demo1_Basis_components_compare_ch1.fig')
 saveas(h_figure,'Demo_Results/Demo1_Basis_components_compare_ch1.jpg')
 close(h_figure)
 %
@@ -158,6 +162,7 @@ for n=1:2
 %     disp(R(1,2));
 end
 set(gcf,'position',[413         601        1205         269]);
+saveas(h_figure,'Demo_Results/Demo1_Basis_components_compare_ch2.fig')
 saveas(h_figure,'Demo_Results/Demo1_Basis_components_compare_ch2.jpg')
 close(h_figure)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -202,6 +207,7 @@ for ch=1:size(X,1)
     set(gca,'fontsize',10)
 end
 set(gcf,'position',[0 0         827         307]);
+saveas(h_figure,'Demo_Results/Demo2_Reconstruct_signal_level_1.fig')
 saveas(h_figure,'Demo_Results/Demo2_Reconstruct_signal_level_1.jpg')
 close(h_figure)
 
@@ -219,6 +225,7 @@ for ch=1:size(X,1)
     set(gca,'fontsize',10)
 end
 set(gcf,'position',[0 0        827         307]);
+saveas(h_figure,'Demo_Results/Demo2_Reconstruct_signal_level_2.fig')
 saveas(h_figure,'Demo_Results/Demo2_Reconstruct_signal_level_2.jpg')
 close(h_figure)
 
@@ -236,6 +243,7 @@ for ch=1:size(X,1)
     set(gca,'fontsize',10)
 end
 set(gcf,'position',[0 0        827         307]);
+saveas(h_figure,'Demo_Results/Demo2_Reconstruct_signal_level_4.fig')
 saveas(h_figure,'Demo_Results/Demo2_Reconstruct_signal_level_4.jpg')
 close(h_figure)
 
@@ -253,6 +261,7 @@ for ch=1:size(X,1)
     set(gca,'fontsize',10)
 end
 set(gcf,'position',[0 0         827         307]);
+saveas(h_figure,'Demo_Results/Demo2_Reconstruct_signal_level_6.fig')
 saveas(h_figure,'Demo_Results/Demo2_Reconstruct_signal_level_6.jpg')
 close(h_figure)
 
@@ -270,6 +279,7 @@ for ch=1:size(X,1)
     set(gca,'fontsize',10)
 end
 set(gcf,'position',[0 0         827         307]);
+saveas(h_figure,'Demo_Results/Demo2_Reconstruct_signal_level_10.fig')
 saveas(h_figure,'Demo_Results/Demo2_Reconstruct_signal_level_10.jpg')
 close(h_figure)
 
@@ -282,6 +292,7 @@ set(gca,'fontsize',10)
 set(gca,'XTick',0:10)
 axis([0 10 0 1.1])
 set(gcf,'position',[0 0        611         335]);
+saveas(h_figure,'Demo_Results/Demo2_Energy_convergence.fig')
 saveas(h_figure,'Demo_Results/Demo2_Energy_convergence.jpg')
 close(h_figure)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -367,5 +378,6 @@ for session_n=1:size(f_in,1)
     set(gcf,'position',[0 0   560   420])
 end
 set(gcf,'position',[0 0 951   298])
+saveas(h_figure,'Demo_Results/Demo3_Power_ratio_sinusoidal_oscillation.fig')
 saveas(h_figure,'Demo_Results/Demo3_Power_ratio_sinusoidal_oscillation.jpg')
 close(h_figure)

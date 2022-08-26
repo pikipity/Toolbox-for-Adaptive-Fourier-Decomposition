@@ -9,7 +9,9 @@ Matlab -- V2.1
 
 Demos of the single channel AFD are in :file:`Matlab/v2.1/Demo of Single Channel AFD`. They are same as demos in V2.0.
 
-Demos of the multi-channel AFD are in :file:`Matlab/v2.1/Demo of Multi-channel AFD`. To run these codes, you need the sample data in this folder.
+Demos of the multi-channel AFD are in :file:`Matlab/v2.1/Demo of Multi-channel AFD`. To run these codes, you need the sample data in this folder. 
+
+Demos related to the paper "Adaptive Fourier decomposition for multi-channel signal analysis" are in :file:`Matlab/v2.1/Comparison of Single Channel AFD and Multi-channel AFD`. The file :file:`multi_AFD_TF_dist.m` shows how to generate time-frequency analysis based on the MAFD. 
 
 Simple Demo of multi-channel AFD
 """"""""""""""""""""""""""""""""""
