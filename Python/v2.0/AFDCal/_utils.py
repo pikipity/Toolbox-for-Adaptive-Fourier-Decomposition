@@ -28,7 +28,7 @@ def Unit_Disk(dist : float,
     image = np.repeat(t.T,n,1)
 
     ret1 = real + 1j * image
-    ret1[np.abs(ret1)-max_an_mag >= 1e-15] = None
+    ret1[np.abs(ret1)-max_an_mag >= -1e-15] = None
 
     row_num, _ = ret1.shape
     remove_row = []
@@ -76,7 +76,7 @@ def Circle_Disk(dist : float,
     phase_a = np.repeat(phase_a.T,n_abs,1)
 
     ret1 = abs_a * np.exp(1j * phase_a)
-    ret1[np.abs(ret1)-max_an_mag >= 1e-15] = None
+    ret1[np.abs(ret1)-max_an_mag >= -1e-15] = None
 
     row_num, _ = ret1.shape
     remove_row = []
@@ -103,9 +103,9 @@ def e_a(a, t):
 def genWeight(N):
     return np.ones((N,1),'complex')
 
-# def intg(f,g,W):
-#     y = f.dot(g.T*W)
-#     return y/f.shape[1]
+def intg(f,g,W):
+    y = f.dot(g.T*W)
+    return y/f.shape[1]
 
 def calCoef(a, t, G, W):
     return np.conj(e_a(a, t).dot(G.conj().T * W))/G.shape[1]

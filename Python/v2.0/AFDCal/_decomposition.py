@@ -66,11 +66,13 @@ def genEva(self):
     if self.decompMethod == 1:
         for i in range(dic_row):
             for j in range(dic_col):
-                self.Base[i,j,:] = e_a(self.dic_an[i,j], self.t)
+                if not np.isnan(self.dic_an[i,j]):
+                    self.Base[i,j,:] = e_a(self.dic_an[i,j], self.t)
     elif self.decompMethod == 2:
         for i in range(dic_row):
             for j in range(dic_col):
-                self.Base[i,j,:] = pyfft.fft(e_a(self.dic_an[i,j], self.t), N_sample) 
+                if not np.isnan(self.dic_an[i,j]):
+                    self.Base[i,j,:] = pyfft.fft(e_a(self.dic_an[i,j], self.t), N_sample) 
 
     self.time_genEva = time() - start_time
 
@@ -148,7 +150,20 @@ def nextDecomp(self):
 
 
     self.run_time.append(time() - start_time)
-    
+
+def reconstrct(self, level):
+    """
+    Calculate reconstructed signal
+    """
+    if level > self.level:
+        raise ValueError("The current decomposition level is {:n}. If you want to reconstruct the signal using decomposition components in higher levels, please use 'nextDecomp()' to get more components.")
+    select_deComp = self.deComp[:level+1]
+    re_sig = self.deComp[0]
+    k = 1
+    while k < len(select_deComp):
+        re_sig = re_sig + select_deComp[k]
+        k += 1
+    return np.real(re_sig)
 
 
 
