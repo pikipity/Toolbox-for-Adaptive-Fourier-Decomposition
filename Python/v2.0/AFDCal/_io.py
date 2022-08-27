@@ -58,6 +58,41 @@ def savedata(file: str,
             np.save(f, data, allow_pickle=True, fix_imports=True)
     else:
         raise ValueError("Unknown 'save_type'. 'save_type' only can be 'mat' or 'np'")
+
+def savedata(file: str,
+             data: dict,
+             save_type: str = 'mat'):
+    """
+    Save data
+    Parameters
+    ----------
+    file : str
+        File name 
+    data : dict
+        Saving data
+        Keys are variable names
+        Values are variable values
+    save_type : str, optional
+        File type
+        'mat' - matlab file in .mat format
+        'np' - Binary file in NumPy .npy format
+        The default is 'mat'.
+    """
+    desertation_dir = os.path.dirname(file)
+    if not os.path.exists(desertation_dir):
+        os.makedirs(desertation_dir)
+    
+    if save_type.lower() == 'mat':
+        if os.path.isfile(file):
+            os.remove(file)
+        sio.savemat(file, data)
+    elif save_type.lower() == 'np':
+        if os.path.isfile(file):
+            os.remove(file)
+        with open(file, 'wb') as f:
+            np.save(f, data, allow_pickle=True, fix_imports=True)
+    else:
+        raise ValueError("Unknown 'save_type'. 'save_type' only can be 'mat' or 'np'")
         
 def loaddata(file: str,
              save_type: str = 'mat') -> dict:
