@@ -4,7 +4,7 @@ from AFDCal import AFDCal
 from AFDCal._io import savefig
 
 # init AFD Calculation
-afdcal = AFDCal(10)
+afdcal = AFDCal()
 # Load input signal
 afdcal.loadInputSignal('bump_signal.mat')
 # set decomposition method: Single Channel Conventional AFD

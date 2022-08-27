@@ -12,7 +12,7 @@ class AFDCal:
         Parameters
         -----------------
         n_jobs : Optional[int] = None
-            Number of threadings for parallel computing
+            Number of threadings for parallel computing (Not implement)
         """
         self.n_jobs = n_jobs
         self.initSetting()
