@@ -16,12 +16,11 @@ def plot_dict(self,
     ax = fig.add_axes([0,0,1,1])
 
     if self.decompMethod == 1:
-        ax.plot(np.real(self.dic_an), np.imag(self.dic_an), 'x')
+        dic_an = self.dic_an
     elif self.decompMethod == 2:
-        dist = np.mean(np.diff(np.abs(self.dic_an)))
-        max_an_mag = np.amax(np.abs(self.dic_an)) + dist/2
-        dic_an = Circle_Disk(dist, max_an_mag, self.s.shape[1], 2*pi-2*pi/self.s.shape[1])
-        ax.plot(np.real(dic_an), np.imag(dic_an), 'x')
+        dic_an = self.dic_an_search
+    
+    ax.plot(np.real(dic_an), np.imag(dic_an), 'x')
 
     ax.grid(True)
     ax.set_xlabel('Real')
@@ -194,10 +193,15 @@ def plot_searchRes(self,
     """
     Plot searching result
     """
+    if self.decompMethod == 1:
+        dic_an = self.dic_an
+    elif self.decompMethod == 2:
+        dic_an = self.dic_an_search
+
     S1 = self.S1[level]
-    S1[np.isnan(self.dic_an)]=None
+    S1[np.isnan(dic_an)]=None
     if self.dicGenMethod == 1:
-        x = np.real(self.dic_an)
+        x = np.real(dic_an)
         for i in range(x.shape[0]):
             if not np.isnan(x[i,:]).any():
                 break
@@ -205,7 +209,7 @@ def plot_searchRes(self,
         x = np.expand_dims(x, axis = 0)
         x = np.repeat(x,S1.shape[1],0)
 
-        y = np.imag(self.dic_an)
+        y = np.imag(dic_an)
         for i in range(y.shape[1]):
             if not np.isnan(y[:,i]).any():
                 break
@@ -213,8 +217,8 @@ def plot_searchRes(self,
         y = np.expand_dims(y, axis = 1)
         y = np.repeat(y,S1.shape[0],1)
     elif self.dicGenMethod == 2:
-        x = np.abs(self.dic_an)
-        y = np.angle(self.dic_an)/(2*pi)
+        x = np.abs(dic_an)
+        y = np.angle(dic_an)/(2*pi)
         y[y<0] += 1
 
     fig = plt.figure(figsize=figsize)

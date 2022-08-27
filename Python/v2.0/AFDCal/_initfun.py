@@ -67,6 +67,7 @@ def setDecompMethod(self,
             raise ValueError("Unknow decomposition method." + HelpStr)
     else:
         raise ValueError("The decomposition method must be an integer number or a string")
+    
 
 def setDicGenMethod(self,
                     dicGenMethod : Union[int, str]):

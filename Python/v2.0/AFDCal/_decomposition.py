@@ -2,6 +2,7 @@ from numpy import ndarray
 from typing import Union, Optional, Dict, List, Tuple
 import numpy as np
 import numpy.fft as pyfft
+import numpy.matlib as pymat
 from math import pi
 
 import warnings
@@ -45,7 +46,9 @@ def genDic(self,
         if self.dicGenMethod == 1:
             raise ValueError("The fast AFD cannot use the 'square' dictionary.")
         elif self.dicGenMethod == 2:
-            self.dic_an = Circle_Disk(dist, max_an_mag, len(self.s), 0)
+            _, sig_len = self.s.shape
+            self.dic_an = Circle_Disk(dist, max_an_mag, sig_len, 0)
+            self.dic_an_search = Circle_Disk(dist, max_an_mag, sig_len, 2*pi-2*pi/sig_len)
     self.time_genDic = time() - start_time
 
 def genEva(self):
@@ -129,11 +132,17 @@ def nextDecomp(self):
             S1_tmp.append(np.abs(calS1(self.Base[i,:,:], self.remainder[self.level], self.weight)).T)
         S1_tmp = np.concatenate(S1_tmp, 0) 
     elif self.decompMethod == 2: # Fast AFD
-        S1_tmp = np.abs(pyfft.ifft(np.repmat(pyfft.fft(self.remainder[self.level] * self.weight.T, self.t.shape[1]),self.Base.shape[0], 1) * self.Base, self.t.shape[1], 1))
+        Base = self.Base[0,:,:]
+        S1_tmp = np.abs(pyfft.ifft(pymat.repmat(pyfft.fft(self.remainder[self.level] * self.weight.T, self.t.shape[1]),Base.shape[0], 1) * Base, self.t.shape[1], 1))
+        S1_tmp = S1_tmp.T
     self.S1.append(S1_tmp)
     max_loc_tmp = np.argwhere(S1_tmp == np.amax(S1_tmp))
     self.max_loc.append(max_loc_tmp)
-    an = self.dic_an[max_loc_tmp[0,0],max_loc_tmp[0,1]]
+    if self.decompMethod == 1:
+        dic_an = self.dic_an
+    elif self.decompMethod == 2:
+        dic_an = self.dic_an_search
+    an = dic_an[max_loc_tmp[0,0],max_loc_tmp[0,1]]
     self.an.append(an)
     # Decomposition coefficient
     coef = calCoef(an, self.t, self.remainder[self.level], self.weight)
