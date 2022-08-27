@@ -7,7 +7,7 @@ from math import pi
 import warnings
 from time import time
 
-from ._utils import Unit_Disk, Circle_Disk, e_a, calCoef
+from ._utils import Unit_Disk, Circle_Disk, e_a, calCoef, calS1
 
 def genDic(self, 
            dist : float,
@@ -92,20 +92,21 @@ def init_decomp(self):
 
     start_time = time()
 
+    # Initial stage: Do not need to search a_n. a_0=0
     self.S1.append(None)
     self.max_loc.append(None)
-
     an = 0
     self.an.append(an)
+    # Decomposition coefficient
     coef = calCoef(an, self.t, self.remainder[self.level], self.weight)
     self.coef.append(coef)
-
+    # Basis component
     tem_B = (np.sqrt(1-np.abs(an)**2)/(1-np.conj(an)*np.exp(self.t*1j)))
     self.tem_B.append(tem_B)
-
+    # Decomposition component
     deComp = self.coef[self.level] * self.tem_B[self.level]
     self.deComp.append(deComp)
-
+    # Remainder
     remainder = (self.remainder[self.level]-coef*e_a(an, self.t)) * (1-np.conj(an) * np.exp(1j * self.t)) / (np.exp(1j * self.t)-an)
     self.remainder.append(remainder)
 
@@ -119,7 +120,32 @@ def nextDecomp(self):
 
     start_time = time()
 
-    
+    # Search a_n
+    if self.decompMethod == 1: # Conventional AFD
+        S1_tmp = []
+        for i in range(self.Base.shape[0]):
+            S1_tmp.append(np.abs(calS1(self.Base[i,:,:], self.remainder[self.level], self.weight)).T)
+        S1_tmp = np.concatenate(S1_tmp, 0) 
+    elif self.decompMethod == 2: # Fast AFD
+        S1_tmp = np.abs(pyfft.ifft(np.repmat(pyfft.fft(self.remainder[self.level] * self.weight.T, self.t.shape[1]),self.Base.shape[0], 1) * self.Base, self.t.shape[1], 1))
+    self.S1.append(S1_tmp)
+    max_loc_tmp = np.argwhere(S1_tmp == np.amax(S1_tmp))
+    self.max_loc.append(max_loc_tmp)
+    an = self.dic_an[max_loc_tmp[0,0],max_loc_tmp[0,1]]
+    self.an.append(an)
+    # Decomposition coefficient
+    coef = calCoef(an, self.t, self.remainder[self.level], self.weight)
+    self.coef.append(coef)
+    # Basis component
+    tem_B = (np.sqrt(1-np.abs(an)**2)/(1-np.conj(an)*np.exp(self.t*1j))) * ((np.exp(1j*self.t)-self.an[self.level-1]) / (np.sqrt(1-np.abs(self.an[self.level-1])**2))) * self.tem_B[self.level-1]
+    self.tem_B.append(tem_B)
+    # Decomposition component
+    deComp = self.coef[self.level] * self.tem_B[self.level]
+    self.deComp.append(deComp)
+    # Remainder
+    remainder = (self.remainder[self.level]-coef*e_a(an, self.t)) * (1-np.conj(an) * np.exp(1j * self.t)) / (np.exp(1j * self.t)-an)
+    self.remainder.append(remainder)
+
 
     self.run_time.append(time() - start_time)
     

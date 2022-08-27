@@ -109,3 +109,7 @@ def genWeight(N):
 
 def calCoef(a, t, G, W):
     return np.conj(e_a(a, t).dot(G.conj().T * W))/G.shape[1]
+
+def calS1(base, G, W):
+    # tmp=conj((base)*(G'.*W));
+    return np.conj(base.dot(G.conj().T * W))

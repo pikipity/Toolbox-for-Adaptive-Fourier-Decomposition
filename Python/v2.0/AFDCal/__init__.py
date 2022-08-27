@@ -19,7 +19,7 @@ class AFDCal:
     
     from ._initfun import initSetting, loadInputSignal, setDecompMethod, setDicGenMethod, setAFDMethod
     from ._logfun import clearLog, addLog, dispLog
-    from ._decomposition import genDic, genEva, init_decomp
+    from ._decomposition import genDic, genEva, init_decomp, nextDecomp
     from ._plot import plot_dict, plot_base, plot_decomp, plot_basis_comp
 
     

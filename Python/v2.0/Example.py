@@ -34,4 +34,14 @@ fig.savefig('example_res/decomp_comp_level_{:n}.jpg'.format(0),
             bbox_inches='tight', dpi=300)
 fig, _ = afdcal.plot_basis_comp(0)
 fig.savefig('example_res/basis_comp_level_{:n}.jpg'.format(0), 
-            bbox_inches='tight', dpi=300)           
+            bbox_inches='tight', dpi=300)      
+# Decomposition level 1
+afdcal.nextDecomp()    
+
+print("Time of decomposition at level={:n}: {:n} s".format(1,afdcal.run_time[1]))
+fig, _ = afdcal.plot_decomp(1)
+fig.savefig('example_res/decomp_comp_level_{:n}.jpg'.format(1), 
+            bbox_inches='tight', dpi=300)
+fig, _ = afdcal.plot_basis_comp(1)
+fig.savefig('example_res/basis_comp_level_{:n}.jpg'.format(1), 
+            bbox_inches='tight', dpi=300)     
