@@ -6,6 +6,24 @@ import mat73
 import numpy as np
 import os
 
+import matplotlib.pyplot as plt
+
+def savefig(fig, fig_path,
+            bbox_inches='tight',
+            dpi=300,
+            close_fig=True):
+    """
+    Save figure
+    """
+    desertation_dir = os.path.dirname(fig_path)
+    if not os.path.exists(desertation_dir):
+        os.makedirs(desertation_dir)
+
+    fig.savefig(fig_path, 
+            bbox_inches=bbox_inches, dpi=dpi)
+    if close_fig:
+        plt.close(fig)
+
 def savedata(file: str,
              data: dict,
              save_type: str = 'mat'):

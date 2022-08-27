@@ -5,7 +5,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from math import pi
 
-from ._utils import intg
+from ._utils import intg, Circle_Disk
 
 def plot_dict(self,
               figsize: List[float] = [6.4, 4.8]):
@@ -15,7 +15,13 @@ def plot_dict(self,
     fig = plt.figure(figsize=figsize)
     ax = fig.add_axes([0,0,1,1])
 
-    ax.plot(np.real(self.dic_an), np.imag(self.dic_an), 'x')
+    if self.decompMethod == 1:
+        ax.plot(np.real(self.dic_an), np.imag(self.dic_an), 'x')
+    elif self.decompMethod == 2:
+        dist = np.mean(np.diff(np.abs(self.dic_an)))
+        max_an_mag = np.amax(np.abs(self.dic_an)) + dist/2
+        dic_an = Circle_Disk(dist, max_an_mag, self.s.shape[1], 2*pi-2*pi/self.s.shape[1])
+        ax.plot(np.real(dic_an), np.imag(dic_an), 'x')
 
     ax.grid(True)
     ax.set_xlabel('Real')
@@ -24,6 +30,15 @@ def plot_dict(self,
     ax.set_ylim([-1,1])
     ax.set_title('Searching Dictionary')
 
+    return fig, ax
+
+def plot_base_random(self,
+                     figsize: List[float] = [6.4, 4.8]):
+    """
+    Randomly select one evaluator and plot it
+    """
+    row_dic, col_dic = self.dic_an.shape
+    fig, ax = self.plot_base(np.random.randint(0,row_dic),np.random.randint(0,col_dic), figsize)
     return fig, ax
 
 def plot_base(self,
