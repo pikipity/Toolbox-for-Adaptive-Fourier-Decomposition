@@ -174,6 +174,17 @@ def reconstrct(self, level):
         k += 1
     return np.real(re_sig)
 
+def decomp(self, level):
+    """
+    Decompose from the initial decomposition to the given level.
+    """
+    if self.level >= level:
+        warnings.warn("The current decomposition already inlcudes the given level.")
+    if self.level == 0:
+        self.init_decomp()
+    while self.level < level:
+        self.nextDecomp()
+
 
 
     

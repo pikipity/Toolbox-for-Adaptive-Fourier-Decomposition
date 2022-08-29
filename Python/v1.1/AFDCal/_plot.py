@@ -158,6 +158,36 @@ def plot_re_sig(self,
     ax.set_xlabel(r'Phase ($2\pi$)')
     ax.set_title('Reconstructed signal at level={:n}'.format(level))
 
+    ax.legend(labels=['Original signal',
+                      'Reconstructed signal'])
+
+    return fig, ax
+
+def plot_remainder(self,
+                   level,
+                   figsize: List[float] = [6.4, 4.8]):
+    """
+    Plot Remainder
+    """
+    if level > self.level:
+        raise ValueError("Level cannot be larger than {:n}".format(self.level))
+
+    ori_sig = self.s[0,:]
+    base_val = self.reconstrct(level)[0,:]
+    t = self.t[0,:]/(2*pi)
+
+    fig = plt.figure(figsize=figsize)
+
+    ax = fig.add_axes([0,0,1,1])
+    ax.plot(t, np.real(ori_sig), 'b-')
+    ax.plot(t, np.real(ori_sig - base_val), 'r-')
+    ax.grid(True)
+    ax.set_xlabel(r'Phase ($2\pi$)')
+    ax.set_title('Remainder at level={:n}'.format(level))
+
+    ax.legend(labels=['Original signal',
+                      'Remainder'])
+
     return fig, ax
 
 def plot_energy_rate(self,
@@ -193,6 +223,8 @@ def plot_searchRes(self,
     """
     Plot searching result
     """
+    if level > self.level:
+        raise ValueError("Level cannot be larger than {:n}".format(self.level))
     if self.decompMethod == 1:
         dic_an = self.dic_an
     elif self.decompMethod == 2:
@@ -236,5 +268,27 @@ def plot_searchRes(self,
         ax.set_xlabel(r'$\|a_n\|$')
         ax.set_ylabel(r'$\angle a_n\;\;(2\pi)$')
     fig.colorbar(cntr,ax=ax)
+
+    return fig, ax
+
+def plot_an(self,
+            level,
+            figsize: List[float] = [6.4, 4.8]):
+    """
+    Plot basis parameters a_n
+    """
+    if level > self.level:
+        raise ValueError("Level cannot be larger than {:n}".format(self.level))
+
+    fig = plt.figure(figsize=figsize)
+
+    ax = fig.add_axes([0,0,1,1],
+                      projection = 'polar')
+    theta = [np.angle(an) for an in self.an[:level+1]]
+    r = [np.abs(an) for an in self.an[:level+1]]
+    ax.plot(theta, r, 'x')
+    ax.grid(True)
+    ax.set_rmax(1)
+    ax.set_title(r'Basis Parameters $a_n$ at level={:n}'.format(level))
 
     return fig, ax

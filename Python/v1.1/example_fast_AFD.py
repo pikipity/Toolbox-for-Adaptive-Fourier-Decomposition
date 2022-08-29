@@ -31,6 +31,8 @@ fig, _ = afdcal.plot_decomp(0)
 savefig(fig, 'example_res_fast_AFD/decomp_comp_level_{:n}.jpg'.format(0))
 fig, _ = afdcal.plot_basis_comp(0)
 savefig(fig, 'example_res_fast_AFD/basis_comp_level_{:n}.jpg'.format(0))
+fig, _ = afdcal.plot_remainder(0)
+savefig(fig, 'example_res_fast_AFD/remainder_level_{:n}.jpg'.format(0))
 # Decomposition 10 levels
 for level in range(10):
     afdcal.nextDecomp()    
@@ -46,3 +48,7 @@ for level in range(10):
     savefig(fig, 'example_res_fast_AFD/energy_convergence_rate_level_{:n}.jpg'.format(afdcal.level))
     fig, _ = afdcal.plot_searchRes(afdcal.level)
     savefig(fig, 'example_res_fast_AFD/searching_result_level_{:n}.jpg'.format(afdcal.level))
+    fig, _ = afdcal.plot_remainder(afdcal.level)
+    savefig(fig, 'example_res_fast_AFD/remainder_level_{:n}.jpg'.format(afdcal.level))
+    fig, _ = afdcal.plot_an(afdcal.level)
+    savefig(fig, 'example_res_fast_AFD/an_level_{:n}.jpg'.format(afdcal.level))

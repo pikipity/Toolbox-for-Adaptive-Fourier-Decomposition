@@ -186,3 +186,39 @@ def loadInputSignal(self,
     self.t = np.expand_dims(t, axis = 0)
     # generate weights
     self.weight = genWeight(N_sample)
+
+def setPhase(self, 
+             t : ndarray):
+    """
+    Set signal phase.
+    After loading the input signal, the default phase (0~2\pi) will be automatically generated. 
+    If you want to use this default phase, this function is useless.
+
+    Parameters
+    ----------------
+    t : nadarray
+        Signal phase. The dimension is 1*N where N is the sampling number of the input signal.
+    """
+    if len(self.s) == 0 or len(self.G) == 0:
+        raise ValueError("Please give the input signal first!!")
+    if type(t) is not ndarray:
+        raise ValueError("The given signal phase must be a python ndarray !!")
+    if t.ndim != 2:
+        raise ValueError("The dimension of the given signal phase must be 1*N where N is the sampling number of the input signal")
+    if t.shape[0] != 1 or t.shape[1] != self.s.shape[1]:
+        raise ValueError("The dimension of the given signal phase must be 1*N where N is the sampling number of the input signal")
+
+    self.t = t.copy()
+
+def setPhase_min_max(self,
+                     min_phase: float,
+                     max_phase: float):
+    """
+    Generate and set signal phase.
+    The generated signal phase is from 'min_phase' to 'max_phase' including 'min_phase'.
+    """
+    N_ch, N_sample = self.G.shape
+    sep = (max_phase-min_phase)/(N_sample)
+    t = np.arange(min_phase, max_phase, sep)
+    self.t = np.expand_dims(t, axis = 0)
+
