@@ -317,7 +317,7 @@ It should be **noticed** that,
 + Suppose values of :math:`t` are not same for different channels, the values of basis components are different. However, the parameters :math:`a_n` and :math:`r_{n,h}` are same for all channels. 
 
 Papers Related to Mathematical Foundation and Implementations
------------------
+-----------------------------------------------------------------
    
    + T. Qian, "`Intrinsic mono-component decomposition of functions: an advance of Fourier theory <https://doi.org/10.1002/mma.1214>`_," *Math. Methods Appl. Sci.*, vol. 33, no. 7, pp. 880–891, 2010.
    + T. Qian, Y. B. Wang, “`Adaptive Fourier series -- a variation of greedy algorithm <https://link.springer.com/article/10.1007/s10444-010-9153-4>`_," Adv. Comput. Math., vol. 34, no. 3, pp. 279–293, 2011.
@@ -333,7 +333,7 @@ Papers Related to Mathematical Foundation and Implementations
    + Z. Wang, C. M. Wong, A. Rosa, T. Qian, and F. Wan, "`Adaptive Fourier decomposition for multi-channel signal analysis <https://doi.org/10.1109/TSP.2022.3143723>`_," *IEEE Trans. Signal Process.*, vol. 70, pp. 903–918, 2022. 
 
 Papers Related to Applications
------------------
+-------------------------------------
 
 According to above characteristics, the AFD can applied to many different areas:
 

@@ -47,3 +47,7 @@ Temporary Items
 .apdisk
 
 Docs/_build/
+Python/v2.0/AFDCal/__pycache__/*
+Python/v1.0/AFDCal/__pycache__/*
+Python/v1.1/AFDCal/__pycache__/*
+Python/v2.0_temp/AFDCal/__pycache__/*

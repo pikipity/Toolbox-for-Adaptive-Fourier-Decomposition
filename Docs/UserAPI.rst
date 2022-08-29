@@ -261,10 +261,140 @@ V1.0 toolbox is **NOT** recommended.
 Python API Reference
 ---------------------
 
-Python -- V2.0
+Python -- V1.1
 ^^^^^^^^^^^^^^^^
 
-*Under development*
+This version only supports the single channel core AFD with/without the fast basis searching. You can follow the given examples to use these functions.
+
+.. py:function:: AFDCal()
+
+    Create a instance of the AFD calculator.
+
+.. py:function:: AFDCal.loadInputSignal(input_signal)
+    
+    Load the input signal from a variable or a file.
+
+    :param input_signal: The input signal can be a string or a numpy array.
+
+                         + numpy array: The dimension must be 1 * N where N is the total sampling number.
+                         + string: File of storing the input signal. Current supporting file format
+                            - ``.mat``: matlab file. Signal is stored in a matrix called "G". The dimension must be 1 * N where N is the total sampling number.
+                            - ".npy": numpy file. Signal is stored in a numpy array called "G". The dimension must be 1 * N where N is the total sampling number.
+
+.. py:function:: AFDCal.setDecompMethod(decompMethod)
+
+    Set the decomposition method.
+
+    :param decompMethod: The order or the name of the decomposition method. Current supported methods:
+
+                         1. ``Single Channel Conventional AFD`` (default): Single channel core AFD without the fast basis searching
+                         2. ``Single Channel Fast AFD``: Single channel core AFD with the fast basis searching
+
+.. py:function:: AFDCal.setDicGenMethod(dicGenMethod)
+
+    Set the method of generating the searching dictionary.
+
+    :param dicGenMethod: The order or the name of the dictionary generation method. Current supported methods:
+            
+                         1. ``Square`` (default)
+                         2. ``Circle`` (Fast AFD must be "circle")
+
+.. py:function:: AFDCal.genDic(dist, max_an_mag)
+
+    Generate the searching dictionary.
+
+    :param dist: Distance between two adjacent magnitude values.
+    :param max_an_mag: Maximum magnitude in the searching dictionary.
+
+.. py:function:: AFDCal.genEva()
+
+    Generate evaluators.
+
+.. py:function:: AFDCal.init_decomp()
+
+    Initialize the decomposition. 
+
+.. py:function:: AFDCal.nextDecomp()
+
+    Decompose next level. Search a new basis parameter and compute the corresponding decomposition coefficient, basis component, and reduced remainder.
+
+.. py:function:: AFDCal.reconstrct(level)
+
+    Reconstruct the signal by using the decomposition components in first several levels.
+
+    :param level: The total decomposition levels used for the reconstruction.
+
+.. py:function:: AFDCal.decomp(level)
+
+    Decompose the input signal to the given level.
+
+    :param level: The total decomposition level. The initial decomposition is inlcuded. 
+
+.. py:function:: AFDCal.plot_decomp(level)
+
+    Plot the decomposition component at the specific level.
+
+    :param level: The decomposition level of the plotted decomposition component.
+
+.. py:function:: AFDCal.plot_basis_comp(level)
+
+    Plot the basis component at the specific level.
+
+    :param level: The decomposition level of the plotted basis component.
+
+.. py:function:: AFDCal.plot_re_sig(level)
+
+    Plot the reconstructed signal at the specific level.
+
+    :param level: The decomposition level of the plotted reconstructed signal.
+
+.. py:function:: AFDCal.plot_energy_rate(level)
+
+    Plot the energy convergence rates of first several levels.
+
+    :param level: Total decomposition levels.
+
+.. py:function:: AFDCal.plot_searchRes(level)
+
+    Plot the basis searching result.
+
+    :param level: The decomposition level of the plotted searching result.
+
+.. py:function:: AFDCal.plot_remainder(level)
+
+    Plot the remainder.
+
+    :param level: The decomposition level of the plotted remainder.
+
+.. py:function:: AFDCal.plot_an(level)
+
+    Plot the basis parameters :math:`a_n` of first several levels.
+
+    :param level: Total decomposition levels.
+
+.. py:function:: AFDCal.plot_base_random()
+
+    Random select one generated evaluator and plot it.
+
+.. py:function:: AFDCal.plot_base(row_idx, col_idx)
+
+    Plot the specific evaluator. The location is related to the generated searching dictionary.
+
+    :param row_idx: Row index of the specific evaluator.
+    :param col_idx: Column index of the specific evaluator.
+
+.. py:function:: AFDCal.plot_dict()
+
+    Plot the searching dictionary.
+
+.. py:function:: _io.savefig(fig, fig_path)
+
+    Save figure. If the given save path does not exist, the file path will be created.
+
+    :param fig: Matplotlib figure instance.
+    :param fig_path: Save path.
+    
+
 
 Python -- V1.0
 ^^^^^^^^^^^^^^^

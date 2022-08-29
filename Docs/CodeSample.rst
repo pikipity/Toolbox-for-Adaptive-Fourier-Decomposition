@@ -335,4 +335,55 @@ V1.0 toolbox is **NOT** recommended.
 Python
 ----------------
 
-*Under development*
+Python -- V1.1
+^^^^^^^^^^^^^^^^^
+
+This version only supports the single channel core AFD with/without the fast basis searching.
+
+Demo 1: Conventional basis searching with the square searching dictionary
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+Decomposition method used in this demo:
+
++ AFD method: Single Channel core AFD
++ Method of generating searching dictionary: square
++ Fast AFD: No
+
+:file:`Python/v1.1/example_conv_AFD_square.py`
+
+.. literalinclude:: ../Python/v1.1/example_conv_AFD_square.py
+    :language: python
+
+Related results are in :file:`Python/v1.1/example_res_conv_AFD_square`.
+
+Demo 2: Conventional basis searching with the circle searching dictionary
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+Decomposition method used in this demo:
+
++ AFD method: Single Channel core AFD
++ Method of generating searching dictionary: circle
++ Fast AFD: No
+
+:file:`Python/v1.1/example_conv_AFD_circle.py`
+
+.. literalinclude:: ../Python/v1.1/example_conv_AFD_circle.py
+    :language: python
+
+Related results are in :file:`Python/v1.1/example_res_conv_AFD_circle`.
+
+Demo 2: Fast basis searching
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+Decomposition method used in this demo:
+
++ AFD method: Single Channel core AFD
++ Method of generating searching dictionary: circle
++ Fast AFD: Yes
+
+:file:`Python/v1.1/example_fast_AFD.py`
+
+.. literalinclude:: ../Python/v1.1/example_fast_AFD.py
+    :language: python
+
+Related results are in :file:`Python/v1.1/example_res_fast_AFD`.
