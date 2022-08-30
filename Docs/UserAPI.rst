@@ -276,10 +276,10 @@ This version only supports the single channel core AFD with/without the fast bas
 
     :param input_signal: The input signal can be a string or a numpy array.
 
-                         + numpy array: The dimension must be 1 * N where N is the total sampling number.
-                         + string: File of storing the input signal. Current supporting file format
-                            - ``.mat``: matlab file. Signal is stored in a matrix called "G". The dimension must be 1 * N where N is the total sampling number.
-                            - ".npy": numpy file. Signal is stored in a numpy array called "G". The dimension must be 1 * N where N is the total sampling number.
+        + ``numpy array``: The dimension must be 1 * N where N is the total sampling number.
+        + ``string``: File of storing the input signal. Current supporting file format
+            - ``.mat``: matlab file. Signal is stored in a matrix called "G". The dimension must be 1 * N where N is the total sampling number.
+            - ``.npy``: numpy file. Signal is stored in a numpy array called "G". The dimension must be 1 * N where N is the total sampling number.
 
 .. py:function:: AFDCal.setDecompMethod(decompMethod)
 
