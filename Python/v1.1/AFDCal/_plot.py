@@ -136,6 +136,25 @@ def plot_basis_comp(self,
 
     return fig, ax
 
+def plot_ori_sig(self,
+                figsize: List[float] = [6.4, 4.8]):
+    """
+    Plot original signal
+    """
+
+    ori_sig = self.s[0,:]
+    t = self.t[0,:]/(2*pi)
+
+    fig = plt.figure(figsize=figsize)
+
+    ax = fig.add_axes([0,0,1,1])
+    ax.plot(t, np.real(ori_sig), 'b-')
+    ax.grid(True)
+    ax.set_xlabel(r'Phase ($2\pi$)')
+    ax.set_title('Input Signal')
+
+    return fig, ax
+
 def plot_re_sig(self,
                 level,
                 figsize: List[float] = [6.4, 4.8]):
