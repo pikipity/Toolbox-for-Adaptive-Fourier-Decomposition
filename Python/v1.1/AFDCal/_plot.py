@@ -286,6 +286,7 @@ def plot_searchRes(self,
     elif self.dicGenMethod == 2:
         ax.set_xlabel(r'$\|a_n\|$')
         ax.set_ylabel(r'$\angle a_n\;\;(2\pi)$')
+    ax.set_title('Searching Result at level={:n}'.format(level))
     fig.colorbar(cntr,ax=ax)
 
     return fig, ax
