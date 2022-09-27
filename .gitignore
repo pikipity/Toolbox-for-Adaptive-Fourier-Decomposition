@@ -46,6 +46,8 @@ Network Trash Folder
 Temporary Items
 .apdisk
 
+.vscode/*
+
 Docs/_build/
 Python/v2.0/AFDCal/__pycache__/*
 Python/v1.0/AFDCal/__pycache__/*
