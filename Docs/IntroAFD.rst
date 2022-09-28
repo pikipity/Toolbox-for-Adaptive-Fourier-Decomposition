@@ -330,6 +330,9 @@ Papers Related to Mathematical Foundation and Implementations
    + Y. Gao, M. Ku, T. Qian, and J. Wang, "`FFT formulations of adaptive Fourier decomposition <http://www.sciencedirect.com/science/article/pii/S0377042717302005>`_," *J. Comput. Appl. Math.*, Apr. 2017.
    + Z. Wang, F. Wan, C. M. Wong, and T. Qian, "`Fast basis search for adaptive Fourier decomposition <https://link.springer.com/article/10.1186/s13634-018-0593-1>`_," *EURASIP J. Adv. Sig. Pr.*, vol. 74, no. 1, 2018.
    + T. Qian, "`Sparse representations of random signals <https://doi.org/10.1002/mma.8033>`_," *Math Meth Appl Sci.*, 2021.
+   + T. Qian, W. Sproessig, J. X. Wang, "`Adaptive Fourier decomposition of functions in quaternionic Hardy spaces <https://onlinelibrary.wiley.com/doi/10.1002/mma.1532>`_," *Mathematical Methods in the Applied Sciences*, vol. 35, no. 1, pp. 43-64, 2012.
+   + W. Qu, P. Dang, "`Rational approximation in a class of weighted Hardy spaces <https://link.springer.com/article/10.1007/s11785-018-0862-x>`_," *Complex Analysis and Operator Theory*, vol. 13, no. 4, pp. 1827-1852, 2019.
+   + W. Qu, P. Dang, "`Reproducing kernel approximation in weighted Bergman spaces: Algorithm and applications <https://onlinelibrary.wiley.com/doi/10.1002/mma.5648>`_," *Mathematical Methods in the Applied Sciences*, vol. 42, no. 12, pp. 4292-4304, 2019.
    + Z. Wang, C. M. Wong, A. Rosa, T. Qian, and F. Wan, "`Adaptive Fourier decomposition for multi-channel signal analysis <https://doi.org/10.1109/TSP.2022.3143723>`_," *IEEE Trans. Signal Process.*, vol. 70, pp. 903–918, 2022. 
 
 Papers Related to Applications

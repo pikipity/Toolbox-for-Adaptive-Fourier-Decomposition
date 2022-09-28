@@ -218,17 +218,29 @@ def plot_energy_rate(self,
     if level > self.level:
         raise ValueError("Level cannot be larger than {:n}".format(self.level))
 
-    energyrate = np.zeros((level+1))
-    x_level = np.zeros((level+1))
-    for k in range(level+1):
-        energyrate[k] = np.abs(intg(np.real(self.s-self.reconstrct(k)),np.real(self.s-self.reconstrct(k)),self.weight))[0,0]
-        x_level[k] = k
+    energyrate = np.zeros((level+2))
+    x_level = np.zeros((level+2))
+    for k in range(level+2):
+        if k==0:
+            energyrate[k] = np.abs(intg(np.real(self.s),np.real(self.s),self.weight))[0,0]
+            x_level[k] = k
+        else:
+            energyrate[k] = np.abs(intg(np.real(self.s-self.reconstrct(k-1)),np.real(self.s-self.reconstrct(k-1)),self.weight))[0,0]
+            x_level[k] = k
     energyrate = energyrate/energyrate[0]
+    x_labels=[]
+    for x_tick in x_level:
+        if x_tick==0:
+            x_labels.append('Ori')
+        else:
+            x_labels.append(str(x_tick-1))
 
     fig = plt.figure(figsize=figsize)
 
     ax = fig.add_axes([0,0,1,1])
     ax.plot(x_level, energyrate, 'x-')
+    ax.set_xticks(x_level)
+    ax.set_xticklabels(x_labels)
     ax.grid(True)
     ax.set_ylabel('Energy Rate')
     ax.set_xlabel('Decomposition Level')
