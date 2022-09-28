@@ -289,6 +289,7 @@ This version only supports the single channel core AFD with/without the fast bas
 
                          1. ``Single Channel Conventional AFD`` (default): Single channel core AFD without the fast basis searching
                          2. ``Single Channel Fast AFD``: Single channel core AFD with the fast basis searching
+                         5. ``Single Channel POAFD``: Single channel POAFD
 
 .. py:function:: AFDCal.setDicGenMethod(dicGenMethod)
 
