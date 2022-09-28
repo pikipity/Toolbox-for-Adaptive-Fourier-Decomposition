@@ -12,7 +12,7 @@ afdcal.setDecompMethod(5)
 # set dictionary generation method: circle
 afdcal.setDicGenMethod(2)
 # generate dictionary
-afdcal.genDic(1/10, 1)
+afdcal.genDic(1/20, 1)
 
 print("Time of generating the searching dictionary: {:n} s".format(afdcal.time_genDic))
 fig, _ = afdcal.plot_dict()
