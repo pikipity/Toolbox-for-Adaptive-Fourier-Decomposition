@@ -113,3 +113,6 @@ def calCoef(a, t, G, W):
 def calS1(base, G, W):
     # tmp=conj((base)*(G'.*W));
     return np.conj(base.dot(G.conj().T * W))
+
+def calS1_noconj(base, G, W):
+    return base.dot(G.conj().T * W)
