@@ -51,10 +51,13 @@ def setDecompMethod(self,
         Current supported methods:
             1. Single Channel Conventional AFD (default)
             2. Single Channel Fast AFD
+            3. Multi-channel Conventional AFD (NOT FINISH)
+            4. Multi-channel Fast AFD (NOT FINISH)
+            5. Single Channel POAFD
     """
     HelpStr = "\nCurrent supported methods:\n1. Single Channel Conventional AFD (default)\n2. Single Channel Fast AFD"
     if type(decompMethod) is int:
-        if decompMethod < 3:
+        if decompMethod < 3 or decompMethod == 5:
             self.decompMethod = decompMethod
         else:
             raise ValueError("Unknow decomposition method." + HelpStr)
@@ -63,6 +66,8 @@ def setDecompMethod(self,
             self.decompMethod = 1
         elif decompMethod.lower() == 'Single Channel Fast AFD'.lower():
             self.decompMethod = 2
+        elif decompMethod.lower() == 'Single Channel POAFD'.lower():
+            self.decompMethod = 5
         else:
             raise ValueError("Unknow decomposition method." + HelpStr)
     else:

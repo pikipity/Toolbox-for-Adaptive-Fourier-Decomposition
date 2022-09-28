@@ -15,7 +15,7 @@ def plot_dict(self,
     fig = plt.figure(figsize=figsize)
     ax = fig.add_axes([0,0,1,1])
 
-    if self.decompMethod == 1:
+    if self.decompMethod == 1 or self.decompMethod == 5:
         dic_an = self.dic_an
     elif self.decompMethod == 2:
         dic_an = self.dic_an_search
@@ -244,7 +244,7 @@ def plot_searchRes(self,
     """
     if level > self.level:
         raise ValueError("Level cannot be larger than {:n}".format(self.level))
-    if self.decompMethod == 1:
+    if self.decompMethod == 1 or self.decompMethod == 5:
         dic_an = self.dic_an
     elif self.decompMethod == 2:
         dic_an = self.dic_an_search
