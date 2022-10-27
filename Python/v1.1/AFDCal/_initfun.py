@@ -187,7 +187,8 @@ def loadInputSignal(self,
         self.G = self.s.copy()
     # set phase
     N_ch, N_sample = self.G.shape
-    t = np.arange(0, 2*pi, 2*pi/N_sample)
+    # t = np.arange(0, 2*pi, 2*pi/N_sample)
+    t = np.arange(0,N_sample)/N_sample*2*pi
     self.t = np.expand_dims(t, axis = 0)
     # generate weights
     self.weight = genWeight(N_sample)
