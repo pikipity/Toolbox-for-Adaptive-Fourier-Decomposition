@@ -10,7 +10,7 @@ This toolbox is intended to help users use the adaptive Fourier decomposition (A
 
 This toolbox contains **multiple implementations** of the AFD for different types of processed signals and different decomposition process.
 
-There is a `simple online demo <http://zewang.site/AFD>`_ based on Python version v1.0. You can try the AFD quickly.
+There is a `online version <https://afd.must.edu.mo/>`_ based on Python version v2.0. You can try the AFD quickly.
 
 This toolbox includes
 
