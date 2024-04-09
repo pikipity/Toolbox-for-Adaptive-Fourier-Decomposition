@@ -335,6 +335,136 @@ V1.0 toolbox is **NOT** recommended.
 Python
 ----------------
 
+Python -- V2.1
+^^^^^^^^^^^^^^^^^
+
+This version supports the multi-channel core AFD.
+
+Demo 1: Multi-channel core AFD based on the conventional basis searching with the square searching dictionary
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+Decomposition method used in this demo:
+
++ AFD method: Multi-channel core AFD
++ Method of generating searching dictionary: square
++ Fast AFD: No
+
+:file:`Python/v2.1/example_multichannel_conv_AFD_square.py`
+
+.. literalinclude:: ../Python/v2.1/example_multichannel_conv_AFD_square.py
+    :language: python
+
+Demo 2: Multi-channel core AFD based on the conventional basis searching with the circle searching dictionary
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+Decomposition method used in this demo:
+
++ AFD method: Multi-channel core AFD
++ Method of generating searching dictionary: circle
++ Fast AFD: No
+
+:file:`Python/v2.1/example_multichannel_conv_AFD_circle.py`
+
+.. literalinclude:: ../Python/v2.1/example_multichannel_conv_AFD_circle.py
+    :language: python
+
+Demo 2: Multi-channel core AFD based on the fast basis searching
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+Decomposition method used in this demo:
+
++ AFD method: Multi-channel core AFD
++ Method of generating searching dictionary: circle
++ Fast AFD: Yes
+
+:file:`Python/v2.1/example_multichannel_fast_AFD.py`
+
+.. literalinclude:: ../Python/v2.1/example_multichannel_fast_AFD.py
+    :language: python
+
+Python -- V2.0
+^^^^^^^^^^^^^^^^^
+
+This version supports multi-channel/multiple signals. But only single channel AFD methods can be used.
+
+Demo 1: Conventional basis searching with the square searching dictionary
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+Decomposition method used in this demo:
+
++ AFD method: Single Channel core AFD
++ Method of generating searching dictionary: square
++ Fast AFD: No
+
+:file:`Python/v2.0/example_conv_AFD_square.py`
+
+.. literalinclude:: ../Python/v2.0/example_conv_AFD_square.py
+    :language: python
+
+Demo 2: Conventional basis searching with the circle searching dictionary
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+Decomposition method used in this demo:
+
++ AFD method: Single Channel core AFD
++ Method of generating searching dictionary: circle
++ Fast AFD: No
+
+:file:`Python/v2.0/example_conv_AFD_circle.py`
+
+.. literalinclude:: ../Python/v2.0/example_conv_AFD_circle.py
+    :language: python
+
+Related results are in :file:`Python/v2.0/example_res_conv_AFD_circle`.
+
+Demo 3: Fast basis searching
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+Decomposition method used in this demo:
+
++ AFD method: Single Channel core AFD
++ Method of generating searching dictionary: circle
++ Fast AFD: Yes
+
+:file:`Python/v2.0/example_fast_AFD.py`
+
+.. literalinclude:: ../Python/v2.0/example_fast_AFD.py
+    :language: python
+
+Related results are in :file:`Python/v2.0/example_res_fast_AFD`.
+
+Demo 4: POAFD with the square searching dictionary
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+Decomposition method used in this demo:
+
++ AFD method: Single Channel POAFD
++ Method of generating searching dictionary: square
++ Fast AFD: No
+
+:file:`Python/v2.0/example_POAFD_square.py`
+
+.. literalinclude:: ../Python/v2.0/example_POAFD_square.py
+    :language: python
+
+Related results are in :file:`Python/v2.0/example_POAFD_square`.
+
+Demo 5: POAFD with the circle searching dictionary
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+Decomposition method used in this demo:
+
++ AFD method: Single Channel POAFD
++ Method of generating searching dictionary: circle
++ Fast AFD: No
+
+:file:`Python/v2.0/example_POAFD_circle.py`
+
+.. literalinclude:: ../Python/v2.0/example_POAFD_circle.py
+    :language: python
+
+Related results are in :file:`Python/v2.0/example_POAFD_circle`.
+
 Python -- V1.1
 ^^^^^^^^^^^^^^^^^
 
@@ -372,7 +502,7 @@ Decomposition method used in this demo:
 
 Related results are in :file:`Python/v1.1/example_res_conv_AFD_circle`.
 
-Demo 2: Fast basis searching
+Demo 3: Fast basis searching
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 Decomposition method used in this demo:
