@@ -8,7 +8,7 @@ afdcal = AFDCal()
 # Load input signal
 afdcal.loadInputSignal('multi_bump_signals.mat')
 ch_num = afdcal.s.shape[0]
-# set decomposition method: Single Channel Conventional AFD
+# set decomposition method: Multi-channel Conventional AFD
 afdcal.setDecompMethod(3)
 # set dictionary generation method: square
 afdcal.setDicGenMethod(1)
