@@ -9,7 +9,7 @@ Matlab API Reference
 Matlab -- V2.1
 ^^^^^^^^^^^^^^^
 
-The Multi-channel core AFD and the multi-channel unwinding AFD has been added in V2.1. To know whether the multi-channel AFD is required, please check :ref:`intro-MAFD` 
+The Multi-channel core AFD and the multi-channel unwinding AFD have been added in V2.1. To know whether the multi-channel AFD is required, please check :ref:`intro-MAFD` 
 
 The basic API is the same as :ref:`matlabV20-label`. The key differences are
 
@@ -260,6 +260,35 @@ V1.0 toolbox is **NOT** recommended.
 
 Python API Reference
 ---------------------
+
+Python -- V2.1
+^^^^^^^^^^^^^^^^
+
+The multi-channel core AFD has been added in V2.1. To know whether the multi-channel AFD is required, please check :ref:`intro-MAFD`.
+
+The basic API is the same as :ref:`pythonV20-label`. The key differences are
+
++ When using ``AFDCal.setDecompMethod(method_no)``, 
+  
+  + ``method_no=1`` means "Single Channel Conventional AFD"
+  + ``method_no=2`` means "Single Channel Fast AFD"
+  + ``method_no=3`` means "Multi-channel Conventional AFD"
+  + ``method_no=4`` means "Multi-channel Fast AFD"
+  + ``method_no=5`` means Single channel POAFD
+
+.. _pythonV20-label:
+
+Python -- V2.0
+^^^^^^^^^^^^^^^^
+
+The multi-channel/multiple signal can be inputed the AFD calculation simulataneously. The single channel AFD methods will be performed along the first axis. In other words, the single channel AFD methods will be applied channel/trial by channel/trial.
+
+The basic API is the same as :ref:`pythonV11-label`. The key differences are
+
++ The dimension of the input signal can be C * N where N is the total sampling number, and C is the total channel number or trial number.
++ Plot related functions include one more parameter ``i_ch`` to indicate the channel number. 
+
+.. _pythonV11-label:
 
 Python -- V1.1
 ^^^^^^^^^^^^^^^^
