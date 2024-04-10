@@ -338,7 +338,7 @@ Python
 Python -- V2.1
 ^^^^^^^^^^^^^^^^^
 
-This version supports the multi-channel core AFD.
+This version supports the multi-channel core AFD. This section only shows the demo codes of multi-channel core AFD. The demo codes of single channel AFD methods can be find in :ref:`pythonV20-democodes-label`.
 
 Demo 1: Multi-channel core AFD based on the conventional basis searching with the square searching dictionary
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -368,7 +368,7 @@ Decomposition method used in this demo:
 .. literalinclude:: ../Python/v2.1/example_multichannel_conv_AFD_circle.py
     :language: python
 
-Demo 2: Multi-channel core AFD based on the fast basis searching
+Demo 3: Multi-channel core AFD based on the fast basis searching
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 Decomposition method used in this demo:
@@ -381,6 +381,8 @@ Decomposition method used in this demo:
 
 .. literalinclude:: ../Python/v2.1/example_multichannel_fast_AFD.py
     :language: python
+
+.. _pythonV20-democodes-label:
 
 Python -- V2.0
 ^^^^^^^^^^^^^^^^^
