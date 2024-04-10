@@ -45,7 +45,7 @@ for i_ch in range(ch_num):
     savefig(fig, 'example_res_POAFD_circle/remainder_level_{:n}_ch_{:n}.jpg'.format(afdcal.level, i_ch))
     fig, _ = afdcal.plot_an(afdcal.level, i_ch = i_ch)
     savefig(fig, 'example_res_POAFD_circle/an_level_{:n}_ch_{:n}.jpg'.format(afdcal.level, i_ch))
-# Decomposition 10 levels
+# Decomposition 4 levels
 for level in range(4):
     afdcal.nextDecomp()    
 
