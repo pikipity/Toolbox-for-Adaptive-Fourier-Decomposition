@@ -26,16 +26,16 @@ From this toolbox, you can find the corresponding folder :file:`Matlab/`. Under 
 Python
 -------
 
-V1.1
-^^^^^^^^^^^^^^
+Versions except V1.0
+^^^^^^^^^^^^^^^^^^^^^^^
 
-1. Install the required packages. You can find all required packages in :file:`Python/v1.1/environment.yml`. If you use conda or Anaconda, you can create a new virtual environment using :file:`environment.yml`:
+1. Install the required packages. You can find all required packages in :file:`Python/vX/environment.yml` (X is the version number). If you use conda or Anaconda, you can create a new virtual environment using :file:`environment.yml`:
 
    .. code-block:: console
     
     $ conda env create -f environment.yml
 
-2. Copy :file:`Python/v1.1/AFDCal` to the Python Searching path, like your own program root path. Then, following the given examples in :file:`Python/v1.1`, you can use this toolbox. 
+2. Copy :file:`Python/vX/AFDCal` to the Python Searching path, like your own program root path. Then, following the given examples in :file:`Python/vX`, you can use this toolbox. 
 
 V1.0 (NOT Recommanded)
 ^^^^^^^^^^^^^^^^^^^^^^^^
