@@ -37,7 +37,7 @@ for i_ch in range(ch_num):
     savefig(fig, 'example_res_conv_AFD_square/basis_comp_level_{:n}_ch_{:n}.jpg'.format(0, i_ch))
     fig, _ = afdcal.plot_remainder(0, i_ch = i_ch)
     savefig(fig, 'example_res_conv_AFD_square/remainder_level_{:n}_ch_{:n}.jpg'.format(0, i_ch))
-# Decomposition 10 levels
+# Decomposition 4 levels
 for level in range(4):
     afdcal.nextDecomp()    
 
