@@ -87,44 +87,8 @@ The set :math:`\mathbb{A}` is the searching range of :math:`a_n`. Normally, it i
 
 The basic decomposition process of the core AFD is shown below.
 
-.. graphviz::
-
-   digraph core_AFD {
-      splines = ortho;
-      size="10,5";
-
-      a -> b[weight=100];
-      b -> c[weight=100];
-      c -> i[weight=100];
-      i -> d[weight=100];
-      a[label="Start" shape=parallelogram];
-      b[label="Generate searching dictionary" shape=box];
-      c[label="Generate evaluators" shape=box];
-      i[label="Initialize decomposition" shape=box];
-
-
-      subgraph cluster_decomposition_loop{
-         label=<Decomposition Loop>;
-         labeljust=l;
-         style=dotted;
-         subgraph cluster_searching_an {
-            d -> e[weight=100];
-            d[label=<Calculate objective function values of a<SUB>n</SUB>> shape=box];
-            e[label=<Obtain a<SUB>n</SUB> by searching the maximum objective function value> shape=box];
-            label = <Searching a<SUB>n</SUB>>;
-            labeljust=l;
-            style=dotted;
-         }         
-         e -> f[weight=100];
-         f -> g[weight=100];
-         g -> d[weight=1];
-         f[label="Construct the decomposition component" shape=box];
-         g[label="Compute reduced remainder" shape=box];
-      }
-
-
-      
-   }
+.. image:: ./_static/core_AFD.svg
+   :width: 322px
    
 
 |
@@ -168,68 +132,8 @@ In real implementation, :math:`r_{n,h}` can be searched iteratively, whcih is si
 
 The basic decomposition process of the unwinding AFD is shown below.
 
-.. graphviz::
-
-   digraph unwinding_AFD {
-      splines = ortho;
-      size="10,8";
-
-      a -> b[weight=100];
-      b -> c[weight=100];
-      c -> i[weight=100];
-      i -> d_r[weight=100];
-
-      a[label="Start" shape=parallelogram];
-      b[label="Generate searching dictionary" shape=box];
-      c[label="Generate evaluators" shape=box];
-      i[label="Initialize decomposition" shape=box];
-
-      subgraph cluster_decomposition_loop{
-         label = <Decomposition Loop>;
-         labeljust=l;
-         style=dotted;
-
-         subgraph cluster_searching_an {
-            d -> e[weight=100];
-            d[label=<Calculate objective function values of a<SUB>n</SUB>> shape=box];
-            e[label=<Obtain a<SUB>n</SUB> by searching the maximum objective function value> shape=box];
-            label = <Searching a<SUB>n</SUB>>;
-            labeljust=l;
-            style=dotted;
-         }
-
-         subgraph cluster_searching_r {
-            d_r -> e_r[weight=100];
-            e_r -> f_r[weight=100];
-            f_r -> d[weight=100 label=No];
-
-            f_r -> g_r[weight=1 label=Yes];
-            g_r -> d_r[weight=1];
-
-            d_r[label=<Calculate objective function values of r<SUB>n,h</SUB>> shape=box];
-            {
-               rank=same;
-               e_r[label=<Obtain r<SUB>n,h</SUB> by searching the minimum objective function value> shape=box];
-               g_r[label=<Add obtained r<SUB>n,h</SUB> into zeros> shape=box];
-            }
-            f_r[label=<Is the objective function value small enough?> shape=diamond];
-            
-            label = <Searching zeros>;
-            labeljust=l;
-            style=dotted;
-         }
-         
-         e -> f[weight=100];
-         f -> g[weight=100];
-
-         g -> d_r[weight=1];
-         
-         f[label="Construct the decomposition component" shape=box];
-         g[label="Compute reduced remainder" shape=box];
-      }
-
-      
-   }
+.. image:: ./_static/unwinding_AFD.svg
+   :width: 322px
    
 
 |
