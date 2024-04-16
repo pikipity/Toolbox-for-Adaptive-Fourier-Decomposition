@@ -234,3 +234,24 @@ def setPhase_min_max(self,
     t = np.expand_dims(t, axis = 0)
     self.t = t.repeat(N_ch, axis = 0)
 
+def set_an_array(self,
+                 an_array : list):
+    """
+    Set an array
+
+    Parameters
+    ----------------
+    an_array : list
+        If the input is a list of an, all channels will use the same bases.
+        If the input is a list of different list, different channels will use different bases.
+    """
+    N_ch, _ = self.G.shape
+    if isinstance(an_array[0], list):
+        if len(an_array) != N_ch:
+            raise ValueError("The input must be the common an array or an arraies of all channels.")
+    else:
+        an_array = [an_array for _ in range(N_ch)]
+
+    self.an = an_array.copy()
+
+
