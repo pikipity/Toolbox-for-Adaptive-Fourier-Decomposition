@@ -382,6 +382,16 @@ Decomposition method used in this demo:
 .. literalinclude:: ../Python/v2.1/example_multichannel_fast_AFD.py
     :language: python
 
+Demo 4: Decomposition using user-defined :math:`a_n` array without searching new :math:`a_n` array
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+This demo shows how to use the user-defined :math:`a_n` array to conduct the decomposition without searching new :math:`a_n` array. It should be noticed that, when using the user_defined :math:`a_n` array, the decomposition is not adaptive. 
+
+:file:`Python/v2.1/example_predefined_an.py`
+
+.. literalinclude:: ../Python/v2.1/example_predefined_an.py
+    :language: python
+
 .. _pythonV20-democodes-label:
 
 Python -- V2.0

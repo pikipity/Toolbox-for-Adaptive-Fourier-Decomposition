@@ -276,6 +276,23 @@ The basic API is the same as :ref:`pythonV20-label`. The key differences are
   + ``method_no=4`` means "Multi-channel Fast AFD"
   + ``method_no=5`` means Single channel POAFD
 
++ The :math:`a_n` array allows to be predefined:
+
+  + A new function ``set_an_array`` is defined.
+  + The functions ``init_decomp`` and ``nextDecomp`` add a new input ``searching_an_flag``:
+    
+    + When set ``searching_an_flag`` as ``False``, the decomposition will not search the new :math:`a_n` array, and will use the predefined :math:`a_n` array. 
+    + When set ``searching_an_flag`` as ``True``, the decomposition will search the new :math:`a_n` array. Default value is ``True``.
+
+.. py:function:: AFDCal.set_an_array(predefined_an_array)
+    
+    Set the predefined :math:`a_n` array. 
+
+    :param predefined_an_array: The predefined :math:`a_n` array must be a list.
+
+        + If directly give one :math:`a_n` array, all channels will use the common :math:`a_n` array.
+        + If give multiple :math:`a_n` arraies, different channels will use different :math:`a_n` arraies. 
+
 .. _pythonV20-label:
 
 Python -- V2.0
