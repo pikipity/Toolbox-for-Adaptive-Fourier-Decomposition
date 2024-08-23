@@ -15,7 +15,7 @@ This toolbox is intended to help users use the adaptive Fourier decomposition (A
 
 This toolbox contains **multiple implementations** of the AFD for different types of processed signals and different decomposition process.
 
-This is the Python version. There is a [*online version*](https://afd.must.edu.mo/) based on Python version v2.0. You can try the AFD quickly.
+This is the Python version. There is an [*online version*](https://afd.must.edu.mo/) based on Python version v2.0. You can try the AFD quickly.
 
 You can find the matlab version in [another repository](https://github.com/pikipity/Toolbox-for-Adaptive-Fourier-Decomposition-MATLAB) or [MathWork file exchange](https://www.mathworks.com/matlabcentral/fileexchange/62783-toolbox-for-adaptive-fourier-decomposition)
 
