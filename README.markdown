@@ -1,5 +1,16 @@
 # Toolbox-for-Adaptive-Fourier-Decomposition
 
+![PyPI - Version](https://img.shields.io/pypi/v/Toolbox-for-Adaptive-Fourier-Decomposition?label=pypi%20version)
+![PyPI - Downloads](https://img.shields.io/pypi/dm/Toolbox-for-Adaptive-Fourier-Decomposition?label=pypi%20download)
+![Read the Docs (version)](https://img.shields.io/readthedocs/toolbox-for-adaptive-fourier-decomposition/stable?label=docs%20(stable)) 
+![Read the Docs (version)](https://img.shields.io/readthedocs/toolbox-for-adaptive-fourier-decomposition/latest?label=docs%20(latest))
+![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/pikipity/Toolbox-for-Adaptive-Fourier-Decomposition)
+
+
+![GitHub forks](https://img.shields.io/github/forks/pikipity/Toolbox-for-Adaptive-Fourier-Decomposition)
+![GitHub Repo stars](https://img.shields.io/github/stars/pikipity/Toolbox-for-Adaptive-Fourier-Decomposition)
+![GitHub watchers](https://img.shields.io/github/watchers/pikipity/Toolbox-for-Adaptive-Fourier-Decomposition)
+
 This toolbox is intended to help users use the adaptive Fourier decomposition (AFD) **easily**. 
 
 This toolbox contains **multiple implementations** of the AFD for different types of processed signals and different decomposition process.
