@@ -5,7 +5,7 @@ with open("README.markdown", "r", encoding="utf8") as fh:
 
 setuptools.setup(
     name="Toolbox-for-Adaptive-Fourier-Decomposition",
-    version="2.1.0",
+    version="2.1.1",
     author="Ze Wang",
     author_email="pikipityw@gmail.com",
     description="Toolbox of adaptive Fourier decomposition (AFD) for Python.",
