@@ -55,3 +55,7 @@ Python/v1.1/AFDCal/__pycache__/*
 Python/v2.0_temp/AFDCal/__pycache__/*
 Python/v1.1/block_signal.mat
 Python/v1.1/example_parallel_*
+
+dist
+build
+Toolbox_for_Adaptive_Fourier_Decomposition.egg-info
