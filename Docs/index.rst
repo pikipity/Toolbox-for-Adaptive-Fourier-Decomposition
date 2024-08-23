@@ -42,13 +42,16 @@ A list of papers related to the AFD can be found in Section `"Introduction to Ad
 
 If you use the single-channel AFD method in this toolbox, please at least cite these papers:
 
-      T. Qian, L. Zhang, and Z. Li, “Algorithm of adaptive Fourier decomposition,” IEEE Trans. Signal Process., vol. 59, no. 12, pp. 5899–5906, 2011.
+.. parsed-literal:: 
+  T. Qian, L. Zhang, and Z. Li, “Algorithm of adaptive Fourier decomposition,” IEEE Trans. Signal Process., vol. 59, no. 12, pp. 5899–5906, 2011.
       
-      T. Qian, Y. B. Wang, “Adaptive Fourier series -- a variation of greedy algorithm," Adv. Comput. Math., vol. 34, no. 3, pp. 279–293, 2011.
+.. parsed-literal:: 
+  T. Qian, Y. B. Wang, “Adaptive Fourier series -- a variation of greedy algorithm," Adv. Comput. Math., vol. 34, no. 3, pp. 279–293, 2011.
 
 If you use the multi-channel AFD method in this toolbox, please at least cite `“Adaptive Fourier decomposition for multi-channel signal analysis” <https://doi.org/10.1109/TSP.2022.3143723>`_.
 
-      Z. Wang, C. M. Wong, A. Rosa, T. Qian, and F. Wan, “Adaptive Fourier decomposition for multi-channel signal analysis,” IEEE Trans. Signal Process., vol. 70, pp. 903–918, 2022.
+.. parsed-literal::
+  Z. Wang, C. M. Wong, A. Rosa, T. Qian, and F. Wan, “Adaptive Fourier decomposition for multi-channel signal analysis,” IEEE Trans. Signal Process., vol. 70, pp. 903–918, 2022.
 
 Content
 --------
