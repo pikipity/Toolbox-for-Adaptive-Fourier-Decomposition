@@ -4,6 +4,7 @@ import os.path as op
 import numpy as np
 import scipy.signal as pysig
 from math import pi
+import warnings
 
 from ._io import loaddata
 from ._utils import genWeight
@@ -92,13 +93,23 @@ def setDicGenMethod(self,
             2. Circle (Fast AFD must be "circle")
     """
     HelpStr = "\nCurrent supported methods:\n1. Square (default)\n2. Circle (Fast AFD must be 'circle')"
+    WarnStr = "The fast AFD must use the 'circle' dictionary. The dictionary generation method is automatically changed from 'square' to 'circle'."
     if type(dicGenMethod) is int:
-        if dicGenMethod < 3:
-            self.dicGenMethod = dicGenMethod
+        if dicGenMethod in [1, 2]:
+            if self.decompMethod in [2, 4] and dicGenMethod == 1:
+                self.dicGenMethod = 2
+                warnings.warn(WarnStr)
+                return
+            else:
+                self.dicGenMethod = dicGenMethod
         else:
             raise ValueError("Unknow dictionary generation method." + HelpStr)
     elif type(dicGenMethod) is str:
         if dicGenMethod.lower() == 'Square'.lower():
+            if self.decompMethod in [2, 4]:
+                self.dicGenMethod = 2
+                warnings.warn(WarnStr)
+                return
             self.dicGenMethod = 1
         elif dicGenMethod.lower() == 'Circle'.lower():
             self.dicGenMethod = 2
